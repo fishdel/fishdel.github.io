@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://fishdel.github.io/sitemap.xml
