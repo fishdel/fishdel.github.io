@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh" dir="auto">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>机器学习实战(训练模型) | Yuuuuu&#39;s Blog</title>
 <meta name="keywords" content="">
 <meta name="description" content="训练模型
@@ -23,16 +23,16 @@ SVD奇异值分解
 训练模型方法的问题
 训练集有数百万特征：（使用迭代优化）随机梯度下降和小批量梯度下降，若训练集可以容纳于内存，使用批量梯度下降">
 <meta name="author" content="">
-<link rel="canonical" href="http://localhost:1313/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B/">
+<link rel="canonical" href="https://fishdel.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.d6fcd20a4fb86efa4dfac8ec95da60244cc8871042183da1ef28e3a762ad79c8.css" integrity="sha256-1vzSCk&#43;4bvpN&#43;sjsldpgJEzIhxBCGD2h7yjjp2Ktecg=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://localhost:1313/favicon.png">
-<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon.png">
-<link rel="apple-touch-icon" href="http://localhost:1313/favicon.png">
-<link rel="mask-icon" href="http://localhost:1313/favicon.png">
+<link rel="icon" href="https://fishdel.github.io/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://fishdel.github.io/favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://fishdel.github.io/favicon.png">
+<link rel="apple-touch-icon" href="https://fishdel.github.io/favicon.png">
+<link rel="mask-icon" href="https://fishdel.github.io/favicon.png">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="zh" href="http://localhost:1313/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B/">
+<link rel="alternate" hreflang="zh" href="https://fishdel.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B/">
 <noscript>
     <style>
         #theme-toggle,
@@ -69,7 +69,83 @@ SVD奇异值分解
         }
 
     </style>
-</noscript>
+</noscript><meta property="og:url" content="https://fishdel.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B/">
+  <meta property="og:site_name" content="Yuuuuu&#39;s Blog">
+  <meta property="og:title" content="机器学习实战(训练模型)">
+  <meta property="og:description" content="训练模型 训练模型的方法 使用成本函数最小的参数 标准方程法 SVD奇异值分解 迭代优化，使用梯度下降 批量梯度下降 随机梯度下降 小批量梯度下降 训练模型方法的问题 训练集有数百万特征：（使用迭代优化）随机梯度下降和小批量梯度下降，若训练集可以容纳于内存，使用批量梯度下降">
+  <meta property="og:locale" content="zh">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2022-04-05T22:11:08+08:00">
+    <meta property="article:modified_time" content="2022-04-05T22:11:08+08:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="机器学习实战(训练模型)">
+<meta name="twitter:description" content="训练模型
+训练模型的方法
+使用成本函数最小的参数
+
+标准方程法
+SVD奇异值分解
+
+迭代优化，使用梯度下降
+
+批量梯度下降
+随机梯度下降
+小批量梯度下降
+
+训练模型方法的问题
+训练集有数百万特征：（使用迭代优化）随机梯度下降和小批量梯度下降，若训练集可以容纳于内存，使用批量梯度下降">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://fishdel.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "机器学习实战(训练模型)",
+      "item": "https://fishdel.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "机器学习实战(训练模型)",
+  "name": "机器学习实战(训练模型)",
+  "description": "训练模型 训练模型的方法 使用成本函数最小的参数 标准方程法 SVD奇异值分解 迭代优化，使用梯度下降 批量梯度下降 随机梯度下降 小批量梯度下降 训练模型方法的问题 训练集有数百万特征：（使用迭代优化）随机梯度下降和小批量梯度下降，若训练集可以容纳于内存，使用批量梯度下降\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "训练模型 训练模型的方法 使用成本函数最小的参数 标准方程法 SVD奇异值分解 迭代优化，使用梯度下降 批量梯度下降 随机梯度下降 小批量梯度下降 训练模型方法的问题 训练集有数百万特征：（使用迭代优化）随机梯度下降和小批量梯度下降，若训练集可以容纳于内存，使用批量梯度下降\n训练集里特征的数值大小迥异 先放缩，再使用梯度下降 使用标准方程法或SVD 使用批量梯度下降，并在每个轮次绘制验证误差。如果验证误差持续上升 如果训练错误增加：学习率过高，如果训练错误没增加，可能过拟合——简化模型 使用多项式回归时，训练误差和验证误差之间差距大 验证误差远高于训练误差\n过拟合\n减少多项式阶数 添加L1或l2至成本函数 增加训练集的大小 使用岭回归时，训练误差和验证误差差不多且都相当高 欠拟合，减少正则化参数alpha 两种用于分类的模型 Logistic回归 对数几率回归：把线性回归的结果，通过sigmoid函数，从(-∞,∞)映射到(0,1) 成本函数为凸函数，梯度下降不会陷入局部最优 Softmax回归 逻辑回归只能用于二分类，通过softmax函数扩展到多分类问题 成本函数为交叉熵成本函数 多项式回归（可能会过拟合） 处理非线性关系的数据：将每个特征的幂次方添加为一个新特征，在扩展的特征集上训练一个线性模型 poly_features = PolynomialFeatures(degree=2, include_bias=False) “斜率”参数（w，也叫作权重或系数）被保存在 coef_ 属性中，而偏移或截距（b）被保 存在 intercept_ 属性中 若有（a，b）两个特征，使用degree=2的二次多项式则为（1，a, a^2, ab, b ,b^2)。 参数：\ndegree：度数，决定多项式的次数\ninteraction_only： 默认为False，字面意思就是只能交叉相乘，不能有a^2这种.\ninclude_bias: 默认为True, 这个bias指的是多项式会自动包含1，设为False就没这个1了\n欠拟合——两条曲线接近且都很高 过拟合——曲线之间存在很大的间隙\n正则化 正则化线性模型 岭回归\nalpha：正则化系数，float类型，默认为1.0。 fit_intercept：是否需要截距b，默认为True。 normalize：是否先进行归一化，默认为False。 copy_X：是否复制X数组，否则覆盖，默认为True。 max_iter：最大的迭代次数，int类型，默认为None。 solver：求解方法，str类型，默认为auto。可选参数为：auto、svd、cholesky、lsqr、sparse_cg、sag。\nridge_reg =Ridge(alpha=1, solver=“cholesky”, random_state=42)\nsgd_reg = SGDRegressor(penalty=‘l2’,max_iter=50,tol=-np.infty,random_state=42)\n也可以这样用 Lasso回归\nlasso_reg = Lasso(alpha=0.1)\nSGDRegressor(penalty=‘l1’)\n经常把特征的权重降低为0，只有很少的特征重要时选他\n弹性网络\nelastic_net = ElasticNet(alpha=0.1,l1_ratio=0.5,random_state=42) 二者的一个混合，容易产生一些异常 早期停止法\nsgd_reg = SGDRegressor(max_iter=1, tol=-np.infty, warm_start=True, penalty=None, learning_rate=“constant”, eta0=0.0005, random_state=42)\n当 warm_start=True 时，调用 fit() 方法后，训练会从停下来的地方继续，而不是从头重新开始\n正则化 正则化就是把额外的约束或者惩罚项加到已有模型（损失函数）上，以防止过拟合并提高泛化能力。损失函数由原来的E(X,Y)变为E(X,Y)+alpha||w||，w是模型系数组成的向量（有些地方也叫参数parameter，coefficients），||·||一般是L1或者L2范数，alpha是一个可调的参数，控制着正则化的强度。当用在线性模型上时，L1正则化和L2正则化也称为Lasso和Ridge。\n",
+  "wordCount" : "1307",
+  "inLanguage": "zh",
+  "datePublished": "2022-04-05T22:11:08+08:00",
+  "dateModified": "2022-04-05T22:11:08+08:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://fishdel.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yuuuuu's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fishdel.github.io/favicon.png"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
@@ -87,7 +163,7 @@ SVD奇异值分解
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://localhost:1313/" accesskey="h" title="Yuuuuu&#39;s Blog (Alt + H)">Yuuuuu&#39;s Blog</a>
+            <a href="https://fishdel.github.io/" accesskey="h" title="Yuuuuu&#39;s Blog (Alt + H)">Yuuuuu&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -113,32 +189,32 @@ SVD奇异值分解
         </div>
         <ul id="menu">
             <li>
-                <a href="http://localhost:1313/" title="首页">
+                <a href="https://fishdel.github.io/" title="首页">
                     <span>首页</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/archives/" title="归档">
+                <a href="https://fishdel.github.io/archives/" title="归档">
                     <span>归档</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/categories/" title="分类">
+                <a href="https://fishdel.github.io/categories/" title="分类">
                     <span>分类</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/tags/" title="标签">
+                <a href="https://fishdel.github.io/tags/" title="标签">
                     <span>标签</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/search/" title="搜索">
+                <a href="https://fishdel.github.io/search/" title="搜索">
                     <span>搜索</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/about/" title="关于">
+                <a href="https://fishdel.github.io/about/" title="关于">
                     <span>关于</span>
                 </a>
             </li>

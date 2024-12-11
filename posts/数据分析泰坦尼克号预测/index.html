@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh" dir="auto">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>机器学习实战（泰坦尼克号预测） | Yuuuuu&#39;s Blog</title>
 <meta name="keywords" content="">
 <meta name="description" content="import pandas as pd
@@ -13,16 +13,16 @@ import matplotlib.pyplot as plt
 数据导入
 观察数据的具体情况，可以发现年龄变量Age和Cabin有缺失，然后Name，sex，Ticket，cabin和Embark是object类型，在后续的数据处理中要进行调整。">
 <meta name="author" content="">
-<link rel="canonical" href="http://localhost:1313/posts/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E6%B3%B0%E5%9D%A6%E5%B0%BC%E5%85%8B%E5%8F%B7%E9%A2%84%E6%B5%8B/">
+<link rel="canonical" href="https://fishdel.github.io/posts/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E6%B3%B0%E5%9D%A6%E5%B0%BC%E5%85%8B%E5%8F%B7%E9%A2%84%E6%B5%8B/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.d6fcd20a4fb86efa4dfac8ec95da60244cc8871042183da1ef28e3a762ad79c8.css" integrity="sha256-1vzSCk&#43;4bvpN&#43;sjsldpgJEzIhxBCGD2h7yjjp2Ktecg=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://localhost:1313/favicon.png">
-<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon.png">
-<link rel="apple-touch-icon" href="http://localhost:1313/favicon.png">
-<link rel="mask-icon" href="http://localhost:1313/favicon.png">
+<link rel="icon" href="https://fishdel.github.io/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://fishdel.github.io/favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://fishdel.github.io/favicon.png">
+<link rel="apple-touch-icon" href="https://fishdel.github.io/favicon.png">
+<link rel="mask-icon" href="https://fishdel.github.io/favicon.png">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="zh" href="http://localhost:1313/posts/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E6%B3%B0%E5%9D%A6%E5%B0%BC%E5%85%8B%E5%8F%B7%E9%A2%84%E6%B5%8B/">
+<link rel="alternate" hreflang="zh" href="https://fishdel.github.io/posts/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E6%B3%B0%E5%9D%A6%E5%B0%BC%E5%85%8B%E5%8F%B7%E9%A2%84%E6%B5%8B/">
 <noscript>
     <style>
         #theme-toggle,
@@ -59,7 +59,73 @@ import matplotlib.pyplot as plt
         }
 
     </style>
-</noscript>
+</noscript><meta property="og:url" content="https://fishdel.github.io/posts/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E6%B3%B0%E5%9D%A6%E5%B0%BC%E5%85%8B%E5%8F%B7%E9%A2%84%E6%B5%8B/">
+  <meta property="og:site_name" content="Yuuuuu&#39;s Blog">
+  <meta property="og:title" content="机器学习实战（泰坦尼克号预测）">
+  <meta property="og:description" content="import pandas as pd import numpy as np import matplotlib.pyplot as plt 数据导入 观察数据的具体情况，可以发现年龄变量Age和Cabin有缺失，然后Name，sex，Ticket，cabin和Embark是object类型，在后续的数据处理中要进行调整。">
+  <meta property="og:locale" content="zh">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2022-04-05T22:11:08+08:00">
+    <meta property="article:modified_time" content="2022-04-05T22:11:08+08:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="机器学习实战（泰坦尼克号预测）">
+<meta name="twitter:description" content="import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+数据导入
+观察数据的具体情况，可以发现年龄变量Age和Cabin有缺失，然后Name，sex，Ticket，cabin和Embark是object类型，在后续的数据处理中要进行调整。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://fishdel.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "机器学习实战（泰坦尼克号预测）",
+      "item": "https://fishdel.github.io/posts/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E6%B3%B0%E5%9D%A6%E5%B0%BC%E5%85%8B%E5%8F%B7%E9%A2%84%E6%B5%8B/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "机器学习实战（泰坦尼克号预测）",
+  "name": "机器学习实战（泰坦尼克号预测）",
+  "description": "import pandas as pd import numpy as np import matplotlib.pyplot as plt 数据导入 观察数据的具体情况，可以发现年龄变量Age和Cabin有缺失，然后Name，sex，Ticket，cabin和Embark是object类型，在后续的数据处理中要进行调整。\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "import pandas as pd import numpy as np import matplotlib.pyplot as plt 数据导入 观察数据的具体情况，可以发现年龄变量Age和Cabin有缺失，然后Name，sex，Ticket，cabin和Embark是object类型，在后续的数据处理中要进行调整。\ndata_train = pd.read_csv(r'C:/Users/train.csv') data_train.info() ",
+  "wordCount" : "1167",
+  "inLanguage": "zh",
+  "datePublished": "2022-04-05T22:11:08+08:00",
+  "dateModified": "2022-04-05T22:11:08+08:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://fishdel.github.io/posts/%E6%95%B0%E6%8D%AE%E5%88%86%E6%9E%90%E6%B3%B0%E5%9D%A6%E5%B0%BC%E5%85%8B%E5%8F%B7%E9%A2%84%E6%B5%8B/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yuuuuu's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fishdel.github.io/favicon.png"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
@@ -77,7 +143,7 @@ import matplotlib.pyplot as plt
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://localhost:1313/" accesskey="h" title="Yuuuuu&#39;s Blog (Alt + H)">Yuuuuu&#39;s Blog</a>
+            <a href="https://fishdel.github.io/" accesskey="h" title="Yuuuuu&#39;s Blog (Alt + H)">Yuuuuu&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -103,32 +169,32 @@ import matplotlib.pyplot as plt
         </div>
         <ul id="menu">
             <li>
-                <a href="http://localhost:1313/" title="首页">
+                <a href="https://fishdel.github.io/" title="首页">
                     <span>首页</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/archives/" title="归档">
+                <a href="https://fishdel.github.io/archives/" title="归档">
                     <span>归档</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/categories/" title="分类">
+                <a href="https://fishdel.github.io/categories/" title="分类">
                     <span>分类</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/tags/" title="标签">
+                <a href="https://fishdel.github.io/tags/" title="标签">
                     <span>标签</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/search/" title="搜索">
+                <a href="https://fishdel.github.io/search/" title="搜索">
                     <span>搜索</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/about/" title="关于">
+                <a href="https://fishdel.github.io/about/" title="关于">
                     <span>关于</span>
                 </a>
             </li>

@@ -1,26 +1,26 @@
 <!DOCTYPE html>
 <html lang="zh" dir="auto">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>Autosar OS原理 | Yuuuuu&#39;s Blog</title>
 <meta name="keywords" content="">
 <meta name="description" content="事件触发操作系统，通过定时器届满，错误检出等event触发os task的调度运行
 1.TASK种类与状态
 task的种类分为两种，基本task和扩展的task，处理器在同一时间只能运行一个task指令，os会负责保存和恢复task的状态切换时的数据">
 <meta name="author" content="">
-<link rel="canonical" href="http://localhost:1313/posts/autosar-os%E5%8E%9F%E7%90%86/">
+<link rel="canonical" href="https://fishdel.github.io/posts/autosar-os%E5%8E%9F%E7%90%86/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.d6fcd20a4fb86efa4dfac8ec95da60244cc8871042183da1ef28e3a762ad79c8.css" integrity="sha256-1vzSCk&#43;4bvpN&#43;sjsldpgJEzIhxBCGD2h7yjjp2Ktecg=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://localhost:1313/favicon.png">
-<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon.png">
-<link rel="apple-touch-icon" href="http://localhost:1313/favicon.png">
-<link rel="mask-icon" href="http://localhost:1313/favicon.png">
+<link rel="icon" href="https://fishdel.github.io/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://fishdel.github.io/favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://fishdel.github.io/favicon.png">
+<link rel="apple-touch-icon" href="https://fishdel.github.io/favicon.png">
+<link rel="mask-icon" href="https://fishdel.github.io/favicon.png">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="zh" href="http://localhost:1313/posts/autosar-os%E5%8E%9F%E7%90%86/">
+<link rel="alternate" hreflang="zh" href="https://fishdel.github.io/posts/autosar-os%E5%8E%9F%E7%90%86/">
 <noscript>
     <style>
         #theme-toggle,
@@ -57,7 +57,72 @@ task的种类分为两种，基本task和扩展的task，处理器在同一时�
         }
 
     </style>
-</noscript>
+</noscript><meta property="og:url" content="https://fishdel.github.io/posts/autosar-os%E5%8E%9F%E7%90%86/">
+  <meta property="og:site_name" content="Yuuuuu&#39;s Blog">
+  <meta property="og:title" content="Autosar OS原理">
+  <meta property="og:description" content="事件触发操作系统，通过定时器届满，错误检出等event触发os task的调度运行
+1.TASK种类与状态 task的种类分为两种，基本task和扩展的task，处理器在同一时间只能运行一个task指令，os会负责保存和恢复task的状态切换时的数据">
+  <meta property="og:locale" content="zh">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-06-08T22:11:08+08:00">
+    <meta property="article:modified_time" content="2023-06-08T22:11:08+08:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Autosar OS原理">
+<meta name="twitter:description" content="事件触发操作系统，通过定时器届满，错误检出等event触发os task的调度运行
+1.TASK种类与状态
+task的种类分为两种，基本task和扩展的task，处理器在同一时间只能运行一个task指令，os会负责保存和恢复task的状态切换时的数据">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://fishdel.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Autosar OS原理",
+      "item": "https://fishdel.github.io/posts/autosar-os%E5%8E%9F%E7%90%86/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Autosar OS原理",
+  "name": "Autosar OS原理",
+  "description": "事件触发操作系统，通过定时器届满，错误检出等event触发os task的调度运行\n1.TASK种类与状态 task的种类分为两种，基本task和扩展的task，处理器在同一时间只能运行一个task指令，os会负责保存和恢复task的状态切换时的数据\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "事件触发操作系统，通过定时器届满，错误检出等event触发os task的调度运行\n1.TASK种类与状态 task的种类分为两种，基本task和扩展的task，处理器在同一时间只能运行一个task指令，os会负责保存和恢复task的状态切换时的数据\n1.1.Basic task 状态：Running，Ready，Suspended 单次任务模型，当基本任务中止或被强占时才会释放处理器 自动开始任务在startOS（）时被自动激活，可以开启需要等待事件的扩展任务。基本task在进入中止状态前只执行依次\n1.2.Extended task 状态：Running，Ready，Waiting，Suspended 多一个waiting状态，适合于需要中间执行同步的功能，使任务具有同步点，（当处理过程中发现缺少信息时，会切换到Waiting状态）时间响应较快，但会一直占用Ram资源，相当于以空间换时间\n1.3.状态与栈工作的对应 1.Basic task：当进入running状态时直接依次入栈，加到栈顶，然后依次出栈；2.Extended task：最差情况：在waiting过程中其他低优先级的任务都被激活并全被打断，扩展task的入栈位置需要确定，即知道实际任务占用的栈空间当扩展任务的栈管理异常时，会进入shutdownOS（）\n抢占式调度会增加任务context的切换时间和内存消耗，不可抢占式会降低实时性，但是节省context切换的时间\n2.调度方式 2.1.任务调度方式 FirstComeFirstServed（FCFS） 2.2.切换机制与调度策略 抢占式并需要设置优先级\n静态调度：在调度前就已经配置好；\n动态调度：根据负载率自动去调度 autosar支持静态调度，单个处理器一次处理一个任务，不同任务通过alarm进行切换\n抢占策略的选择：如果应用程序并行的task比较少，可以选择全抢占式，如果有明确的执行时间的短期任务则是和混合抢占式。\n若有三个task，优先级task1",
+  "wordCount" : "2489",
+  "inLanguage": "zh",
+  "datePublished": "2023-06-08T22:11:08+08:00",
+  "dateModified": "2023-06-08T22:11:08+08:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://fishdel.github.io/posts/autosar-os%E5%8E%9F%E7%90%86/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yuuuuu's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fishdel.github.io/favicon.png"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
@@ -75,7 +140,7 @@ task的种类分为两种，基本task和扩展的task，处理器在同一时�
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://localhost:1313/" accesskey="h" title="Yuuuuu&#39;s Blog (Alt + H)">Yuuuuu&#39;s Blog</a>
+            <a href="https://fishdel.github.io/" accesskey="h" title="Yuuuuu&#39;s Blog (Alt + H)">Yuuuuu&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -101,32 +166,32 @@ task的种类分为两种，基本task和扩展的task，处理器在同一时�
         </div>
         <ul id="menu">
             <li>
-                <a href="http://localhost:1313/" title="首页">
+                <a href="https://fishdel.github.io/" title="首页">
                     <span>首页</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/archives/" title="归档">
+                <a href="https://fishdel.github.io/archives/" title="归档">
                     <span>归档</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/categories/" title="分类">
+                <a href="https://fishdel.github.io/categories/" title="分类">
                     <span>分类</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/tags/" title="标签">
+                <a href="https://fishdel.github.io/tags/" title="标签">
                     <span>标签</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/search/" title="搜索">
+                <a href="https://fishdel.github.io/search/" title="搜索">
                     <span>搜索</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/about/" title="关于">
+                <a href="https://fishdel.github.io/about/" title="关于">
                     <span>关于</span>
                 </a>
             </li>

@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh" dir="auto">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>Pandas基本用法 | Yuuuuu&#39;s Blog</title>
 <meta name="keywords" content="">
 <meta name="description" content="1.数据导入
@@ -36,16 +36,16 @@ df.insert(4,&#39;能力600&#39;,df[&#39;综合能力&#39;]&gt;=600)
 pickle文件，可以将python中的数据类型进行序列化
 compression参数指定了压缩类型，&lsquo;zip&rsquo;, &lsquo;gzip&rsquo;, &lsquo;bz2&rsquo;, &lsquo;zstd&rsquo;">
 <meta name="author" content="">
-<link rel="canonical" href="http://localhost:1313/posts/pandas%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/">
+<link rel="canonical" href="https://fishdel.github.io/posts/pandas%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.d6fcd20a4fb86efa4dfac8ec95da60244cc8871042183da1ef28e3a762ad79c8.css" integrity="sha256-1vzSCk&#43;4bvpN&#43;sjsldpgJEzIhxBCGD2h7yjjp2Ktecg=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://localhost:1313/favicon.png">
-<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon.png">
-<link rel="apple-touch-icon" href="http://localhost:1313/favicon.png">
-<link rel="mask-icon" href="http://localhost:1313/favicon.png">
+<link rel="icon" href="https://fishdel.github.io/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://fishdel.github.io/favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://fishdel.github.io/favicon.png">
+<link rel="apple-touch-icon" href="https://fishdel.github.io/favicon.png">
+<link rel="mask-icon" href="https://fishdel.github.io/favicon.png">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="zh" href="http://localhost:1313/posts/pandas%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/">
+<link rel="alternate" hreflang="zh" href="https://fishdel.github.io/posts/pandas%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/">
 <noscript>
     <style>
         #theme-toggle,
@@ -82,7 +82,97 @@ compression参数指定了压缩类型，&lsquo;zip&rsquo;, &lsquo;gzip&rsquo;, 
         }
 
     </style>
-</noscript>
+</noscript><meta property="og:url" content="https://fishdel.github.io/posts/pandas%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/">
+  <meta property="og:site_name" content="Yuuuuu&#39;s Blog">
+  <meta property="og:title" content="Pandas基本用法">
+  <meta property="og:description" content="1.数据导入 df=pd.read_csv(&#39;Pokemon.csv&#39;,encoding=&#34;ISO-8859-1&#34;) df.head() 2.查看数据 df.shape df.shape[0] df.shape[1] df.columns #列名 df.index #行名 df.dtypes df.head() df.tail() df.sample() df.describe() pd.set_option(&#39;max_colwidth&#39;,8) #设置每一行的最大宽度，恢复原设置方法 pd.reset_option(&#39;max_colwidth&#39;) loc操作与iloc loc通过label定位；iloc通过position定位
+df.loc[[0,5],[&#39;名称&#39;,&#39;生命点数&#39;]] df.iloc[0:10,[0,1]] df[:3] 3.数据筛选与操作 df[df[&#39;综合能力&#39;]&gt;400].head() df[df[&#39;世代数&#39;]==1] df.insert(4,&#39;能力600&#39;,df[&#39;综合能力&#39;]&gt;=600) 4.读取数据 pickle文件，可以将python中的数据类型进行序列化 compression参数指定了压缩类型，‘zip’, ‘gzip’, ‘bz2’, ‘zstd’">
+  <meta property="og:locale" content="zh">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2022-05-20T22:11:08+08:00">
+    <meta property="article:modified_time" content="2022-05-20T22:11:08+08:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Pandas基本用法">
+<meta name="twitter:description" content="1.数据导入
+df=pd.read_csv(&#39;Pokemon.csv&#39;,encoding=&#34;ISO-8859-1&#34;)
+df.head()
+2.查看数据
+df.shape
+df.shape[0]
+df.shape[1]
+df.columns #列名
+df.index #行名
+df.dtypes
+df.head()
+df.tail()
+df.sample()
+df.describe()
+pd.set_option(&#39;max_colwidth&#39;,8) #设置每一行的最大宽度，恢复原设置方法
+pd.reset_option(&#39;max_colwidth&#39;)
+loc操作与iloc
+loc通过label定位；iloc通过position定位
+df.loc[[0,5],[&#39;名称&#39;,&#39;生命点数&#39;]]
+df.iloc[0:10,[0,1]]
+df[:3]
+3.数据筛选与操作
+df[df[&#39;综合能力&#39;]&gt;400].head()
+df[df[&#39;世代数&#39;]==1]
+df.insert(4,&#39;能力600&#39;,df[&#39;综合能力&#39;]&gt;=600)
+4.读取数据
+pickle文件，可以将python中的数据类型进行序列化
+compression参数指定了压缩类型，&lsquo;zip&rsquo;, &lsquo;gzip&rsquo;, &lsquo;bz2&rsquo;, &lsquo;zstd&rsquo;">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://fishdel.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Pandas基本用法",
+      "item": "https://fishdel.github.io/posts/pandas%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Pandas基本用法",
+  "name": "Pandas基本用法",
+  "description": "1.数据导入 df=pd.read_csv(\u0026#39;Pokemon.csv\u0026#39;,encoding=\u0026#34;ISO-8859-1\u0026#34;) df.head() 2.查看数据 df.shape df.shape[0] df.shape[1] df.columns #列名 df.index #行名 df.dtypes df.head() df.tail() df.sample() df.describe() pd.set_option(\u0026#39;max_colwidth\u0026#39;,8) #设置每一行的最大宽度，恢复原设置方法 pd.reset_option(\u0026#39;max_colwidth\u0026#39;) loc操作与iloc loc通过label定位；iloc通过position定位\ndf.loc[[0,5],[\u0026#39;名称\u0026#39;,\u0026#39;生命点数\u0026#39;]] df.iloc[0:10,[0,1]] df[:3] 3.数据筛选与操作 df[df[\u0026#39;综合能力\u0026#39;]\u0026gt;400].head() df[df[\u0026#39;世代数\u0026#39;]==1] df.insert(4,\u0026#39;能力600\u0026#39;,df[\u0026#39;综合能力\u0026#39;]\u0026gt;=600) 4.读取数据 pickle文件，可以将python中的数据类型进行序列化 compression参数指定了压缩类型，\u0026lsquo;zip\u0026rsquo;, \u0026lsquo;gzip\u0026rsquo;, \u0026lsquo;bz2\u0026rsquo;, \u0026lsquo;zstd\u0026rsquo;\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "1.数据导入 df=pd.read_csv('Pokemon.csv',encoding=\"ISO-8859-1\") df.head() 2.查看数据 df.shape df.shape[0] df.shape[1] df.columns #列名 df.index #行名 df.dtypes df.head() df.tail() df.sample() df.describe() pd.set_option('max_colwidth',8) #设置每一行的最大宽度，恢复原设置方法 pd.reset_option('max_colwidth') loc操作与iloc loc通过label定位；iloc通过position定位\ndf.loc[[0,5],['名称','生命点数']] df.iloc[0:10,[0,1]] df[:3] 3.数据筛选与操作 df[df['综合能力']\u003e400].head() df[df['世代数']==1] df.insert(4,'能力600',df['综合能力']\u003e=600) 4.读取数据 pickle文件，可以将python中的数据类型进行序列化 compression参数指定了压缩类型，‘zip’, ‘gzip’, ‘bz2’, ‘zstd’\npandas.read_pickle(filepath_or_buffer, compression='infer', storage_options=None) 5.处理数据 （1）取特定的行列 利用标签取列：\ndata['xxx'] data.at #访问单个值 data.loc['行名','列名'] #访问值组 data.loc[['A行','B行']] # 取多行 （2）对需要的行列进行处理 时间处理 #转换回日期格式,默认是毫秒 data['time'] = pd.to_datetime(data['time'],unit='s') #生成一个时间戳 now = pd.Timestamp.now() 某一列数据进行处理 data['xxx'] = ['这里用一个列表表达式'] data['xxx'] = data['xxx'].apply(lamdba x: function(x)) 对于字符串的处理 #去掉首位的a data['a'] = data['a'].str.strip('a') # 替换 data['a'] = data['a'].str.replace('a'，'b') 将特定的列拆分后合并 data = pd.concat([data, data['tempvaluearray'].str.split(',', expand=True)], axis=1).drop('tempvaluearray', axis=1) pd.concat()#可以按照指定的轴将dataframe或者series拼接，而merge只能拼接两个表 axis #0：上下拼接 1：左右拼接 #drop()的参数axis在删除特定的一行为1 批量修改列名称 data.rename(columns=dic)#可以写一个字典进行替换 计算时保留小数 '%.3f'%0.0065 #保留3位小数 lambda x:'%.3f'%((int(x)-1000)/1000)) 调整列顺序 #先取出来再插入 A = data['A'] data.drop(labels=['A'],axis = 1,inplace=True) data.insert(0, 'A', A) 一个字符串划分的函数 # 对于数据为[12，23，45，12]类似的数据，其中不能是字符串 def split_col(data, columns): \"\"\"拆分成列 :param data: 原始数据 :param columns: 拆分的列名 :type data: pandas.core.frame.DataFrame :type columns: list \"\"\" for c in columns: new_col = data.pop(c) max_len = max(list(map(len, new_col.values))) # 最大长度 new_col = new_col.apply(lambda x: x + [None]*(max_len - len(x))) # 补空值，None可换成np.nan new_col = np.array(new_col.tolist()).T # 转置 for i, j in enumerate(new_col): data[c + str(i)] = j 去重 df_unique = df.drop_duplicates(['A'], keep='last') # 根据A去重只留下最后一次出现的 隔行取数据 方法1：每隔20行取数,把每20行的id取出来\na=[] for i in range(0,len(df),20): a.append(i) new_df= df.iloc[a] 方法2：直接调用read_csv()里的参数skiprows\ndf = pd.read_csv('test.csv',header = None,skiprows=lambda x: x \u003e 0 and x % 20 != 0) df 6.遍历和求值 遍历\nfor name,group in grouped_single: print(name) display(group.head()) 组内求均值，最大值，最小值等等\ndf.groupby('A')['B'].mean() agg自定义内置函数 df.groupby('A')['B'].agg(fun()) 整合（Aggregation）——即分组计算统计量（如求均值、求每组元素个数）\n变换（Transformation）——即分组对每个单元的数据进行操作（如元素标准化）\n过滤（Filtration）——即按照某些规则筛选出一些组（如选出组内某一指标小于50的组）\n7.举例：分组统计次数或者频数 ①先排序，再分组，加上first()就是取最大值。\n若B是种类，C是时间，就是先按种类分组，再按时间分组，取A最大的情况。\ndf1=df.sort_values('A', ascending=False).groupby(['B','C'], as_index=False).first() ②apply方法(groupby+apply这样的写法比之前写循环要快很多)\n先分组再对A属性进行数量统计，加上head（1）取最大值\n需要加上reset_index,时期扁平化，原来的index变成数据列，保留下来\ndf2=df.groupby('B')['A'].apply(lambda x: x.value_counts(normalize=True).head(1)).to_frame().reset_index() 举个例子：统计数学成绩前五名的学生\ndf = df['math'].groupby('class').apply(lambda x: x.sort_values(ascending = False)[:5])` 1. value_counts()方法 需要加上unstack()将其展开，否则是一个序列。\ndata.groupby('A')['B'].value_counts().unstack() 2.DataFrame.plot函数 画在一个子图里\npd.DateFrame.plot(kind = ‘scatter’)\nax=v1.plot.scatter(x='C',y='D',label='D',title=i,alpha=0.4,) v1.plot.scatter(x='C',y='E',c='r',title=i,alpha=0.4,ax=ax,label='E') ",
+  "wordCount" : "1504",
+  "inLanguage": "zh",
+  "datePublished": "2022-05-20T22:11:08+08:00",
+  "dateModified": "2022-05-20T22:11:08+08:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://fishdel.github.io/posts/pandas%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yuuuuu's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fishdel.github.io/favicon.png"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
@@ -100,7 +190,7 @@ compression参数指定了压缩类型，&lsquo;zip&rsquo;, &lsquo;gzip&rsquo;, 
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://localhost:1313/" accesskey="h" title="Yuuuuu&#39;s Blog (Alt + H)">Yuuuuu&#39;s Blog</a>
+            <a href="https://fishdel.github.io/" accesskey="h" title="Yuuuuu&#39;s Blog (Alt + H)">Yuuuuu&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -126,32 +216,32 @@ compression参数指定了压缩类型，&lsquo;zip&rsquo;, &lsquo;gzip&rsquo;, 
         </div>
         <ul id="menu">
             <li>
-                <a href="http://localhost:1313/" title="首页">
+                <a href="https://fishdel.github.io/" title="首页">
                     <span>首页</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/archives/" title="归档">
+                <a href="https://fishdel.github.io/archives/" title="归档">
                     <span>归档</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/categories/" title="分类">
+                <a href="https://fishdel.github.io/categories/" title="分类">
                     <span>分类</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/tags/" title="标签">
+                <a href="https://fishdel.github.io/tags/" title="标签">
                     <span>标签</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/search/" title="搜索">
+                <a href="https://fishdel.github.io/search/" title="搜索">
                     <span>搜索</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/about/" title="关于">
+                <a href="https://fishdel.github.io/about/" title="关于">
                     <span>关于</span>
                 </a>
             </li>

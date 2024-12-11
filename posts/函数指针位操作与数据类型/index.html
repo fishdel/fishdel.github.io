@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh" dir="auto">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>函数指针，位操作和数据类型 | Yuuuuu&#39;s Blog</title>
 <meta name="keywords" content="">
 <meta name="description" content="函数指针与回调函数
@@ -13,16 +13,16 @@
 回调机制的好处是，在程序执行期间可以动态更改被调用
 回调函数：作为参数传递给另一个函数的函数，接受回调作为参数的函数预计会在某个时间点执行它。">
 <meta name="author" content="">
-<link rel="canonical" href="http://localhost:1313/posts/%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88%E4%BD%8D%E6%93%8D%E4%BD%9C%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
+<link rel="canonical" href="https://fishdel.github.io/posts/%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88%E4%BD%8D%E6%93%8D%E4%BD%9C%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.d6fcd20a4fb86efa4dfac8ec95da60244cc8871042183da1ef28e3a762ad79c8.css" integrity="sha256-1vzSCk&#43;4bvpN&#43;sjsldpgJEzIhxBCGD2h7yjjp2Ktecg=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://localhost:1313/favicon.png">
-<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon.png">
-<link rel="apple-touch-icon" href="http://localhost:1313/favicon.png">
-<link rel="mask-icon" href="http://localhost:1313/favicon.png">
+<link rel="icon" href="https://fishdel.github.io/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://fishdel.github.io/favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://fishdel.github.io/favicon.png">
+<link rel="apple-touch-icon" href="https://fishdel.github.io/favicon.png">
+<link rel="mask-icon" href="https://fishdel.github.io/favicon.png">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="zh" href="http://localhost:1313/posts/%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88%E4%BD%8D%E6%93%8D%E4%BD%9C%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
+<link rel="alternate" hreflang="zh" href="https://fishdel.github.io/posts/%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88%E4%BD%8D%E6%93%8D%E4%BD%9C%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
 <noscript>
     <style>
         #theme-toggle,
@@ -59,7 +59,73 @@
         }
 
     </style>
-</noscript>
+</noscript><meta property="og:url" content="https://fishdel.github.io/posts/%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88%E4%BD%8D%E6%93%8D%E4%BD%9C%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
+  <meta property="og:site_name" content="Yuuuuu&#39;s Blog">
+  <meta property="og:title" content="函数指针，位操作和数据类型">
+  <meta property="og:description" content="函数指针与回调函数 函数指针 作用：硬件驱动程序和用户应用程序相互分开，硬件驱动程序提供API函数，用户应用程序将函数作为回调函数的方式进行使用。 回调机制的好处是，在程序执行期间可以动态更改被调用 回调函数：作为参数传递给另一个函数的函数，接受回调作为参数的函数预计会在某个时间点执行它。">
+  <meta property="og:locale" content="zh">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-07-15T22:11:08+08:00">
+    <meta property="article:modified_time" content="2023-07-15T22:11:08+08:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="函数指针，位操作和数据类型">
+<meta name="twitter:description" content="函数指针与回调函数
+函数指针
+作用：硬件驱动程序和用户应用程序相互分开，硬件驱动程序提供API函数，用户应用程序将函数作为回调函数的方式进行使用。
+回调机制的好处是，在程序执行期间可以动态更改被调用
+回调函数：作为参数传递给另一个函数的函数，接受回调作为参数的函数预计会在某个时间点执行它。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://fishdel.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "函数指针，位操作和数据类型",
+      "item": "https://fishdel.github.io/posts/%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88%E4%BD%8D%E6%93%8D%E4%BD%9C%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "函数指针，位操作和数据类型",
+  "name": "函数指针，位操作和数据类型",
+  "description": "函数指针与回调函数 函数指针 作用：硬件驱动程序和用户应用程序相互分开，硬件驱动程序提供API函数，用户应用程序将函数作为回调函数的方式进行使用。 回调机制的好处是，在程序执行期间可以动态更改被调用 回调函数：作为参数传递给另一个函数的函数，接受回调作为参数的函数预计会在某个时间点执行它。\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "函数指针与回调函数 函数指针 作用：硬件驱动程序和用户应用程序相互分开，硬件驱动程序提供API函数，用户应用程序将函数作为回调函数的方式进行使用。 回调机制的好处是，在程序执行期间可以动态更改被调用 回调函数：作为参数传递给另一个函数的函数，接受回调作为参数的函数预计会在某个时间点执行它。\n使用方法：函数名带括号就是函数指针，没括号是指针函数\n把函数A的地址赋给一个函数指针p，以p为参数，赋值给函数B，函数B通过p调用A\n函数指针是一个指向函数的指针变量，32位单片机中存放大小为4字节的地址\nint *(*pfunc)(int,int*,void*)*; typedef int *(*pfunc)(int,int*,void*)*; 一般用typedef定义函数指针类型。 typedef和define区别：typedef 语句是在编译过程中被解析的，而#define是在编译之前的预处理过程中被解析的\ntypedef uint8_t (*func_ptr) (void);，就相当于把uint8_t (*) (void); 定义成了另一个别名 func_ptr了。这个func_ptr就表示了函数指针类型。\ntypedef int *(*pfunc)(int,int*,void*)*;相当于把int（*）(int,int*,void*)；定义成别名pfunc\n相当于把 int(*)(int，int*，void*)取一个别名pfunc\n回调函数 作用: 虽然只是函数指针的应用，但通过函数指针的当时区分传入不同的函数入口地址去执行不同的函数，可以节省单片机的ram和rom的开支。\n实现： 例如将callback函数看做底层函数，main函数看成上层应用函数，现在有上层方法A,上层方法B,在使用底层callback函数进行功能设计时，转回去拿到具体的方法A,方法B，再把结果返回main,此时方法A,B就是回调函数。\n举例： EcuM_AL_Reset是回调函数，属于对象外的，该函数被调用后，会MCAL标准函数Mcu_PerformReset来重启CPU\n钩子函数 hook函数实际也是函数指针，因为也是用户定义的，也可以理解为回调函数，二者之间区别主要是回调函数主要是目的处理，hook函数主要是过程监控。\n定义函数fun1，fun2，再定义一个pfun函数指针，在main函数里通过pfun指向fun1，fun2，这个过程称为挂钩子。在不确定main函数的功能的情况下，留下函数指针作为接口，挂上不同的函数就可以完成不同的功能。\nHOOK函数相当于一个监视器，捕获消息队列中需要的内容去处理\n挂钩子的过程也称为注册。在注册函数中，使用者把自己编写的钩子函数挂在已经声明的函数指针上，这个注册函数的参数是要挂上的钩子函数的地址，即函数指针。\n举例：Autosar中的hook函数机制\n1）由操作系统调用，在特定的context中取决于操作系统的实现 2）高于所有task 3）不被第二类中断程序打断。 4）属于操作系统的一部分 5）可以由用户定义功能\n截获行为的函数调用（相当于监控器）。所有特定于应用程序的Hook函数（Startup, Shutdown and Error）必须返回（不接受阻塞或无限循环）。\n当应用程序或操作系统在出现严重错误时请求系统关闭时调用 (ShutdownHook)\n在Shutdown OS时，操作系统将调用钩子函数ShutdownHook，勾到EcuM_ShutDown那边，然后关闭（如下图： 多核系统关闭过程）。用户通常可以在ShutdownHook中自由定义任何系统行为\nFUNC(void, OS_SHUTDOWNHOOK_CODE) ShutdownHook(StatusType Fatalerror) { if( GetCoreID() == OS_CORE_ID_MASTER ) { EcuM_Shutdown(); } } 位操作 1. 移位操作 ①« 左移 ：左移几位就把左边的数去掉几位，右边补0；相当于2^5-\u003e2^6\n源操作数 * 2的N次方（N取决于移动的位数） = 移动后的结果。\n②»右移：右移几位就把右边的数去掉几位，左边补0\n源操作数 / 2的N次方（N取决于移动的位数） = 移动后的结果(*只取整数部分*)\n算术左移和逻辑左移相同\n​ 算术右移符号位要一起移动，左边补符号位，11100算术右移一位为11110\n2.逻辑运算 \u0026(与) 和0一起使用 可以清零 |(或) 可以置1 ^(异或) 3.举例 将特定数置1 0xf8 把第2位到第6位置1\n1111 _1000\n2到6 1_1111 =0x1f\n从第二位开始置1 0x1f«2 = 111_1100\n第a位到第b位置1，（b-a+1）转为16进制\n从哪一位开始置1 则左移多少位，«a\n把第4位到第8位和第23到25位同时置1\n((0x1f «4) | (0x7«23))\n将特定数置0 先置1 再按位取反\n~((0x1f «3)\n操作 表达式 设置整型数a的bit4 a|=(1«4) 设置整型数a的bit4~bit7 a|=（(0x1f）«4） 清除整型数a的bit15 a\u0026=((~a«15)) 代码举例 清除特定位的值 VOID\tClear_data( const UCHAR indat ) { UCHAR\tbyte_id;\tUCHAR\tbit_dat;\tUCHAR\tbit_id;\tUCHAR\tbit_dat_inv;\t/* indat/8 取得其数组id*/ byte_id\t= (UCHAR)If_Shift_LR( (ULONG)indat, ZSHIFT3 ); /* indat%8 取得其bit位*/ bit_id\t= (UCHAR)( indat \u0026 ZMASK_07 );\tbit_dat\t= (UCHAR)If_Shift_LL( ZMASK_BIT0, (ULONG)bit_id ); bit_dat_inv = ~bit_dat; /*\u0026= 清除该位*/ array[ byte_id ]\t\u0026= bit_dat_inv;\t} memcpy函数 3.以2Byte为单位进行复制处理，从起始地址开始每2个Byte拷贝到目标地址，n是拷贝次数，如果16个字节，以2Byte为单位复写，n=8，以4Byte为单位复写，n=4 VOID\tIf_Memcpy2( VOID* const dst, const VOID* const src, SIZE_T n ) { USHORT*\tdst_p = (USHORT*)dst; const\tUSHORT*\tsrc_p = (const USHORT*)src; /*n = n/2 如果是4个byte为单位进行复写，IfCfc_Shift_LR( (ULONG)n, 2 );*/ n = (SIZE_T)If_Shift_LR( (ULONG)n, 1 ); if ( n != 0 ) { do { *(dst_p) = *(src_p); dst_p++; src_p++; n--; } while ( n \u003e 0 ); } } 数据类型与关键字 enum枚举 注意点：\n1.在同一个作用域能不能出现重名的枚举常量名；\n虽然定义了两个枚举类型 enum1，enum2，但如果其成员常量名相同则会报错\n2.不可以定义相同的变量但是可以定义相同的值；\n`typedef enum { enumA=0, enumB=4, enumC=5,\tenmuD=6, enmuE=6, }A_enum;` union联合体 注意点\n内存空间相同但储存不同的数据类型，并不是同时储存，而是一次只能存储一种数据类型。 联合体的大小都相等，每个联合可以储存各种数据类型。共用体的长度为其最大的成员的长度。 用途： 数据的格式在不同场合下不同时，节省内存。 const关键字 可以保护被修饰的东西，防止意外修改，增强程序的健壮性\n编译器通常不为普通const常量分配存储空间，而是将它们保存在符号表中，这使得它成为一个编译期间的常量，没有了存储与读内存的操作，使得它的效率也很高。\ninline关键字 关键字inline 必须与函数定义体放在一起\n只适合函数体内代码简单的函数数使用\nstatic inline inline函数不能在两个不同的文件中出现，一个.h不能被两个不同的文件包含，一个inline在不同的.C里面生成了不同的实例\nc文件中的仅inline函数是不内联的，因为没有static，编译会认为它是全局的，因此像普通函数一样编译了。 加入static，这样内部调用函数时，会内联，而外部调用该函数时，则不会内联。\nstatic关键字 修饰变量：\n修饰全局变量：仅对当前文件可见，其他文件不可访问，其他文件可以定义与其同名的变量\n修饰局部变量：普通局部变量存储在栈空间，编译器不会初始化；修饰之后的局部变量，即使在声明时未赋初值，编译器也会把它初始化为0。且静态局部变量存储于进程的全局数据区，即使函数返回，它的值也会保持不变\n修饰函数：\n静态函数只能在声明它的文件中可见，其他文件不能引用该函数\nvolatile关键字 每次读取数据，必须在内存上取，而不是使用保存在寄存器或者cache里的备份（直接取内存原始地址）\n没有声明的话，对一个变量进行多次赋值，没有生成之间汇编代码，直接取最后的值寻址赋值给该变量；声明之后每个变量的赋值都形成了汇编代码，没有被优化。\n易变的 多线程的程序，共同访问内存时多个程序可以操纵这个变量；和外部设备的状态对应，通过驱动程序和中断改变该变量的值，程序并不知道\n用途：\n并行设备的硬件寄存器（状态寄存器），每次对它的读写都可能有不同意义\n一个中断服务子程序中会访问到的非自动变量；当变量在触发某中断程序中修改，对于编译器，主函数里没有修改这个变量，可能只执行一次从内存到某寄存器的读操作，而后每次只会从该寄存器中读取变量副本，使得中断程序的操作做了跟没做一样。\n多线程任务中的共享变量。\n一个参数可以既是const又是volatile——只读的状态寄存器。它是volatile因为它可能被意想不到地改变。它是const因为程序不应该试图去修改它。\n一个volatile的指针——当一个中断服务子程序修改一个指向一个主函数的指针时\n宏定义 用途\n防止头文件被重复包含\n重新定义一些类型\n得到指定地址\n得到指定地址上的一个字节\n#define MEM_B( x ) ( *( (byte *) (x) ) ) #define MEM_W( x ) ( *( (word *) (x) ) ) Translation unit 在函数块外部名字声明（函数和变量）若只能在一个已知的translation unit是可见的，称为内部链接。他们对于linker（连接器）是不可见。若声明的函数或变量对于其他的目标文件是看见的，则称为具有外部连接，对于linker是可见的。\n编译的基本单元是.c文件\n",
+  "wordCount" : "3442",
+  "inLanguage": "zh",
+  "datePublished": "2023-07-15T22:11:08+08:00",
+  "dateModified": "2023-07-15T22:11:08+08:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://fishdel.github.io/posts/%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88%E4%BD%8D%E6%93%8D%E4%BD%9C%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yuuuuu's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fishdel.github.io/favicon.png"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
@@ -77,7 +143,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://localhost:1313/" accesskey="h" title="Yuuuuu&#39;s Blog (Alt + H)">Yuuuuu&#39;s Blog</a>
+            <a href="https://fishdel.github.io/" accesskey="h" title="Yuuuuu&#39;s Blog (Alt + H)">Yuuuuu&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -103,32 +169,32 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="http://localhost:1313/" title="首页">
+                <a href="https://fishdel.github.io/" title="首页">
                     <span>首页</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/archives/" title="归档">
+                <a href="https://fishdel.github.io/archives/" title="归档">
                     <span>归档</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/categories/" title="分类">
+                <a href="https://fishdel.github.io/categories/" title="分类">
                     <span>分类</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/tags/" title="标签">
+                <a href="https://fishdel.github.io/tags/" title="标签">
                     <span>标签</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/search/" title="搜索">
+                <a href="https://fishdel.github.io/search/" title="搜索">
                     <span>搜索</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/about/" title="关于">
+                <a href="https://fishdel.github.io/about/" title="关于">
                     <span>关于</span>
                 </a>
             </li>
