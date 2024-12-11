@@ -5,11 +5,34 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="noindex, nofollow">
-<title>Tags | Yuuuuu&#39;s Blog</title>
+<title>Yuuuuu&#39;s Blog</title>
 <meta name="keywords" content="">
-<meta name="description" content="">
+<meta name="description" content="1.数据导入
+df=pd.read_csv(&#39;Pokemon.csv&#39;,encoding=&#34;ISO-8859-1&#34;)
+df.head()
+2.查看数据
+df.shape
+df.shape[0]
+df.shape[1]
+df.columns #列名
+df.index #行名
+df.dtypes
+df.head()
+df.tail()
+df.sample()
+df.describe()
+pd.set_option(&#39;max_colwidth&#39;,8) #设置每一行的最大宽度，恢复原设置方法
+pd.reset_option(&#39;max_colwidth&#39;)
+loc操作与iloc
+loc通过label定位；iloc通过position定位
+df.loc[[0,5],[&#39;名称&#39;,&#39;生命点数&#39;]]
+df.iloc[0:10,[0,1]]
+df[:3]
+
+
+3.数据筛选与操作`">
 <meta name="author" content="">
-<link rel="canonical" href="http://localhost:1313/tags/">
+<link rel="canonical" href="http://localhost:1313/posts/pandas%E5%A4%8D%E4%B9%A01/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.d6fcd20a4fb86efa4dfac8ec95da60244cc8871042183da1ef28e3a762ad79c8.css" integrity="sha256-1vzSCk&#43;4bvpN&#43;sjsldpgJEzIhxBCGD2h7yjjp2Ktecg=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://localhost:1313/favicon.png">
 <link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon.png">
@@ -18,8 +41,7 @@
 <link rel="mask-icon" href="http://localhost:1313/favicon.png">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" type="application/rss+xml" href="http://localhost:1313/tags/index.xml">
-<link rel="alternate" hreflang="zh" href="http://localhost:1313/tags/">
+<link rel="alternate" hreflang="zh" href="http://localhost:1313/posts/pandas%E5%A4%8D%E4%B9%A01/">
 <noscript>
     <style>
         #theme-toggle,
@@ -59,7 +81,7 @@
 </noscript>
 </head>
 
-<body class="list" id="top">
+<body class="" id="top">
 <script>
     if (localStorage.getItem("pref-theme") === "dark") {
         document.body.classList.add('dark');
@@ -116,7 +138,7 @@
             </li>
             <li>
                 <a href="http://localhost:1313/tags/" title="标签">
-                    <span class="active">标签</span>
+                    <span>标签</span>
                 </a>
             </li>
             <li>
@@ -133,12 +155,55 @@
     </nav>
 </header>
 <main class="main">
-<header class="page-header">
-    <h1>Tags</h1>
-</header>
 
-<ul class="terms-tags">
-</ul>
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      
+    </h1>
+    <div class="post-meta">
+
+</div>
+  </header> 
+  <div class="post-content"><p>1.数据导入</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Pokemon.csv&#39;</span><span class="p">,</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&#34;ISO-8859-1&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</span></span></code></pre></div><p>2.查看数据</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">shape</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="c1">#列名</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="c1">#行名</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;max_colwidth&#39;</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span> <span class="c1">#设置每一行的最大宽度，恢复原设置方法</span>
+</span></span><span class="line"><span class="cl"><span class="n">pd</span><span class="o">.</span><span class="n">reset_option</span><span class="p">(</span><span class="s1">&#39;max_colwidth&#39;</span><span class="p">)</span>
+</span></span></code></pre></div><p>loc操作与iloc
+loc通过label定位；iloc通过position定位</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">],[</span><span class="s1">&#39;名称&#39;</span><span class="p">,</span><span class="s1">&#39;生命点数&#39;</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">,[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+</span></span></code></pre></div><p><img alt="在这里插入图片描述" loading="lazy" src="https://i-blog.csdnimg.cn/blog_migrate/37f2d49614e9539c6f99438463348013.png">
+<img alt="在这里插入图片描述" loading="lazy" src="https://i-blog.csdnimg.cn/blog_migrate/a21befe4ef37f5ef38e9d973defc4d40.png">
+3.数据筛选与操作`</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;综合能力&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">400</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;世代数&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="s1">&#39;能力600&#39;</span><span class="p">,</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;综合能力&#39;</span><span class="p">]</span><span class="o">&gt;=</span><span class="mi">600</span><span class="p">)</span>
+</span></span></code></pre></div><p><img alt="在这里插入图片描述" loading="lazy" src="https://i-blog.csdnimg.cn/blog_migrate/a2fbe3678b35a63b45a391001ad40370.png"></p>
+<p><img alt="在这里插入图片描述" loading="lazy" src="https://i-blog.csdnimg.cn/blog_migrate/fcef46dd852ff25e5f7870d9291ebb92.png"></p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
     </main>
     
 <footer class="footer">
