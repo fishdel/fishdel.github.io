@@ -1,27 +1,27 @@
 <!DOCTYPE html>
 <html lang="zh" dir="auto">
 
-<head><meta charset="utf-8">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="noindex, nofollow">
 <title>英飞凌 TC3XX CAN Interface (MCMCAN)模块 | Yuuuuu&#39;s Blog</title>
-<meta name="keywords" content="">
+<meta name="keywords" content="嵌入式与C语言">
 <meta name="description" content="CAN Interface (MCMCAN)
 1.模块
 有三个模块CAN0,CAN1,CAN2，一般只使用CAN0,CAN0的模块比较全面。
 CAN0有4个CAN node，Message RAM 一共32Kbyte，FIFO,buffer，register在此处开辟。">
 <meta name="author" content="">
-<link rel="canonical" href="https://fishdel.github.io/posts/%E8%8B%B1%E9%A3%9E%E5%87%8C-tc3xx-can-interface-mcmcan-%E6%A8%A1%E5%9D%97/">
+<link rel="canonical" href="http://localhost:1313/posts/%E8%8B%B1%E9%A3%9E%E5%87%8C-tc3xx-can-interface-mcmcan-%E6%A8%A1%E5%9D%97/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.d6fcd20a4fb86efa4dfac8ec95da60244cc8871042183da1ef28e3a762ad79c8.css" integrity="sha256-1vzSCk&#43;4bvpN&#43;sjsldpgJEzIhxBCGD2h7yjjp2Ktecg=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://fishdel.github.io/favicon.png">
-<link rel="icon" type="image/png" sizes="16x16" href="https://fishdel.github.io/favicon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://fishdel.github.io/favicon.png">
-<link rel="apple-touch-icon" href="https://fishdel.github.io/favicon.png">
-<link rel="mask-icon" href="https://fishdel.github.io/favicon.png">
+<link rel="icon" href="http://localhost:1313/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/favicon.png">
+<link rel="mask-icon" href="http://localhost:1313/favicon.png">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="zh" href="https://fishdel.github.io/posts/%E8%8B%B1%E9%A3%9E%E5%87%8C-tc3xx-can-interface-mcmcan-%E6%A8%A1%E5%9D%97/">
+<link rel="alternate" hreflang="zh" href="http://localhost:1313/posts/%E8%8B%B1%E9%A3%9E%E5%87%8C-tc3xx-can-interface-mcmcan-%E6%A8%A1%E5%9D%97/">
 <noscript>
     <style>
         #theme-toggle,
@@ -58,73 +58,7 @@ CAN0有4个CAN node，Message RAM 一共32Kbyte，FIFO,buffer，register在此�
         }
 
     </style>
-</noscript><meta property="og:url" content="https://fishdel.github.io/posts/%E8%8B%B1%E9%A3%9E%E5%87%8C-tc3xx-can-interface-mcmcan-%E6%A8%A1%E5%9D%97/">
-  <meta property="og:site_name" content="Yuuuuu&#39;s Blog">
-  <meta property="og:title" content="英飞凌 TC3XX CAN Interface (MCMCAN)模块">
-  <meta property="og:description" content="CAN Interface (MCMCAN) 1.模块 有三个模块CAN0,CAN1,CAN2，一般只使用CAN0,CAN0的模块比较全面。
-CAN0有4个CAN node，Message RAM 一共32Kbyte，FIFO,buffer，register在此处开辟。">
-  <meta property="og:locale" content="zh">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2023-07-11T22:11:08+08:00">
-    <meta property="article:modified_time" content="2023-07-11T22:11:08+08:00">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="英飞凌 TC3XX CAN Interface (MCMCAN)模块">
-<meta name="twitter:description" content="CAN Interface (MCMCAN)
-1.模块
-有三个模块CAN0,CAN1,CAN2，一般只使用CAN0,CAN0的模块比较全面。
-CAN0有4个CAN node，Message RAM 一共32Kbyte，FIFO,buffer，register在此处开辟。">
-
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position":  1 ,
-      "name": "Posts",
-      "item": "https://fishdel.github.io/posts/"
-    }, 
-    {
-      "@type": "ListItem",
-      "position":  2 ,
-      "name": "英飞凌 TC3XX CAN Interface (MCMCAN)模块",
-      "item": "https://fishdel.github.io/posts/%E8%8B%B1%E9%A3%9E%E5%87%8C-tc3xx-can-interface-mcmcan-%E6%A8%A1%E5%9D%97/"
-    }
-  ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "英飞凌 TC3XX CAN Interface (MCMCAN)模块",
-  "name": "英飞凌 TC3XX CAN Interface (MCMCAN)模块",
-  "description": "CAN Interface (MCMCAN) 1.模块 有三个模块CAN0,CAN1,CAN2，一般只使用CAN0,CAN0的模块比较全面。\nCAN0有4个CAN node，Message RAM 一共32Kbyte，FIFO,buffer，register在此处开辟。\n",
-  "keywords": [
-    
-  ],
-  "articleBody": "CAN Interface (MCMCAN) 1.模块 有三个模块CAN0,CAN1,CAN2，一般只使用CAN0,CAN0的模块比较全面。\nCAN0有4个CAN node，Message RAM 一共32Kbyte，FIFO,buffer，register在此处开辟。\n每个node通过M_CAN来实现，并且都支持CAN FD；都有两个引角，TXD和RXD\n2.初始化 具体步骤\n设置CCCRi.INIT开始初始化（软硬件复位或通过bus off）此时配置寄存器不会被改变\n当该位被置起，即CCCRi.INIT (i=0-3) 置1，can总线之间的通信停止，CAN node停止收发，CAN总线输出TXD为隐性（高）。错误管理逻辑EML的计数器保持不变。\n重置 CCCRi (i=0-3).INIT 完成软件初始化\n只有当位CCCRi.INIT和CCCRy.CCE都设置为1时，才能启用对M_CAN配置寄存器的访问\nCCCRi.CCE只有在CCCRi.INIT=‘1’时才能被set/reset。\n当CCCRi.INIT被清除时，CCCRi.CCE自动复位。\n3. 时钟控制单元 MCMCAN模块时钟输入连接到时钟控制单元（CCU）。并且MCMCAN有两种时钟源，fsyn用于寄存器和RAM接口，fasyn用在CAN FD上。CLC设置为全局模块寄存器提供其时钟。\n为了向M_CAN节点提供相应的时钟，必须设置MCR.CLKSELi寄存器。异步时钟以及每个M_CAN节点的同步时钟可以通过MCR.CLKSELi寄存器位字段打开/关闭。\n4. 中断 每个module都有16个中断线INT_O0~INT_O15\n中断分组已经设置，存在16个中断节点。中断组可以通过GRINT1i（i=0-3），**GRINT2i (i=0-3)**自由分配给节点\n中断脉冲的生成是基于 寄存器 (IRi (i=0-3) TTIR0) 和 (**IEi (i=0-3)**and TTIE0)，中断标志和中断使能之间的关系是\u0026。中断flag会通过向 CANn_IRi bit.写‘1’进行reset。\n如果相应中断使能寄存器中的相关中断使能位使能（IEi（i＝0-3）、NTRTRi（i＝0-2）、TEIE和TTIE0），MCMCAN 模块里16条中断输出线INT_On的其中一条使用GRINT1i (i=0-3) 和 GRINT2i (i=0-3)可以产生中断脉冲。\n也就是说通过配置interrupt line选择对应的SRC节点（line和SRC_INT一一对应）配置CAN中断\nIfx_SRC_SRCR INT[16]; } Ifx_SRC_CAN_CAN; volatile Ifx_SRC_SRCR *IfxCan_getSrcPointer(Ifx_CAN *can, IfxCan_InterruptLine interruptLine) { IfxCan_Index canIndex = IfxCan_getIndex(can); Ifx_SRC_CAN_CAN *const srcCanBaseAddress[IFXCAN_NUM_MODULES] = { \u0026MODULE_SRC.CAN.CAN[0], \u0026MODULE_SRC.CAN.CAN[1], }; return \u0026(srcCanBaseAddress[canIndex]-\u003eINT[interruptLine]); } 5. CAN FD 区别：传输速率不同、数据长度不同、帧格式不同、ID长度不同\nCCCRi.FDOE (i=0-3) 是收发CAN FD frame功能启用位\n时间延迟补偿：为了实现比发射机延迟更短的数据相位比特时间，引入了延迟补偿。在没有变送器延迟补偿的情况下，CAN FD帧的数据阶段的比特率受到变送器延迟的限制\nCAN收发器的信号从TX出发到总线到RX有时延。CAN FD速率可变，BRS位进行控制，波特率更高\n6. CAN node的收发 接受到的Rx Frame以Rx buffer的形式存放在Message RAM，最多存放64个\n首地址通过寄存器进行配置\n\\#define SMCMCAN0_RXBC0_INIT ( 0x00000000UL )\ntypedef volatile struct _Ifx_CAN_N_RX { Ifx_CAN_N_RX_F0C F0C; Ifx_CAN_N_RX_F0S F0S; Ifx_CAN_N_RX_F0A F0A; Ifx_CAN_N_RX_BC BC; Ifx_CAN_N_RX_F1C F1C; Ifx_CAN_N_RX_F1S F1S; Ifx_CAN_N_RX_F1A F1A; Ifx_CAN_N_RX_ESC ESC; } Ifx_CAN_N_RX; 单个Rx Buffer进行管理时，每个Rx Buffer称为Dedicated Rx Buffer，当写入数据后就会被锁住，不会再从CAN总线上写入新数据，直到CPU访问完后解锁\n多个连续的Rx Buffer 可以组成Rx FIFO进行管理，一个CAN Node可以设置2个Rx FIFO,FIFO0和FIFO1.同样首地址通过寄存器进行配置。FIFO是一种先进先出的数据缓存区域。\n在节点的初始化过程中\n①对于Tx,\n（1）首先设置buffer大小\n（2）判断config-\u003etxConfig.txMode的类型是FIFO还是QUEUE设置为对应的模式并且设置其buffers的大小\n（3）在所选中的buffer使能中断\n​\t②对于Rx，主要是设置其Rx buffer 的数据长度和Message RAM的起始地址，然后设置Rx FIFO的数据长度，Message RAM的起始地址，大小，操作模式和watermark level\n对于FIFO,可容纳的元素数量称为Deepth，每个元素大小为Size，进入full状态后写入会溢出，所以要设置水线（Watermark)，Watermark",
-  "wordCount" : "2680",
-  "inLanguage": "zh",
-  "datePublished": "2023-07-11T22:11:08+08:00",
-  "dateModified": "2023-07-11T22:11:08+08:00",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://fishdel.github.io/posts/%E8%8B%B1%E9%A3%9E%E5%87%8C-tc3xx-can-interface-mcmcan-%E6%A8%A1%E5%9D%97/"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Yuuuuu's Blog",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://fishdel.github.io/favicon.png"
-    }
-  }
-}
-</script>
+</noscript>
 </head>
 
 <body class="" id="top">
@@ -142,7 +76,7 @@ CAN0有4个CAN node，Message RAM 一共32Kbyte，FIFO,buffer，register在此�
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://fishdel.github.io/" accesskey="h" title="Yuuuuu&#39;s Blog (Alt + H)">Yuuuuu&#39;s Blog</a>
+            <a href="http://localhost:1313/" accesskey="h" title="Yuuuuu&#39;s Blog (Alt + H)">Yuuuuu&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -168,33 +102,38 @@ CAN0有4个CAN node，Message RAM 一共32Kbyte，FIFO,buffer，register在此�
         </div>
         <ul id="menu">
             <li>
-                <a href="https://fishdel.github.io/" title="首页">
-                    <span>首页</span>
+                <a href="http://localhost:1313/" title="🏠主页">
+                    <span>🏠主页</span>
                 </a>
             </li>
             <li>
-                <a href="https://fishdel.github.io/archives/" title="归档">
-                    <span>归档</span>
+                <a href="http://localhost:1313/posts/" title="📚文章">
+                    <span>📚文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://fishdel.github.io/categories/" title="分类">
-                    <span>分类</span>
+                <a href="http://localhost:1313/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://fishdel.github.io/tags/" title="标签">
-                    <span>标签</span>
+                <a href="http://localhost:1313/tags/" title="🔖标签">
+                    <span>🔖标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://fishdel.github.io/search/" title="搜索">
-                    <span>搜索</span>
+                <a href="http://localhost:1313/categories/" title="🧩分类">
+                    <span>🧩分类</span>
                 </a>
             </li>
             <li>
-                <a href="https://fishdel.github.io/about/" title="关于">
-                    <span>关于</span>
+                <a href="http://localhost:1313/search/" title="🔍搜索">
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/about/" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
                 </a>
             </li>
         </ul>
@@ -344,6 +283,7 @@ CAN0有4个CAN node，Message RAM 一共32Kbyte，FIFO,buffer，register在此�
 
   <footer class="post-footer">
     <ul class="post-tags">
+      <li><a href="http://localhost:1313/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E4%B8%8Ec%E8%AF%AD%E8%A8%80/">嵌入式与C语言</a></li>
     </ul>
   </footer>
 </article>

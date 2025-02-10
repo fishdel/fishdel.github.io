@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>机器学习实战(支持向量机) | Yuuuuu&#39;s Blog</title>
+<meta name="keywords" content="Machine learning">
+<meta name="description" content="支持向量机
+线性SVM分类
+硬间隔分类：让所有实例都在正确的一边的分类。
+硬间隔变成软间隔：引入松弛变量C。
+C是调节间隔与准确率的因子，C值越大，越不愿放弃那些离群点；c值越小，越不重视那些离群点。（模型过拟合，C值调小进行正则化）
+软间隔分类：在“街道”的宽度和间隔违例（错误分类）之间找到良好的平衡的分类。
+svm_clf = SVC(kernel=&ldquo;linear&rdquo;, C=float(&ldquo;inf&rdquo;))
+线性核函数">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/zh/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.d6fcd20a4fb86efa4dfac8ec95da60244cc8871042183da1ef28e3a762ad79c8.css" integrity="sha256-1vzSCk&#43;4bvpN&#43;sjsldpgJEzIhxBCGD2h7yjjp2Ktecg=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/favicon.png">
+<link rel="mask-icon" href="http://localhost:1313/favicon.png">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="zh" href="http://localhost:1313/zh/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/zh/" accesskey="h" title="Yuuuuu&#39;s Blog (Alt + H)">Yuuuuu&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/zh/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/zh/posts/" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/zh/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/zh/tags/" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/zh/categories/" title="🧩分类">
+                    <span>🧩分类</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/zh/search/" title="🔍搜索">
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/zh/about/" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      机器学习实战(支持向量机)
+    </h1>
+    <div class="post-meta"><span title='2022-04-05 22:11:08 +0800 CST'>四月 5, 2022</span>
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="支持向量机">支持向量机<a hidden class="anchor" aria-hidden="true" href="#支持向量机">#</a></h1>
+<h2 id="线性svm分类">线性SVM分类<a hidden class="anchor" aria-hidden="true" href="#线性svm分类">#</a></h2>
+<h3 id="硬间隔分类让所有实例都在正确的一边的分类">硬间隔分类：让所有实例都在正确的一边的分类。<a hidden class="anchor" aria-hidden="true" href="#硬间隔分类让所有实例都在正确的一边的分类">#</a></h3>
+<h3 id="硬间隔变成软间隔引入松弛变量c">硬间隔变成软间隔：引入松弛变量C。<a hidden class="anchor" aria-hidden="true" href="#硬间隔变成软间隔引入松弛变量c">#</a></h3>
+<p>C是调节间隔与准确率的因子，C值越大，越不愿放弃那些离群点；c值越小，越不重视那些离群点。（模型过拟合，C值调小进行正则化）</p>
+<h3 id="软间隔分类在街道的宽度和间隔违例错误分类之间找到良好的平衡的分类">软间隔分类：在“街道”的宽度和间隔违例（错误分类）之间找到良好的平衡的分类。<a hidden class="anchor" aria-hidden="true" href="#软间隔分类在街道的宽度和间隔违例错误分类之间找到良好的平衡的分类">#</a></h3>
+<p>svm_clf = SVC(kernel=&ldquo;linear&rdquo;, C=float(&ldquo;inf&rdquo;))
+线性核函数</p>
+<h2 id="非线性svm分类">非线性SVM分类<a hidden class="anchor" aria-hidden="true" href="#非线性svm分类">#</a></h2>
+<h3 id="通过非线性变换将非线性问题变为线性问题">通过非线性变换，将非线性问题变为线性问题<a hidden class="anchor" aria-hidden="true" href="#通过非线性变换将非线性问题变为线性问题">#</a></h3>
+<ul>
+<li>
+<p>添加特征</p>
+<ul>
+<li>指定kernel=“ploy”其中γ、r、d属于超参，需要调参定义</li>
+</ul>
+</li>
+<li>
+<p>添加相似特征</p>
+<ul>
+<li>
+<p>指定kernel=“rbf”，其中γ属于超参，要求大于0，需要调参定义（过拟合降低，欠拟合提升）</p>
+</li>
+<li>
+<p>增加gamma值，钟形曲线变得更窄会变得更窄，每个实例的影响范围更小，减小gamma变的更平坦</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="核函数的选取">核函数的选取<a hidden class="anchor" aria-hidden="true" href="#核函数的选取">#</a></h3>
+<ul>
+<li>高维用线性，不行换特征；低维试线性，不行换高斯</li>
+</ul>
+<h2 id="svm回归">SVM回归<a hidden class="anchor" aria-hidden="true" href="#svm回归">#</a></h2>
+<h3 id="参数">参数<a hidden class="anchor" aria-hidden="true" href="#参数">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>参数</th>
+          <th>解释</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>C</td>
+          <td>惩罚项参数</td>
+      </tr>
+      <tr>
+          <td>loss</td>
+          <td>损失函数。当值为epsilon_insensitive时损失函数为L（它是标准SVR的损失函数）；值为square_epsilon_insensitive时表示为L的平方</td>
+      </tr>
+      <tr>
+          <td>epsilon</td>
+          <td>浮点数，用于loss中的sigma参数</td>
+      </tr>
+      <tr>
+          <td>dual</td>
+          <td>布尔值。如果为True，则解决对偶问题，如果为False，则解决原始问题，当n_samples&gt;n_features时，倾向于采用False</td>
+      </tr>
+      <tr>
+          <td>tol</td>
+          <td>浮点数，指定终止迭代的阈值</td>
+      </tr>
+      <tr>
+          <td>fit_intercept</td>
+          <td>布尔值，如果为True，则计算截距，即决策函数中的常数项；否则忽略截距</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="属性">属性<a hidden class="anchor" aria-hidden="true" href="#属性">#</a></h3>
+<ul>
+<li>
+<p>coef_：一个数组，给出了各个特征的权重。</p>
+</li>
+<li>
+<p>intercept_：一个数组，隔出了截距，即决定函数中的常数项。</p>
+</li>
+</ul>
+<h3 id="方法">方法<a hidden class="anchor" aria-hidden="true" href="#方法">#</a></h3>
+<ul>
+<li>fit（x, [,y]）:训练模型。</li>
+<li>predict（x）:用模型进行预测，返回预测值</li>
+<li>score（x,y[,sample_weight]）:返回(x,y)上预测的准确率</li>
+</ul>
+<h2 id="基本思想">基本思想<a hidden class="anchor" aria-hidden="true" href="#基本思想">#</a></h2>
+<ol>
+<li>在类之间拟合可能最宽的街道，寻找最大的决策边界</li>
+<li>支持向量：决策边界位于“街道”边缘的实例</li>
+<li>放缩的原因：支持向量机拟合类别之间可能的、最宽的“街道”，所以如果训练集不经缩放，SVM将趋于忽略值较小的特征。</li>
+<li>当训练实例的数量小于特征数量时，解决对偶问题比原始问题更迅速。</li>
+</ol>
+<h2 id="sklearn构建的svm分类器">Sklearn构建的SVM分类器<a hidden class="anchor" aria-hidden="true" href="#sklearn构建的svm分类器">#</a></h2>
+<table>
+  <thead>
+      <tr>
+          <th>参数</th>
+          <th>解释</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>C</td>
+          <td>惩罚项</td>
+      </tr>
+      <tr>
+          <td>kernel</td>
+          <td>核函数类型，str类型，默认为’rbf’</td>
+      </tr>
+      <tr>
+          <td>degree</td>
+          <td>多项式核函数的阶数，int类型，可选参数，默认为3</td>
+      </tr>
+      <tr>
+          <td>gamma</td>
+          <td>核函数系数，float类型，可选参数，默认为auto。只对’rbf’ ,’poly’ ,’sigmod’有效。如果gamma为auto，代表其值为样本特征数的倒数，即1/n_features。</td>
+      </tr>
+      <tr>
+          <td>coef0</td>
+          <td>核函数中的独立项，float类型，可选参数，默认为0.0。只有对’poly’ 和,’sigmod’核函数有用，是指其中的参数c。</td>
+      </tr>
+  </tbody>
+</table>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://localhost:1313/zh/tags/machine-learning/">Machine Learning</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span><a href="https://fishdel.github.io/">©2024 Yuuuu&rsquo;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

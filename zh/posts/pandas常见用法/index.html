@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Pandas基本用法 | Yuuuuu&#39;s Blog</title>
+<meta name="keywords" content="Machine learning">
+<meta name="description" content="1.数据导入
+df=pd.read_csv(&#39;Pokemon.csv&#39;,encoding=&#34;ISO-8859-1&#34;)
+df.head()
+2.查看数据
+df.shape
+df.shape[0]
+df.shape[1]
+df.columns #列名
+df.index #行名
+df.dtypes
+df.head()
+df.tail()
+df.sample()
+df.describe()
+pd.set_option(&#39;max_colwidth&#39;,8) #设置每一行的最大宽度，恢复原设置方法
+pd.reset_option(&#39;max_colwidth&#39;)
+loc操作与iloc
+loc通过label定位；iloc通过position定位
+df.loc[[0,5],[&#39;名称&#39;,&#39;生命点数&#39;]]
+df.iloc[0:10,[0,1]]
+df[:3]
+3.数据筛选与操作
+df[df[&#39;综合能力&#39;]&gt;400].head()
+df[df[&#39;世代数&#39;]==1]
+df.insert(4,&#39;能力600&#39;,df[&#39;综合能力&#39;]&gt;=600)
+4.读取数据
+pickle文件，可以将python中的数据类型进行序列化
+compression参数指定了压缩类型，&lsquo;zip&rsquo;, &lsquo;gzip&rsquo;, &lsquo;bz2&rsquo;, &lsquo;zstd&rsquo;">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/zh/posts/pandas%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.d6fcd20a4fb86efa4dfac8ec95da60244cc8871042183da1ef28e3a762ad79c8.css" integrity="sha256-1vzSCk&#43;4bvpN&#43;sjsldpgJEzIhxBCGD2h7yjjp2Ktecg=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/favicon.png">
+<link rel="mask-icon" href="http://localhost:1313/favicon.png">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="zh" href="http://localhost:1313/zh/posts/pandas%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/zh/" accesskey="h" title="Yuuuuu&#39;s Blog (Alt + H)">Yuuuuu&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/zh/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/zh/posts/" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/zh/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/zh/tags/" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/zh/categories/" title="🧩分类">
+                    <span>🧩分类</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/zh/search/" title="🔍搜索">
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/zh/about/" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      Pandas基本用法
+    </h1>
+    <div class="post-meta"><span title='2022-05-20 22:11:08 +0800 CST'>五月 20, 2022</span>
+
+</div>
+  </header> 
+  <div class="post-content"><h3 id="1数据导入">1.数据导入<a hidden class="anchor" aria-hidden="true" href="#1数据导入">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">=</span><span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s1">&#39;Pokemon.csv&#39;</span><span class="p">,</span><span class="n">encoding</span><span class="o">=</span><span class="s2">&#34;ISO-8859-1&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</span></span></code></pre></div><h3 id="2查看数据">2.查看数据<a hidden class="anchor" aria-hidden="true" href="#2查看数据">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">shape</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">columns</span> <span class="c1">#列名</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">index</span> <span class="c1">#行名</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">dtypes</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">tail</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">sample</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">describe</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">pd</span><span class="o">.</span><span class="n">set_option</span><span class="p">(</span><span class="s1">&#39;max_colwidth&#39;</span><span class="p">,</span><span class="mi">8</span><span class="p">)</span> <span class="c1">#设置每一行的最大宽度，恢复原设置方法</span>
+</span></span><span class="line"><span class="cl"><span class="n">pd</span><span class="o">.</span><span class="n">reset_option</span><span class="p">(</span><span class="s1">&#39;max_colwidth&#39;</span><span class="p">)</span>
+</span></span></code></pre></div><p>loc操作与iloc
+loc通过label定位；iloc通过position定位</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="mi">0</span><span class="p">,</span><span class="mi">5</span><span class="p">],[</span><span class="s1">&#39;名称&#39;</span><span class="p">,</span><span class="s1">&#39;生命点数&#39;</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="mi">0</span><span class="p">:</span><span class="mi">10</span><span class="p">,[</span><span class="mi">0</span><span class="p">,</span><span class="mi">1</span><span class="p">]]</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="p">[:</span><span class="mi">3</span><span class="p">]</span>
+</span></span></code></pre></div><h3 id="3数据筛选与操作">3.数据筛选与操作<a hidden class="anchor" aria-hidden="true" href="#3数据筛选与操作">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;综合能力&#39;</span><span class="p">]</span><span class="o">&gt;</span><span class="mi">400</span><span class="p">]</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="p">[</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;世代数&#39;</span><span class="p">]</span><span class="o">==</span><span class="mi">1</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">df</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span><span class="s1">&#39;能力600&#39;</span><span class="p">,</span><span class="n">df</span><span class="p">[</span><span class="s1">&#39;综合能力&#39;</span><span class="p">]</span><span class="o">&gt;=</span><span class="mi">600</span><span class="p">)</span>
+</span></span></code></pre></div><h3 id="4读取数据">4.读取数据<a hidden class="anchor" aria-hidden="true" href="#4读取数据">#</a></h3>
+<p>pickle文件，可以将python中的数据类型进行序列化
+compression参数指定了压缩类型，&lsquo;zip&rsquo;, &lsquo;gzip&rsquo;, &lsquo;bz2&rsquo;, &lsquo;zstd&rsquo;</p>
+<pre tabindex="0"><code>pandas.read_pickle(filepath_or_buffer, compression=&#39;infer&#39;, storage_options=None)
+</code></pre><h3 id="5处理数据">5.处理数据<a hidden class="anchor" aria-hidden="true" href="#5处理数据">#</a></h3>
+<h4 id="1取特定的行列">（1）取特定的行列<a hidden class="anchor" aria-hidden="true" href="#1取特定的行列">#</a></h4>
+<p>利用标签取列：</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">data</span><span class="p">[</span><span class="s1">&#39;xxx&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">data</span><span class="o">.</span><span class="n">at</span> <span class="c1">#访问单个值</span>
+</span></span><span class="line"><span class="cl"><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[</span><span class="s1">&#39;行名&#39;</span><span class="p">,</span><span class="s1">&#39;列名&#39;</span><span class="p">]</span> <span class="c1">#访问值组</span>
+</span></span><span class="line"><span class="cl"><span class="n">data</span><span class="o">.</span><span class="n">loc</span><span class="p">[[</span><span class="s1">&#39;A行&#39;</span><span class="p">,</span><span class="s1">&#39;B行&#39;</span><span class="p">]]</span> <span class="c1"># 取多行</span>
+</span></span></code></pre></div><h4 id="2对需要的行列进行处理">（2）对需要的行列进行处理<a hidden class="anchor" aria-hidden="true" href="#2对需要的行列进行处理">#</a></h4>
+<h5 id="时间处理">时间处理<a hidden class="anchor" aria-hidden="true" href="#时间处理">#</a></h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1">#转换回日期格式,默认是毫秒</span>
+</span></span><span class="line"><span class="cl"><span class="n">data</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">to_datetime</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;time&#39;</span><span class="p">],</span><span class="n">unit</span><span class="o">=</span><span class="s1">&#39;s&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#生成一个时间戳</span>
+</span></span><span class="line"><span class="cl"><span class="n">now</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">Timestamp</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+</span></span></code></pre></div><h5 id="某一列数据进行处理">某一列数据进行处理<a hidden class="anchor" aria-hidden="true" href="#某一列数据进行处理">#</a></h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">data</span><span class="p">[</span><span class="s1">&#39;xxx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;这里用一个列表表达式&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">data</span><span class="p">[</span><span class="s1">&#39;xxx&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;xxx&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="n">lamdba</span> <span class="n">x</span><span class="p">:</span> <span class="n">function</span><span class="p">(</span><span class="n">x</span><span class="p">))</span>
+</span></span></code></pre></div><h5 id="对于字符串的处理">对于字符串的处理<a hidden class="anchor" aria-hidden="true" href="#对于字符串的处理">#</a></h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1">#去掉首位的a</span>
+</span></span><span class="line"><span class="cl"><span class="n">data</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">strip</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1"># 替换</span>
+</span></span><span class="line"><span class="cl"><span class="n">data</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;a&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">&#39;a&#39;</span><span class="err">，</span><span class="s1">&#39;b&#39;</span><span class="p">)</span>
+</span></span></code></pre></div><h5 id="将特定的列拆分后合并">将特定的列拆分后合并<a hidden class="anchor" aria-hidden="true" href="#将特定的列拆分后合并">#</a></h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">data</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">([</span><span class="n">data</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;tempvaluearray&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">str</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;,&#39;</span><span class="p">,</span> <span class="n">expand</span><span class="o">=</span><span class="kc">True</span><span class="p">)],</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="s1">&#39;tempvaluearray&#39;</span><span class="p">,</span> <span class="n">axis</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">pd</span><span class="o">.</span><span class="n">concat</span><span class="p">()</span><span class="c1">#可以按照指定的轴将dataframe或者series拼接，而merge只能拼接两个表</span>
+</span></span><span class="line"><span class="cl"><span class="n">axis</span> <span class="c1">#0：上下拼接 1：左右拼接</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#drop()的参数axis在删除特定的一行为1</span>
+</span></span></code></pre></div><h5 id="批量修改列名称">批量修改列名称<a hidden class="anchor" aria-hidden="true" href="#批量修改列名称">#</a></h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">data</span><span class="o">.</span><span class="n">rename</span><span class="p">(</span><span class="n">columns</span><span class="o">=</span><span class="n">dic</span><span class="p">)</span><span class="c1">#可以写一个字典进行替换</span>
+</span></span></code></pre></div><h5 id="计算时保留小数">计算时保留小数<a hidden class="anchor" aria-hidden="true" href="#计算时保留小数">#</a></h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="s1">&#39;</span><span class="si">%.3f</span><span class="s1">&#39;</span><span class="o">%</span><span class="mf">0.0065</span> <span class="c1">#保留3位小数</span>
+</span></span><span class="line"><span class="cl"><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span><span class="s1">&#39;</span><span class="si">%.3f</span><span class="s1">&#39;</span><span class="o">%</span><span class="p">((</span><span class="nb">int</span><span class="p">(</span><span class="n">x</span><span class="p">)</span><span class="o">-</span><span class="mi">1000</span><span class="p">)</span><span class="o">/</span><span class="mi">1000</span><span class="p">))</span>
+</span></span></code></pre></div><h5 id="调整列顺序">调整列顺序<a hidden class="anchor" aria-hidden="true" href="#调整列顺序">#</a></h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1">#先取出来再插入</span>
+</span></span><span class="line"><span class="cl"><span class="n">A</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">]</span>
+</span></span><span class="line"><span class="cl"><span class="n">data</span><span class="o">.</span><span class="n">drop</span><span class="p">(</span><span class="n">labels</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;A&#39;</span><span class="p">],</span><span class="n">axis</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span><span class="n">inplace</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">data</span><span class="o">.</span><span class="n">insert</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="s1">&#39;A&#39;</span><span class="p">,</span> <span class="n">A</span><span class="p">)</span>
+</span></span></code></pre></div><h5 id="一个字符串划分的函数">一个字符串划分的函数<a hidden class="anchor" aria-hidden="true" href="#一个字符串划分的函数">#</a></h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="c1"># 对于数据为[12，23，45，12]类似的数据，其中不能是字符串</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">split_col</span><span class="p">(</span><span class="n">data</span><span class="p">,</span> <span class="n">columns</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="s2">&#34;&#34;&#34;拆分成列
+</span></span></span><span class="line"><span class="cl"><span class="s2">    :param data: 原始数据
+</span></span></span><span class="line"><span class="cl"><span class="s2">    :param columns: 拆分的列名
+</span></span></span><span class="line"><span class="cl"><span class="s2">    :type data: pandas.core.frame.DataFrame
+</span></span></span><span class="line"><span class="cl"><span class="s2">    :type columns: list
+</span></span></span><span class="line"><span class="cl"><span class="s2">    &#34;&#34;&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="k">for</span> <span class="n">c</span> <span class="ow">in</span> <span class="n">columns</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">        <span class="n">new_col</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">pop</span><span class="p">(</span><span class="n">c</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">        <span class="n">max_len</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="nb">list</span><span class="p">(</span><span class="nb">map</span><span class="p">(</span><span class="nb">len</span><span class="p">,</span> <span class="n">new_col</span><span class="o">.</span><span class="n">values</span><span class="p">)))</span>  <span class="c1"># 最大长度</span>
+</span></span><span class="line"><span class="cl">        <span class="n">new_col</span> <span class="o">=</span> <span class="n">new_col</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span> <span class="o">+</span> <span class="p">[</span><span class="kc">None</span><span class="p">]</span><span class="o">*</span><span class="p">(</span><span class="n">max_len</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">x</span><span class="p">)))</span>  <span class="c1"># 补空值，None可换成np.nan</span>
+</span></span><span class="line"><span class="cl">        <span class="n">new_col</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">new_col</span><span class="o">.</span><span class="n">tolist</span><span class="p">())</span><span class="o">.</span><span class="n">T</span>  <span class="c1"># 转置</span>
+</span></span><span class="line"><span class="cl">        <span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">new_col</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">            <span class="n">data</span><span class="p">[</span><span class="n">c</span> <span class="o">+</span> <span class="nb">str</span><span class="p">(</span><span class="n">i</span><span class="p">)]</span> <span class="o">=</span> <span class="n">j</span>
+</span></span></code></pre></div><h5 id="去重">去重<a hidden class="anchor" aria-hidden="true" href="#去重">#</a></h5>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df_unique</span> <span class="o">=</span> <span class="n">df</span><span class="o">.</span><span class="n">drop_duplicates</span><span class="p">([</span><span class="s1">&#39;A&#39;</span><span class="p">],</span> <span class="n">keep</span><span class="o">=</span><span class="s1">&#39;last&#39;</span><span class="p">)</span> <span class="c1"># 根据A去重只留下最后一次出现的</span>
+</span></span></code></pre></div><h5 id="隔行取数据">隔行取数据<a hidden class="anchor" aria-hidden="true" href="#隔行取数据">#</a></h5>
+<p>方法1：每隔20行取数,把每20行的id取出来</p>
+<pre tabindex="0"><code>a=[]
+for i in range(0,len(df),20): 	
+    a.append(i) 
+
+new_df= df.iloc[a]
+</code></pre><p>方法2：直接调用read_csv()里的参数skiprows</p>
+<pre tabindex="0"><code>df = pd.read_csv(&#39;test.csv&#39;,header = None,skiprows=lambda x: x &gt; 0 and x % 20 != 0)
+df
+</code></pre><h3 id="6遍历和求值">6.遍历和求值<a hidden class="anchor" aria-hidden="true" href="#6遍历和求值">#</a></h3>
+<ol>
+<li>
+<p>遍历</p>
+<pre tabindex="0"><code>for name,group in grouped_single:  
+	print(name)    
+	display(group.head())
+</code></pre></li>
+<li>
+<p>组内求均值，最大值，最小值等等</p>
+</li>
+</ol>
+<pre tabindex="0"><code>df.groupby(&#39;A&#39;)[&#39;B&#39;].mean()
+</code></pre><ol start="3">
+<li>agg自定义内置函数</li>
+</ol>
+<pre tabindex="0"><code>df.groupby(&#39;A&#39;)[&#39;B&#39;].agg(fun())
+</code></pre><ul>
+<li>
+<p>整合（Aggregation）——即分组计算统计量（如求均值、求每组元素个数）</p>
+</li>
+<li>
+<p>变换（Transformation）——即分组对每个单元的数据进行操作（如元素标准化）</p>
+</li>
+<li>
+<p>过滤（Filtration）——即按照某些规则筛选出一些组（如选出组内某一指标小于50的组）</p>
+</li>
+</ul>
+<h3 id="7举例分组统计次数或者频数">7.举例：分组统计次数或者频数<a hidden class="anchor" aria-hidden="true" href="#7举例分组统计次数或者频数">#</a></h3>
+<p>①先排序，再分组，加上first()就是取最大值。</p>
+<p>若B是种类，C是时间，就是先按种类分组，再按时间分组，取A最大的情况。</p>
+<pre tabindex="0"><code>df1=df.sort_values(&#39;A&#39;, ascending=False).groupby([&#39;B&#39;,&#39;C&#39;], as_index=False).first()
+</code></pre><p>②apply方法(groupby+apply这样的写法比之前写循环要快很多)</p>
+<p>先分组再对A属性进行数量统计，加上head（1）取最大值</p>
+<p>需要加上reset_index,时期扁平化，原来的index变成数据列，保留下来</p>
+<pre tabindex="0"><code>df2=df.groupby(&#39;B&#39;)[&#39;A&#39;].apply(lambda x: x.value_counts(normalize=True).head(1)).to_frame().reset_index()
+</code></pre><p>举个例子：统计数学成绩前五名的学生</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">df</span> <span class="o">=</span> <span class="n">df</span><span class="p">[</span><span class="s1">&#39;math&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;class&#39;</span><span class="p">)</span><span class="o">.</span><span class="n">apply</span><span class="p">(</span><span class="k">lambda</span> <span class="n">x</span><span class="p">:</span> <span class="n">x</span><span class="o">.</span><span class="n">sort_values</span><span class="p">(</span><span class="n">ascending</span> <span class="o">=</span> <span class="kc">False</span><span class="p">)[:</span><span class="mi">5</span><span class="p">])</span><span class="err">`</span>
+</span></span></code></pre></div><h4 id="1-value_counts方法">1. value_counts()方法<a hidden class="anchor" aria-hidden="true" href="#1-value_counts方法">#</a></h4>
+<p>需要加上unstack()将其展开，否则是一个序列。</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">data</span><span class="o">.</span><span class="n">groupby</span><span class="p">(</span><span class="s1">&#39;A&#39;</span><span class="p">)[</span><span class="s1">&#39;B&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">value_counts</span><span class="p">()</span><span class="o">.</span><span class="n">unstack</span><span class="p">()</span>
+</span></span></code></pre></div><h4 id="2dataframeplot函数">2.DataFrame.plot函数<a hidden class="anchor" aria-hidden="true" href="#2dataframeplot函数">#</a></h4>
+<p>画在一个子图里</p>
+<p>pd.DateFrame.plot(kind = &lsquo;scatter&rsquo;)</p>
+<pre tabindex="0"><code>ax=v1.plot.scatter(x=&#39;C&#39;,y=&#39;D&#39;,label=&#39;D&#39;,title=i,alpha=0.4,)
+v1.plot.scatter(x=&#39;C&#39;,y=&#39;E&#39;,c=&#39;r&#39;,title=i,alpha=0.4,ax=ax,label=&#39;E&#39;)
+</code></pre>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="http://localhost:1313/zh/tags/machine-learning/">Machine Learning</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span><a href="https://fishdel.github.io/">©2024 Yuuuu&rsquo;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

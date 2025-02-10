@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh" dir="auto">
 
-<head><meta charset="utf-8">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="noindex, nofollow">
 <title>机器学习实战(集成学习与随机森林) | Yuuuuu&#39;s Blog</title>
-<meta name="keywords" content="">
+<meta name="keywords" content="Machine learning">
 <meta name="description" content="集成学习与随机森林
 更新权重
 Adaboost
@@ -23,16 +23,16 @@ algorithm： 可选参数，默认为SAMME.R
 
 循环训练，实例权重不断更新（不是是成本函数最小化，而是加入更多预测器）">
 <meta name="author" content="">
-<link rel="canonical" href="https://fishdel.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E4%B8%8E%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/">
+<link rel="canonical" href="http://localhost:1313/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E4%B8%8E%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.d6fcd20a4fb86efa4dfac8ec95da60244cc8871042183da1ef28e3a762ad79c8.css" integrity="sha256-1vzSCk&#43;4bvpN&#43;sjsldpgJEzIhxBCGD2h7yjjp2Ktecg=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://fishdel.github.io/favicon.png">
-<link rel="icon" type="image/png" sizes="16x16" href="https://fishdel.github.io/favicon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://fishdel.github.io/favicon.png">
-<link rel="apple-touch-icon" href="https://fishdel.github.io/favicon.png">
-<link rel="mask-icon" href="https://fishdel.github.io/favicon.png">
+<link rel="icon" href="http://localhost:1313/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/favicon.png">
+<link rel="mask-icon" href="http://localhost:1313/favicon.png">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="zh" href="https://fishdel.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E4%B8%8E%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/">
+<link rel="alternate" hreflang="zh" href="http://localhost:1313/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E4%B8%8E%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/">
 <noscript>
     <style>
         #theme-toggle,
@@ -69,84 +69,7 @@ algorithm： 可选参数，默认为SAMME.R
         }
 
     </style>
-</noscript><meta property="og:url" content="https://fishdel.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E4%B8%8E%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/">
-  <meta property="og:site_name" content="Yuuuuu&#39;s Blog">
-  <meta property="og:title" content="机器学习实战(集成学习与随机森林)">
-  <meta property="og:description" content="集成学习与随机森林 更新权重 Adaboost AdaBoostClassifier(base_estimator=None, n_estimators=50, learning_rate=1.0, algorithm=’SAMME.R’, random_state=None)
-base_estimator:可选参数，默认为DecisionTreeClassifier。 algorithm： 可选参数，默认为SAMME.R 循环训练，实例权重不断更新（不是是成本函数最小化，而是加入更多预测器）">
-  <meta property="og:locale" content="zh">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2022-04-05T22:11:08+08:00">
-    <meta property="article:modified_time" content="2022-04-05T22:11:08+08:00">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="机器学习实战(集成学习与随机森林)">
-<meta name="twitter:description" content="集成学习与随机森林
-更新权重
-Adaboost
-
-
-AdaBoostClassifier(base_estimator=None, n_estimators=50,
-learning_rate=1.0, algorithm=’SAMME.R’,
-random_state=None)
-
-base_estimator:可选参数，默认为DecisionTreeClassifier。
-algorithm： 可选参数，默认为SAMME.R
-
-
-
-循环训练，实例权重不断更新（不是是成本函数最小化，而是加入更多预测器）">
-
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position":  1 ,
-      "name": "Posts",
-      "item": "https://fishdel.github.io/posts/"
-    }, 
-    {
-      "@type": "ListItem",
-      "position":  2 ,
-      "name": "机器学习实战(集成学习与随机森林)",
-      "item": "https://fishdel.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E4%B8%8E%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/"
-    }
-  ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "机器学习实战(集成学习与随机森林)",
-  "name": "机器学习实战(集成学习与随机森林)",
-  "description": "集成学习与随机森林 更新权重 Adaboost AdaBoostClassifier(base_estimator=None, n_estimators=50, learning_rate=1.0, algorithm=’SAMME.R’, random_state=None)\nbase_estimator:可选参数，默认为DecisionTreeClassifier。 algorithm： 可选参数，默认为SAMME.R 循环训练，实例权重不断更新（不是是成本函数最小化，而是加入更多预测器）\n",
-  "keywords": [
-    
-  ],
-  "articleBody": "集成学习与随机森林 更新权重 Adaboost AdaBoostClassifier(base_estimator=None, n_estimators=50, learning_rate=1.0, algorithm=’SAMME.R’, random_state=None)\nbase_estimator:可选参数，默认为DecisionTreeClassifier。 algorithm： 可选参数，默认为SAMME.R 循环训练，实例权重不断更新（不是是成本函数最小化，而是加入更多预测器）\nGradient Boosting 新预测器针对前一个预测器的残差进行拟合\nGradientBoostingRegressor(max_depth=2,n_estimators=3,learning_rate=1.0,random_state=42)\n提前停止法\n训练完之后测量每个阶段的训练验证误差，找到树的最优数量后重新训练\nerrors = [mean_squared_error(y_val, y_pred) for y_pred in gbrt.staged_predict(X_val)]\nbst_n_estimators = np.argmin(errors) + 1\n验证误差在连续某次未改善时停止训练\nxgboost xgbc = XGBClassifier(max_depth=2, learning_rate=1, n_estimators=2, # number of iterations or number of trees slient=0, objective=\"binary:logistic\" ) 不更新权重 投票分类器 基于多分类器的结果聚合\nvoting_clf = VotingClassifier(estimators=[ (’log_clf’, LogisticRegression()), (‘svm_clf’, SVC(probability=True)), (‘dt_clf’, DecisionTreeClassifier(random_state=10)), ], voting=‘soft’) voting_clf.fit(X_train, y_train) voting_clf.score(X_test, y_test)\nbagging./pasting 有放回抽样。在每个数据集上学习出一个模型，最后的预测结果利用N个模型的输出得到，具体地：分类问题采用N个模型预测投票的方式，回归问题采用N个模型预测平均的方式。\n1.通过设置参数 bootstrap=False来切换为无放回采样。 2.n_estimators=500，表示有有500个相同的决策器。 3.max_samples=100，表示在数据集上有放回采样 100 个训练实例。 4.n_jobs=-1，n_jobs 参数告诉 sklearn 用于训练和预测所需要 CPU 核的数量。（-1 代表着 sklearn 会使用所有空闲核） 5.oob_score=True，表示包外评估bag_clf.oob_score_ 随机森林\nrnd_clf = RandomForestClassifier(n_estimators=500, max_leaf_nodes=16, random_state=42)\n重要参数\nn_estimators，random_state，boostrap和oob_score 重要属性\n.estimators_ .oob_score_ .feature_importances_ 接口\napply，fit，predict，score和predict_proba ",
-  "wordCount" : "670",
-  "inLanguage": "zh",
-  "datePublished": "2022-04-05T22:11:08+08:00",
-  "dateModified": "2022-04-05T22:11:08+08:00",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://fishdel.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E4%B8%8E%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Yuuuuu's Blog",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://fishdel.github.io/favicon.png"
-    }
-  }
-}
-</script>
+</noscript>
 </head>
 
 <body class="" id="top">
@@ -164,7 +87,7 @@ algorithm： 可选参数，默认为SAMME.R
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://fishdel.github.io/" accesskey="h" title="Yuuuuu&#39;s Blog (Alt + H)">Yuuuuu&#39;s Blog</a>
+            <a href="http://localhost:1313/" accesskey="h" title="Yuuuuu&#39;s Blog (Alt + H)">Yuuuuu&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -190,33 +113,38 @@ algorithm： 可选参数，默认为SAMME.R
         </div>
         <ul id="menu">
             <li>
-                <a href="https://fishdel.github.io/" title="首页">
-                    <span>首页</span>
+                <a href="http://localhost:1313/" title="🏠主页">
+                    <span>🏠主页</span>
                 </a>
             </li>
             <li>
-                <a href="https://fishdel.github.io/archives/" title="归档">
-                    <span>归档</span>
+                <a href="http://localhost:1313/posts/" title="📚文章">
+                    <span>📚文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://fishdel.github.io/categories/" title="分类">
-                    <span>分类</span>
+                <a href="http://localhost:1313/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://fishdel.github.io/tags/" title="标签">
-                    <span>标签</span>
+                <a href="http://localhost:1313/tags/" title="🔖标签">
+                    <span>🔖标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://fishdel.github.io/search/" title="搜索">
-                    <span>搜索</span>
+                <a href="http://localhost:1313/categories/" title="🧩分类">
+                    <span>🧩分类</span>
                 </a>
             </li>
             <li>
-                <a href="https://fishdel.github.io/about/" title="关于">
-                    <span>关于</span>
+                <a href="http://localhost:1313/search/" title="🔍搜索">
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/about/" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
                 </a>
             </li>
         </ul>
@@ -347,6 +275,7 @@ voting_clf.score(X_test, y_test)</p>
 
   <footer class="post-footer">
     <ul class="post-tags">
+      <li><a href="http://localhost:1313/tags/machine-learning/">Machine Learning</a></li>
     </ul>
   </footer>
 </article>

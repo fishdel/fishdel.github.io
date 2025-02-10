@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="zh" dir="auto">
 
-<head><meta charset="utf-8">
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="index, follow">
+<meta name="robots" content="noindex, nofollow">
 <title>嵌入式系统——CPU | Yuuuuu&#39;s Blog</title>
-<meta name="keywords" content="">
+<meta name="keywords" content="嵌入式与C语言">
 <meta name="description" content="1. CPU的运行原理
 1.1 CPU最基本的工作单元——MOSFET
 二极管的工作原理
@@ -15,16 +15,16 @@ SI原子外层有4个电子，P原子外层有5个电子，B原子外层有3个�
 如果在一块硅晶体左边和右边进行N型掺杂和P型掺杂，中间区域就会出现电子从N区扩散到P区和空穴结合；交界处N区域失去电子显正电，P区域得到电子带负电，中间产生一个电场，叫耗尽层。
 如果在外面接一个电池，如果电池提供的电场和中间电场方向相反进行抵消，此时电路导通；如果反过来接，耗尽层加宽，则不能导通。">
 <meta name="author" content="">
-<link rel="canonical" href="https://fishdel.github.io/posts/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0cpu%E4%B8%80/">
+<link rel="canonical" href="http://localhost:1313/posts/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0cpu%E4%B8%80/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.d6fcd20a4fb86efa4dfac8ec95da60244cc8871042183da1ef28e3a762ad79c8.css" integrity="sha256-1vzSCk&#43;4bvpN&#43;sjsldpgJEzIhxBCGD2h7yjjp2Ktecg=" rel="preload stylesheet" as="style">
-<link rel="icon" href="https://fishdel.github.io/favicon.png">
-<link rel="icon" type="image/png" sizes="16x16" href="https://fishdel.github.io/favicon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="https://fishdel.github.io/favicon.png">
-<link rel="apple-touch-icon" href="https://fishdel.github.io/favicon.png">
-<link rel="mask-icon" href="https://fishdel.github.io/favicon.png">
+<link rel="icon" href="http://localhost:1313/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/favicon.png">
+<link rel="mask-icon" href="http://localhost:1313/favicon.png">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="zh" href="https://fishdel.github.io/posts/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0cpu%E4%B8%80/">
+<link rel="alternate" hreflang="zh" href="http://localhost:1313/posts/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0cpu%E4%B8%80/">
 <noscript>
     <style>
         #theme-toggle,
@@ -61,75 +61,7 @@ SI原子外层有4个电子，P原子外层有5个电子，B原子外层有3个�
         }
 
     </style>
-</noscript><meta property="og:url" content="https://fishdel.github.io/posts/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0cpu%E4%B8%80/">
-  <meta property="og:site_name" content="Yuuuuu&#39;s Blog">
-  <meta property="og:title" content="嵌入式系统——CPU">
-  <meta property="og:description" content="1. CPU的运行原理 1.1 CPU最基本的工作单元——MOSFET 二极管的工作原理 SI原子外层有4个电子，P原子外层有5个电子，B原子外层有3个电子；如果SI和P结合，就会多一个电子，导电性上升；如果SI和B结合，就会有一个空穴，会有电子过来，导电性也会上升；电子和空穴都叫载流子，载流子就是电流的载体。 增加空穴的掺杂——P型掺杂；增加电子的掺杂——N型掺杂。 如果在一块硅晶体左边和右边进行N型掺杂和P型掺杂，中间区域就会出现电子从N区扩散到P区和空穴结合；交界处N区域失去电子显正电，P区域得到电子带负电，中间产生一个电场，叫耗尽层。 如果在外面接一个电池，如果电池提供的电场和中间电场方向相反进行抵消，此时电路导通；如果反过来接，耗尽层加宽，则不能导通。">
-  <meta property="og:locale" content="zh">
-  <meta property="og:type" content="article">
-    <meta property="article:section" content="posts">
-    <meta property="article:published_time" content="2022-08-07T22:11:08+08:00">
-    <meta property="article:modified_time" content="2022-08-07T22:11:08+08:00">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="嵌入式系统——CPU">
-<meta name="twitter:description" content="1. CPU的运行原理
-1.1 CPU最基本的工作单元——MOSFET
-二极管的工作原理
-SI原子外层有4个电子，P原子外层有5个电子，B原子外层有3个电子；如果SI和P结合，就会多一个电子，导电性上升；如果SI和B结合，就会有一个空穴，会有电子过来，导电性也会上升；电子和空穴都叫载流子，载流子就是电流的载体。
-增加空穴的掺杂——P型掺杂；增加电子的掺杂——N型掺杂。
-如果在一块硅晶体左边和右边进行N型掺杂和P型掺杂，中间区域就会出现电子从N区扩散到P区和空穴结合；交界处N区域失去电子显正电，P区域得到电子带负电，中间产生一个电场，叫耗尽层。
-如果在外面接一个电池，如果电池提供的电场和中间电场方向相反进行抵消，此时电路导通；如果反过来接，耗尽层加宽，则不能导通。">
-
-
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  "itemListElement": [
-    {
-      "@type": "ListItem",
-      "position":  1 ,
-      "name": "Posts",
-      "item": "https://fishdel.github.io/posts/"
-    }, 
-    {
-      "@type": "ListItem",
-      "position":  2 ,
-      "name": "嵌入式系统——CPU",
-      "item": "https://fishdel.github.io/posts/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0cpu%E4%B8%80/"
-    }
-  ]
-}
-</script>
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "BlogPosting",
-  "headline": "嵌入式系统——CPU",
-  "name": "嵌入式系统——CPU",
-  "description": "1. CPU的运行原理 1.1 CPU最基本的工作单元——MOSFET 二极管的工作原理 SI原子外层有4个电子，P原子外层有5个电子，B原子外层有3个电子；如果SI和P结合，就会多一个电子，导电性上升；如果SI和B结合，就会有一个空穴，会有电子过来，导电性也会上升；电子和空穴都叫载流子，载流子就是电流的载体。 增加空穴的掺杂——P型掺杂；增加电子的掺杂——N型掺杂。 如果在一块硅晶体左边和右边进行N型掺杂和P型掺杂，中间区域就会出现电子从N区扩散到P区和空穴结合；交界处N区域失去电子显正电，P区域得到电子带负电，中间产生一个电场，叫耗尽层。 如果在外面接一个电池，如果电池提供的电场和中间电场方向相反进行抵消，此时电路导通；如果反过来接，耗尽层加宽，则不能导通。\n",
-  "keywords": [
-    
-  ],
-  "articleBody": "1. CPU的运行原理 1.1 CPU最基本的工作单元——MOSFET 二极管的工作原理 SI原子外层有4个电子，P原子外层有5个电子，B原子外层有3个电子；如果SI和P结合，就会多一个电子，导电性上升；如果SI和B结合，就会有一个空穴，会有电子过来，导电性也会上升；电子和空穴都叫载流子，载流子就是电流的载体。 增加空穴的掺杂——P型掺杂；增加电子的掺杂——N型掺杂。 如果在一块硅晶体左边和右边进行N型掺杂和P型掺杂，中间区域就会出现电子从N区扩散到P区和空穴结合；交界处N区域失去电子显正电，P区域得到电子带负电，中间产生一个电场，叫耗尽层。 如果在外面接一个电池，如果电池提供的电场和中间电场方向相反进行抵消，此时电路导通；如果反过来接，耗尽层加宽，则不能导通。\nMOSFET的工作原理 在一块纯硅的两个肩膀处进行N型掺杂，其余部分P型掺杂，交界处产生耗尽层。 在两个N区域中间下层接绝缘层上层放金属板，P区域也充当金属板（类似于一个电容），此时通电很多电子填到下层P区域的空穴中，然后下面又出现一个耗尽层，两个N区域被联通起来，这个区域称为N沟道。\n如果施加一个能使沟道产生的电压，电路被导通，这个电压叫做阈值电压，中间电极称为栅极，左边称为源极，右边称为漏极。\n高于阈值电压被导通，低于阈值电压不导通：NMOS； 如果NP掺杂时相反，高于阈值电压不导通，低于阈值电压导通：PMOS；\n把NMOS和PMOS的漏极连起来得到一个CMOS。 对于NMOS远离源头。 对于PMOS指向源头 1.2 逻辑门 门电路 以非门为例： 以或门为例： 假设A=0,B=1,那么A上的PMOS导通，B上的NMOS导通，PMOS不导通，中间的主线相当于接了VSS，为0，再经过非门，得到值为1。 之后以此类推。 所以，或非门就是不要后面的非门。 同样，与非门： 可以得出： 与非门+非门=与门 或非门+非门=或门\n异或门： 逻辑的组合 异或门+与门可以构成半加法器，但是不能进位（后面会解释） 所以两个半加器级联，构成全加法器，四个串联起来四位全加法器。\n时序的逻辑 D锁存器 C端如果是0，D端不起作用 C端为1的时候，Q和Q~被D刷新成新值 锁存器是一种存储数据形式，SRAM是用这种形式，所以掉电之后代码会丢失。\nD触发器 一对D锁存器构成，控制信号相反 clk为高，主关从开；clk为低，主开从关；低电平前面导通，高电平后面导通，从而实现一个节拍结构。\n1.3 CPU计算加法的原理 本位和（Sum），进位（Carry） 10进制 3+9=12里2是本位和，1是进位数； 2进制 1+1=10里0是本位和，1是进位数 A B S C 0 0 0 0 0 1 1 0 1 0 1 0 1 1 0 1 本位和S符合异或的逻辑，进位C符合与的逻辑，用这两个门就可以计算一位二进制数得到一个半加法器，但是它的输入只有A,B，就不能输入上一次计算的进位数，所以需要再来一个可以计算上一位进位数的加法器。 本位S还要和Cin再异或一次；进位条件是A,B,Cin有大于等于两个以上的1就行了,这三个分别做与运算，结果再分别做或运算。 四个全加法器Cin和Cout首位串起来，就是4位串行进位全加法器。\n1.4 总结 逻辑门由MOSFET组成，把它们刻蚀到芯片上，按电路图连接，CPU内部全是门电路构成。\n2. 概念CPU之微控制器MCU和ARM CPU是什么 CPU是计算机/微控制器的核心，进行算术逻辑运算，通用CPU需要大量外围辅助. MUC 微控制器：完成的计算机系统，单个芯片包含了处理器，存储器和所有外设I/O模块. 其组成包括： CPU 输入输出接口 外设接口 RAM ROM 时钟单元 MCU优势在于：小巧，低成本，低功耗。\nARM是什么 1 一家公司，全球领先的半导体知识产权(IP)提供商，ARM设计了大量高性价比、耗能低的RISC处理器、相关技术及软件。 2 ARM指的也是一门技术，具有性能高、成本低和能耗省的特点。在智能机、平板电脑、嵌入控制、多媒体数字等处理器领域拥有主导地位。 3 ARM还是一类微型处理器的统称，其微型处理器包含多个系列，每个系列各自的特点和应用领域。\n3.\tCPU的基本结构和运行机制 3.1 基本结构 运算逻辑单元（Arithmetic Logic Unit） 操作数operands 运算operation 结果\tresult 标志\tflag 寄存器组（register file） 作用：用于临时保存/获取操作数 程序状态寄存器（program status register/CCR） 特点：1. 执行单元产生的标志通常放在PSR中；2. 每执行一条指令，相应的状态位更新；3.\t每条指令影响的状态位不同 条件码：Zero，Negative，Overflow，Carry 寄存器与CPU的关系：\t任何CPU都包含通用/专用寄存器；\t寄存器的数目和宽度是衡量CPU的重要指标。 寄存器和内存的关系：内存并不在CPU上访问比较慢，寄存器相当于衣服上的口袋，内存相当于包包。在单片机中，寄存器相当于要操作的外设的别名，通过操作寄存器对外设进行控制。 ARM五个寄存器编程模型 xPSR——保存cpu各种状态（32位） 通过别名访问，只关注和访问特定的字段实现特定功能 APSR—高四位：N Z C V IPSR—后几位：发生异常时的中断号 EPSR—T：记录是否发生异常和中断 PRIMASK：PM 控制中断的总开关 FAULTMASK BASEPRI CONTROL 控制寄存器：实现控制堆栈指针的选择和切换到用户级 程序计数器（Program Counter） 作用：保存下一条待执行的指令 控制单元（Control Unit） 指令解析 分析该指令需要执行何种操作 原理：程序由指令序列构成，保存在程序存储器中，这些指令序列依次进入CPU执行 数据流向 3.2堆栈的概念 栈 概念：一段连续的存储空间 工作方式：后入先出，只能从顶部加入或取出数据 特点：堆栈能保持数据的顺序 操作方式：PUSH，PULL 栈的实际使用：分支调用，嵌套调用，顺次保存函数地址，逆序取用。 栈的作用\nC语言编译器使用堆栈来完成参数的传递和返回值传递 汇编语言使用堆栈来保存局部变量，寄存器值 CPU硬件使用堆栈来保存返回地址和寄存器上下文（中断） 栈与寄存器的关系 栈的顶端位置通过CPU内的堆栈指针寄存器确定（stack pointer） 初始位置由程序代码确定，指向预先划定的堆栈空间底部 地址 变量地址从低地址向高地址划分 堆栈空间从高地址向低地址增长 堆 概念：一个进程开启后，系统分配给它的一个全局的空间，系统中所有动态分配的对象（指针）都在这个空间分配。 注意：堆里的数据是有数据结构的，空间占用不连续 堆栈溢出：堆栈溢出的产生是由于过多的函数调用，导致调用堆栈无法容纳这些调用的返回地址，一般在递归中产生。\n3.3 运行机制 该程序的功能：A和B做对换 具体步骤 1 开始什么也不做，随后加载一个栈指针 2 A入栈，B入栈 3 跳到函数subfunc 3.1 do nothing 3.2 返回 4 A出栈，B出栈\n",
-  "wordCount" : "2717",
-  "inLanguage": "zh",
-  "datePublished": "2022-08-07T22:11:08+08:00",
-  "dateModified": "2022-08-07T22:11:08+08:00",
-  "mainEntityOfPage": {
-    "@type": "WebPage",
-    "@id": "https://fishdel.github.io/posts/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0cpu%E4%B8%80/"
-  },
-  "publisher": {
-    "@type": "Organization",
-    "name": "Yuuuuu's Blog",
-    "logo": {
-      "@type": "ImageObject",
-      "url": "https://fishdel.github.io/favicon.png"
-    }
-  }
-}
-</script>
+</noscript>
 </head>
 
 <body class="" id="top">
@@ -147,7 +79,7 @@ SI原子外层有4个电子，P原子外层有5个电子，B原子外层有3个�
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="https://fishdel.github.io/" accesskey="h" title="Yuuuuu&#39;s Blog (Alt + H)">Yuuuuu&#39;s Blog</a>
+            <a href="http://localhost:1313/" accesskey="h" title="Yuuuuu&#39;s Blog (Alt + H)">Yuuuuu&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -173,33 +105,38 @@ SI原子外层有4个电子，P原子外层有5个电子，B原子外层有3个�
         </div>
         <ul id="menu">
             <li>
-                <a href="https://fishdel.github.io/" title="首页">
-                    <span>首页</span>
+                <a href="http://localhost:1313/" title="🏠主页">
+                    <span>🏠主页</span>
                 </a>
             </li>
             <li>
-                <a href="https://fishdel.github.io/archives/" title="归档">
-                    <span>归档</span>
+                <a href="http://localhost:1313/posts/" title="📚文章">
+                    <span>📚文章</span>
                 </a>
             </li>
             <li>
-                <a href="https://fishdel.github.io/categories/" title="分类">
-                    <span>分类</span>
+                <a href="http://localhost:1313/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="https://fishdel.github.io/tags/" title="标签">
-                    <span>标签</span>
+                <a href="http://localhost:1313/tags/" title="🔖标签">
+                    <span>🔖标签</span>
                 </a>
             </li>
             <li>
-                <a href="https://fishdel.github.io/search/" title="搜索">
-                    <span>搜索</span>
+                <a href="http://localhost:1313/categories/" title="🧩分类">
+                    <span>🧩分类</span>
                 </a>
             </li>
             <li>
-                <a href="https://fishdel.github.io/about/" title="关于">
-                    <span>关于</span>
+                <a href="http://localhost:1313/search/" title="🔍搜索">
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/about/" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
                 </a>
             </li>
         </ul>
@@ -403,6 +340,7 @@ IPSR—后几位：发生异常时的中断号 EPSR—T：记录是否发生异�
 
   <footer class="post-footer">
     <ul class="post-tags">
+      <li><a href="http://localhost:1313/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E4%B8%8Ec%E8%AF%AD%E8%A8%80/">嵌入式与C语言</a></li>
     </ul>
   </footer>
 </article>
