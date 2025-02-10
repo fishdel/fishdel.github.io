@@ -2,18 +2,18 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Autosar on Yuuuuu&#39;s Blog</title>
-    <link>http://localhost:1313/zh/tags/autosar/</link>
+    <link>https://fishdel.github.io/zh/tags/autosar/</link>
     <description>Recent content in Autosar on Yuuuuu&#39;s Blog</description>
     <generator>Hugo -- 0.139.3</generator>
     <language>zh</language>
     <copyright>©2024 Yuuuu&amp;rsquo;s Blog</copyright>
     <lastBuildDate>Thu, 08 Jun 2023 22:11:08 +0800</lastBuildDate>
-    <atom:link href="http://localhost:1313/zh/tags/autosar/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://fishdel.github.io/zh/tags/autosar/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Autosar OS原理</title>
-      <link>http://localhost:1313/zh/posts/autosar-os%E5%8E%9F%E7%90%86/</link>
+      <link>https://fishdel.github.io/zh/posts/autosar-os%E5%8E%9F%E7%90%86/</link>
       <pubDate>Thu, 08 Jun 2023 22:11:08 +0800</pubDate>
-      <guid>http://localhost:1313/zh/posts/autosar-os%E5%8E%9F%E7%90%86/</guid>
+      <guid>https://fishdel.github.io/zh/posts/autosar-os%E5%8E%9F%E7%90%86/</guid>
       <description>&lt;p&gt;事件触发操作系统，通过定时器届满，错误检出等event触发os task的调度运行&lt;/p&gt;
 &lt;h4 id=&#34;1task种类与状态&#34;&gt;1.TASK种类与状态&lt;/h4&gt;
 &lt;p&gt;task的种类分为两种，基本task和扩展的task，处理器在同一时间只能运行一个task指令，os会负责保存和恢复task的状态切换时的数据&lt;/p&gt;</description>
