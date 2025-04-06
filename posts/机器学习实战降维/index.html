@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html lang="zh" dir="auto">
 
-<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<head><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>机器学习实战(降维) | Yuuuuu&#39;s Blog</title>
 <meta name="keywords" content="Machine learning">
 <meta name="description" content="降维
@@ -16,16 +16,16 @@
 维度诅咒
 高维数据集——非常稀疏——训练实例彼此远离——容易过拟合">
 <meta name="author" content="">
-<link rel="canonical" href="http://localhost:1313/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E9%99%8D%E7%BB%B4/">
+<link rel="canonical" href="https://fishdel.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E9%99%8D%E7%BB%B4/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.d6fcd20a4fb86efa4dfac8ec95da60244cc8871042183da1ef28e3a762ad79c8.css" integrity="sha256-1vzSCk&#43;4bvpN&#43;sjsldpgJEzIhxBCGD2h7yjjp2Ktecg=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://localhost:1313/favicon.png">
-<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon.png">
-<link rel="apple-touch-icon" href="http://localhost:1313/favicon.png">
-<link rel="mask-icon" href="http://localhost:1313/favicon.png">
+<link rel="icon" href="https://fishdel.github.io/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://fishdel.github.io/favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://fishdel.github.io/favicon.png">
+<link rel="apple-touch-icon" href="https://fishdel.github.io/favicon.png">
+<link rel="mask-icon" href="https://fishdel.github.io/favicon.png">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="zh" href="http://localhost:1313/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E9%99%8D%E7%BB%B4/">
+<link rel="alternate" hreflang="zh" href="https://fishdel.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E9%99%8D%E7%BB%B4/">
 <noscript>
     <style>
         #theme-toggle,
@@ -62,7 +62,80 @@
         }
 
     </style>
-</noscript>
+</noscript><meta property="og:url" content="https://fishdel.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E9%99%8D%E7%BB%B4/">
+  <meta property="og:site_name" content="Yuuuuu&#39;s Blog">
+  <meta property="og:title" content="机器学习实战(降维)">
+  <meta property="og:description" content="降维 主要动机 加速，可视化数据，节省空间
+缺点：丢失信息，计算密集，转换过程难以理解
+什么时候用到降维 分类前，加速；聚类前，可视化数据
+维度诅咒 高维数据集——非常稀疏——训练实例彼此远离——容易过拟合">
+  <meta property="og:locale" content="zh">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2022-04-05T22:11:08+08:00">
+    <meta property="article:modified_time" content="2022-04-05T22:11:08+08:00">
+    <meta property="article:tag" content="Machine Learning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="机器学习实战(降维)">
+<meta name="twitter:description" content="降维
+主要动机
+加速，可视化数据，节省空间
+缺点：丢失信息，计算密集，转换过程难以理解
+什么时候用到降维
+分类前，加速；聚类前，可视化数据
+维度诅咒
+高维数据集——非常稀疏——训练实例彼此远离——容易过拟合">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://fishdel.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "机器学习实战(降维)",
+      "item": "https://fishdel.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E9%99%8D%E7%BB%B4/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "机器学习实战(降维)",
+  "name": "机器学习实战(降维)",
+  "description": "降维 主要动机 加速，可视化数据，节省空间\n缺点：丢失信息，计算密集，转换过程难以理解\n什么时候用到降维 分类前，加速；聚类前，可视化数据\n维度诅咒 高维数据集——非常稀疏——训练实例彼此远离——容易过拟合\n",
+  "keywords": [
+    "Machine learning"
+  ],
+  "articleBody": "降维 主要动机 加速，可视化数据，节省空间\n缺点：丢失信息，计算密集，转换过程难以理解\n什么时候用到降维 分类前，加速；聚类前，可视化数据\n维度诅咒 高维数据集——非常稀疏——训练实例彼此远离——容易过拟合\n主要动机：特征过多，训练变得缓慢，难以寻找更好的解决方案\n例子：MNIST数据集中图像边界的像素全是白色，删除这些像素也不会丢失太多信息，或者相邻两个像素合并。\n降维的主要方法 投影：适用于一个分布接近于2D子空间的3D数据集\n流形学习：瑞士卷数据集\n投影 投影的方法：PCA （主成分分析）寻找训练集中可获得最大方差的轴。\n如何寻找训练集的主成分 奇异值分解（SVD）\n使用numpy提供的svd（）函数获得训练集的主成分 如果不是用sklearn的PCA类，就要将数据集做中心化处理.\nX_centered=X-X.mean(axis=0)` `U,s,V=np.linalg.svd(X_centered)` `c1=V.T[:,0]` `c2=V.T[:,1] 有了奇异值分解得到的V，任意选取前d个主成分点乘原始数据集便可实现在d维的投影。\nW2 = V.T[:,:2]` `X2D=X_centered.dot(W2) sklearn实现PCA from sklearn.decomposition import PCA` `pca=PCA(n_components=2)` `X2D=pca.fit_transform(X) 使用components_访问每一个主成分\n`pca.components_.T[:,0]` 方差解释率 pca.explained_variance_ratio_` `pca = PCA(n_components=0.95) 可以将 n_components 设置为 0.0 到 1.0 之间的浮点数，表明希望保留的方差比率 cumsum = np.cumsum(pca.explained_variance_ratio_)` `d = np.argmax(cumsum \u003e= 0.95)+1 也可以保留相加足够大的方差部分维度\n也可以画图寻找拐点\nplt.plot(cumsum,linewidth=3)\nQ：假设你对一个 1000 维的数据集应用 PCA，同时设置方差解释率为 95%，你的最终数据集将会有多少维？\n可能是1-1000之间的任何数字，取决于数据集，\nPCA数据压缩 `pca = PCA(n_components=154)` `X_reduced = pca.fit_transform(X_train)` `X_recovered = pca.inverse_transform(X_reduced)` 几种不同的PCA 随机PCA `rnd_pca = PCA(n_components=154,svd_solver='randomized',random_state=42)` `X_reduced = rnd_pca.fit_transform(X_train)` 增量PCA：对于大型数据集可以划分成小批量，但是要在每个小批量里调用partial_fit方法 from sklearn.decomposition import IncrementalPCA` `n_batches = 100` `inc_pca = IncrementalPCA(n_components=154)` `for X_batch in np.array_split(X_train,n_batches):` `inc_pca.partial_fit(X_batch)` `X_reduced = inc_pca.transform(X_train)` Kernel PCA `from sklearn.decomposition import KernelPCA rbf_pca=KernelPCA(n_components=2,kernel='rbf',gamma=0.04) X_reduced=rbf_pca.fit_transform(X)` 为kPCA调参方法 引入模型，通过最优化模型表现调参\n`from sklearn.model_selection import GridSearchCV` `from sklearn.linear_model import LogisticRegression` `from sklearn.pipeline import Pipeline` `clf = Pipeline([` `(\"kpca\",KernelPCA(n_components=2)),` `(\"log_reg\",LogisticRegression(solver=\"lbfgs\"))` `])` `param_grid = [{` `\"kpca__gamma\":np.linspace(0.03,0.05,10), \"kpca__kernel\":[\"rbf\",\"sigmoid\"]` `}]` `grid_search = GridSearchCV(clf,param_grid,cv=3)` `grid_search.fit(X,y)` 2.基于重建功能算误差\n`best_score = 0.0` `for gamma in np.linspace(0.01, 0.05, 10):` `for kernel in [\"rbf\", \"sigmoid\"]:` `kpca = KernelPCA(n_components=27,fit_inverse_transform=True)` `X_reduced = kpca.fit_transform(X)` `X_preimage = kpca.inverse_transform(X_reduced )` score = mean_squared_error(X, X_preimage) if score \u003e best_score: best_score = score best_parameters = {'gamma':gamma,'kernel':kernel} print(best_parameters,best_score) 各种PCA的选择 首选常规PCA，不适合内存的大型数据集用增量PCA，想要大幅度降低维度并且追求速度用随机PCA，非线性数据集用内核PCA\n流形学习 LLE from sklearn.manifold import LocallyLinearEmbedding lle=LocallyLinearEmbedding(n_components=2,n_neighbors=10) X_reduced=lle.fit_transform(X) ",
+  "wordCount" : "851",
+  "inLanguage": "zh",
+  "datePublished": "2022-04-05T22:11:08+08:00",
+  "dateModified": "2022-04-05T22:11:08+08:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://fishdel.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E9%99%8D%E7%BB%B4/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yuuuuu's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fishdel.github.io/favicon.png"
+    }
+  }
+}
+</script>
 </head>
 
 <body class="" id="top">
@@ -80,7 +153,7 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://localhost:1313/" accesskey="h" title="Yuuuuu&#39;s Blog (Alt + H)">Yuuuuu&#39;s Blog</a>
+            <a href="https://fishdel.github.io/" accesskey="h" title="Yuuuuu&#39;s Blog (Alt + H)">Yuuuuu&#39;s Blog</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -106,37 +179,37 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="http://localhost:1313/" title="🏠主页">
+                <a href="https://fishdel.github.io/" title="🏠主页">
                     <span>🏠主页</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/posts/" title="📚文章">
+                <a href="https://fishdel.github.io/posts/" title="📚文章">
                     <span>📚文章</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/archives/" title="⏱时间轴">
+                <a href="https://fishdel.github.io/archives/" title="⏱时间轴">
                     <span>⏱时间轴</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/tags/" title="🔖标签">
+                <a href="https://fishdel.github.io/tags/" title="🔖标签">
                     <span>🔖标签</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/categories/" title="🧩分类">
+                <a href="https://fishdel.github.io/categories/" title="🧩分类">
                     <span>🧩分类</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/search/" title="🔍搜索">
+                <a href="https://fishdel.github.io/search/" title="🔍搜索">
                     <span>🔍搜索</span>
                 </a>
             </li>
             <li>
-                <a href="http://localhost:1313/about/" title="🙋🏻‍♂️关于">
+                <a href="https://fishdel.github.io/about/" title="🙋🏻‍♂️关于">
                     <span>🙋🏻‍♂️关于</span>
                 </a>
             </li>
@@ -288,7 +361,7 @@ X_reduced=lle.fit_transform(X)
 
   <footer class="post-footer">
     <ul class="post-tags">
-      <li><a href="http://localhost:1313/tags/machine-learning/">Machine Learning</a></li>
+      <li><a href="https://fishdel.github.io/tags/machine-learning/">Machine Learning</a></li>
     </ul>
   </footer>
 </article>
