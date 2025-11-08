@@ -26,7 +26,7 @@ permalinks:
 params:
   homeInfoParams:
     Title: '一个学习、思考和吐槽的地方' # 主题
-    Content: '写一些生活中学到的内容（已移植21-23年内容），然后觉得做一个网站比较有趣
+    Content: '写一些乱七八糟的东西，然后觉得做一个网站比较有趣
                     ' # 描述
 
     
