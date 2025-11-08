@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>机器学习实战(训练模型) | Yuuuuu&#39;s Blog</title>
+<meta name="keywords" content="Machine learning">
+<meta name="description" content="训练模型
+训练模型的方法
+使用成本函数最小的参数
+
+标准方程法
+SVD奇异值分解
+
+迭代优化，使用梯度下降
+
+批量梯度下降
+随机梯度下降
+小批量梯度下降
+
+训练模型方法的问题
+训练集有数百万特征：（使用迭代优化）随机梯度下降和小批量梯度下降，若训练集可以容纳于内存，使用批量梯度下降">
+<meta name="author" content="">
+<link rel="canonical" href="https://fishdel.github.io/zh/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.d6fcd20a4fb86efa4dfac8ec95da60244cc8871042183da1ef28e3a762ad79c8.css" integrity="sha256-1vzSCk&#43;4bvpN&#43;sjsldpgJEzIhxBCGD2h7yjjp2Ktecg=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://fishdel.github.io/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://fishdel.github.io/favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://fishdel.github.io/favicon.png">
+<link rel="apple-touch-icon" href="https://fishdel.github.io/favicon.png">
+<link rel="mask-icon" href="https://fishdel.github.io/favicon.png">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="zh" href="https://fishdel.github.io/zh/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:url" content="https://fishdel.github.io/zh/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B/">
+  <meta property="og:site_name" content="Yuuuuu&#39;s Blog">
+  <meta property="og:title" content="机器学习实战(训练模型)">
+  <meta property="og:description" content="训练模型 训练模型的方法 使用成本函数最小的参数 标准方程法 SVD奇异值分解 迭代优化，使用梯度下降 批量梯度下降 随机梯度下降 小批量梯度下降 训练模型方法的问题 训练集有数百万特征：（使用迭代优化）随机梯度下降和小批量梯度下降，若训练集可以容纳于内存，使用批量梯度下降">
+  <meta property="og:locale" content="zh">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2022-04-05T22:11:08+08:00">
+    <meta property="article:modified_time" content="2022-04-05T22:11:08+08:00">
+    <meta property="article:tag" content="Machine Learning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="机器学习实战(训练模型)">
+<meta name="twitter:description" content="训练模型
+训练模型的方法
+使用成本函数最小的参数
+
+标准方程法
+SVD奇异值分解
+
+迭代优化，使用梯度下降
+
+批量梯度下降
+随机梯度下降
+小批量梯度下降
+
+训练模型方法的问题
+训练集有数百万特征：（使用迭代优化）随机梯度下降和小批量梯度下降，若训练集可以容纳于内存，使用批量梯度下降">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://fishdel.github.io/zh/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "机器学习实战(训练模型)",
+      "item": "https://fishdel.github.io/zh/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "机器学习实战(训练模型)",
+  "name": "机器学习实战(训练模型)",
+  "description": "训练模型 训练模型的方法 使用成本函数最小的参数 标准方程法 SVD奇异值分解 迭代优化，使用梯度下降 批量梯度下降 随机梯度下降 小批量梯度下降 训练模型方法的问题 训练集有数百万特征：（使用迭代优化）随机梯度下降和小批量梯度下降，若训练集可以容纳于内存，使用批量梯度下降\n",
+  "keywords": [
+    "Machine learning"
+  ],
+  "articleBody": "训练模型 训练模型的方法 使用成本函数最小的参数 标准方程法 SVD奇异值分解 迭代优化，使用梯度下降 批量梯度下降 随机梯度下降 小批量梯度下降 训练模型方法的问题 训练集有数百万特征：（使用迭代优化）随机梯度下降和小批量梯度下降，若训练集可以容纳于内存，使用批量梯度下降\n训练集里特征的数值大小迥异 先放缩，再使用梯度下降 使用标准方程法或SVD 使用批量梯度下降，并在每个轮次绘制验证误差。如果验证误差持续上升 如果训练错误增加：学习率过高，如果训练错误没增加，可能过拟合——简化模型 使用多项式回归时，训练误差和验证误差之间差距大 验证误差远高于训练误差\n过拟合\n减少多项式阶数 添加L1或l2至成本函数 增加训练集的大小 使用岭回归时，训练误差和验证误差差不多且都相当高 欠拟合，减少正则化参数alpha 两种用于分类的模型 Logistic回归 对数几率回归：把线性回归的结果，通过sigmoid函数，从(-∞,∞)映射到(0,1) 成本函数为凸函数，梯度下降不会陷入局部最优 Softmax回归 逻辑回归只能用于二分类，通过softmax函数扩展到多分类问题 成本函数为交叉熵成本函数 多项式回归（可能会过拟合） 处理非线性关系的数据：将每个特征的幂次方添加为一个新特征，在扩展的特征集上训练一个线性模型 poly_features = PolynomialFeatures(degree=2, include_bias=False) “斜率”参数（w，也叫作权重或系数）被保存在 coef_ 属性中，而偏移或截距（b）被保 存在 intercept_ 属性中 若有（a，b）两个特征，使用degree=2的二次多项式则为（1，a, a^2, ab, b ,b^2)。 参数：\ndegree：度数，决定多项式的次数\ninteraction_only： 默认为False，字面意思就是只能交叉相乘，不能有a^2这种.\ninclude_bias: 默认为True, 这个bias指的是多项式会自动包含1，设为False就没这个1了\n欠拟合——两条曲线接近且都很高 过拟合——曲线之间存在很大的间隙\n正则化 正则化线性模型 岭回归\nalpha：正则化系数，float类型，默认为1.0。 fit_intercept：是否需要截距b，默认为True。 normalize：是否先进行归一化，默认为False。 copy_X：是否复制X数组，否则覆盖，默认为True。 max_iter：最大的迭代次数，int类型，默认为None。 solver：求解方法，str类型，默认为auto。可选参数为：auto、svd、cholesky、lsqr、sparse_cg、sag。\nridge_reg =Ridge(alpha=1, solver=“cholesky”, random_state=42)\nsgd_reg = SGDRegressor(penalty=‘l2’,max_iter=50,tol=-np.infty,random_state=42)\n也可以这样用 Lasso回归\nlasso_reg = Lasso(alpha=0.1)\nSGDRegressor(penalty=‘l1’)\n经常把特征的权重降低为0，只有很少的特征重要时选他\n弹性网络\nelastic_net = ElasticNet(alpha=0.1,l1_ratio=0.5,random_state=42) 二者的一个混合，容易产生一些异常 早期停止法\nsgd_reg = SGDRegressor(max_iter=1, tol=-np.infty, warm_start=True, penalty=None, learning_rate=“constant”, eta0=0.0005, random_state=42)\n当 warm_start=True 时，调用 fit() 方法后，训练会从停下来的地方继续，而不是从头重新开始\n正则化 正则化就是把额外的约束或者惩罚项加到已有模型（损失函数）上，以防止过拟合并提高泛化能力。损失函数由原来的E(X,Y)变为E(X,Y)+alpha||w||，w是模型系数组成的向量（有些地方也叫参数parameter，coefficients），||·||一般是L1或者L2范数，alpha是一个可调的参数，控制着正则化的强度。当用在线性模型上时，L1正则化和L2正则化也称为Lasso和Ridge。\n",
+  "wordCount" : "1307",
+  "inLanguage": "zh",
+  "datePublished": "2022-04-05T22:11:08+08:00",
+  "dateModified": "2022-04-05T22:11:08+08:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://fishdel.github.io/zh/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yuuuuu's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fishdel.github.io/favicon.png"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://fishdel.github.io/zh/" accesskey="h" title="Yuuuuu&#39;s Blog (Alt + H)">Yuuuuu&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://fishdel.github.io/zh/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/zh/posts/" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/zh/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/zh/tags/" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/zh/categories/" title="🧩分类">
+                    <span>🧩分类</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/zh/search/" title="🔍搜索">
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/zh/about/" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      机器学习实战(训练模型)
+    </h1>
+    <div class="post-meta"><span title='2022-04-05 22:11:08 +0800 CST'>四月 5, 2022</span>
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="训练模型">训练模型<a hidden class="anchor" aria-hidden="true" href="#训练模型">#</a></h1>
+<h2 id="训练模型的方法">训练模型的方法<a hidden class="anchor" aria-hidden="true" href="#训练模型的方法">#</a></h2>
+<h3 id="使用成本函数最小的参数">使用成本函数最小的参数<a hidden class="anchor" aria-hidden="true" href="#使用成本函数最小的参数">#</a></h3>
+<ul>
+<li>标准方程法</li>
+<li>SVD奇异值分解</li>
+</ul>
+<h3 id="迭代优化使用梯度下降">迭代优化，使用梯度下降<a hidden class="anchor" aria-hidden="true" href="#迭代优化使用梯度下降">#</a></h3>
+<ul>
+<li>批量梯度下降</li>
+<li>随机梯度下降</li>
+<li>小批量梯度下降</li>
+</ul>
+<h2 id="训练模型方法的问题">训练模型方法的问题<a hidden class="anchor" aria-hidden="true" href="#训练模型方法的问题">#</a></h2>
+<p>训练集有数百万特征：（使用迭代优化）随机梯度下降和小批量梯度下降，若训练集可以容纳于内存，使用批量梯度下降</p>
+<h3 id="训练集里特征的数值大小迥异">训练集里特征的数值大小迥异<a hidden class="anchor" aria-hidden="true" href="#训练集里特征的数值大小迥异">#</a></h3>
+<ul>
+<li>先放缩，再使用梯度下降</li>
+<li>使用标准方程法或SVD</li>
+</ul>
+<h3 id="使用批量梯度下降并在每个轮次绘制验证误差如果验证误差持续上升">使用批量梯度下降，并在每个轮次绘制验证误差。如果验证误差持续上升<a hidden class="anchor" aria-hidden="true" href="#使用批量梯度下降并在每个轮次绘制验证误差如果验证误差持续上升">#</a></h3>
+<ul>
+<li>如果训练错误增加：学习率过高，如果训练错误没增加，可能过拟合——简化模型</li>
+</ul>
+<h3 id="使用多项式回归时训练误差和验证误差之间差距大">使用多项式回归时，训练误差和验证误差之间差距大<a hidden class="anchor" aria-hidden="true" href="#使用多项式回归时训练误差和验证误差之间差距大">#</a></h3>
+<ul>
+<li>
+<p>验证误差远高于训练误差</p>
+<ul>
+<li>
+<p>过拟合</p>
+<ul>
+<li>减少多项式阶数</li>
+<li>添加L1或l2至成本函数</li>
+<li>增加训练集的大小</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="使用岭回归时训练误差和验证误差差不多且都相当高">使用岭回归时，训练误差和验证误差差不多且都相当高<a hidden class="anchor" aria-hidden="true" href="#使用岭回归时训练误差和验证误差差不多且都相当高">#</a></h3>
+<ul>
+<li>欠拟合，减少正则化参数alpha</li>
+</ul>
+<h2 id="两种用于分类的模型">两种用于分类的模型<a hidden class="anchor" aria-hidden="true" href="#两种用于分类的模型">#</a></h2>
+<h3 id="logistic回归">Logistic回归<a hidden class="anchor" aria-hidden="true" href="#logistic回归">#</a></h3>
+<ul>
+<li>对数几率回归：把线性回归的结果，通过sigmoid函数，从(-∞,∞)映射到(0,1)</li>
+<li>成本函数为凸函数，梯度下降不会陷入局部最优</li>
+</ul>
+<h3 id="softmax回归">Softmax回归<a hidden class="anchor" aria-hidden="true" href="#softmax回归">#</a></h3>
+<ul>
+<li>逻辑回归只能用于二分类，通过softmax函数扩展到多分类问题</li>
+<li>成本函数为交叉熵成本函数</li>
+</ul>
+<h2 id="多项式回归可能会过拟合">多项式回归（可能会过拟合）<a hidden class="anchor" aria-hidden="true" href="#多项式回归可能会过拟合">#</a></h2>
+<h3 id="处理非线性关系的数据将每个特征的幂次方添加为一个新特征在扩展的特征集上训练一个线性模型">处理非线性关系的数据：将每个特征的幂次方添加为一个新特征，在扩展的特征集上训练一个线性模型<a hidden class="anchor" aria-hidden="true" href="#处理非线性关系的数据将每个特征的幂次方添加为一个新特征在扩展的特征集上训练一个线性模型">#</a></h3>
+<ul>
+<li>poly_features = PolynomialFeatures(degree=2, include_bias=False)</li>
+<li>“斜率”参数（w，也叫作权重或系数）被保存在 coef_ 属性中，而偏移或截距（b）被保
+存在 intercept_ 属性中</li>
+</ul>
+<h3 id="若有ab两个特征使用degree2的二次多项式则为1a-a2-ab-b-b2">若有（a，b）两个特征，使用degree=2的二次多项式则为（1，a, a^2, ab, b ,b^2)。<a hidden class="anchor" aria-hidden="true" href="#若有ab两个特征使用degree2的二次多项式则为1a-a2-ab-b-b2">#</a></h3>
+<p>参数：</p>
+<p>degree：度数，决定多项式的次数</p>
+<p>interaction_only： 默认为False，字面意思就是只能交叉相乘，不能有a^2这种.</p>
+<p>include_bias: 默认为True, 这个bias指的是多项式会自动包含1，设为False就没这个1了</p>
+<h3 id="欠拟合两条曲线接近且都很高">欠拟合——两条曲线接近且都很高<a hidden class="anchor" aria-hidden="true" href="#欠拟合两条曲线接近且都很高">#</a></h3>
+<p>过拟合——曲线之间存在很大的间隙</p>
+<h2 id="正则化">正则化<a hidden class="anchor" aria-hidden="true" href="#正则化">#</a></h2>
+<h3 id="正则化线性模型">正则化线性模型<a hidden class="anchor" aria-hidden="true" href="#正则化线性模型">#</a></h3>
+<ul>
+<li>
+<p>岭回归</p>
+<ul>
+<li>
+<p>alpha：正则化系数，float类型，默认为1.0。
+fit_intercept：是否需要截距b，默认为True。
+normalize：是否先进行归一化，默认为False。
+copy_X：是否复制X数组，否则覆盖，默认为True。
+max_iter：最大的迭代次数，int类型，默认为None。
+solver：求解方法，str类型，默认为auto。可选参数为：auto、svd、cholesky、lsqr、sparse_cg、sag。</p>
+</li>
+<li>
+<p>ridge_reg =Ridge(alpha=1, solver=&ldquo;cholesky&rdquo;, random_state=42)</p>
+<ul>
+<li>
+<p>sgd_reg = SGDRegressor(penalty=&lsquo;l2&rsquo;,max_iter=50,tol=-np.infty,random_state=42)</p>
+<ul>
+<li>也可以这样用</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>
+<p>Lasso回归</p>
+</li>
+</ul>
+<p>lasso_reg = Lasso(alpha=0.1)</p>
+<p>SGDRegressor(penalty=&lsquo;l1&rsquo;)</p>
+<p>经常把特征的权重降低为0，只有很少的特征重要时选他</p>
+<ul>
+<li>
+<p>弹性网络</p>
+<ul>
+<li>elastic_net = ElasticNet(alpha=0.1,l1_ratio=0.5,random_state=42)</li>
+<li>二者的一个混合，容易产生一些异常</li>
+</ul>
+</li>
+<li>
+<p>早期停止法</p>
+<ul>
+<li>
+<p>sgd_reg = SGDRegressor(max_iter=1, tol=-np.infty, warm_start=True,
+penalty=None, learning_rate=&ldquo;constant&rdquo;, eta0=0.0005, random_state=42)</p>
+</li>
+<li>
+<p>当 warm_start=True 时，调用 fit() 方法后，训练会从停下来的地方继续，而不是从头重新开始</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="正则化-1">正则化<a hidden class="anchor" aria-hidden="true" href="#正则化-1">#</a></h3>
+<p>正则化就是把额外的约束或者惩罚项加到已有模型（损失函数）上，以防止过拟合并提高泛化能力。损失函数由原来的E(X,Y)变为E(X,Y)+alpha||w||，w是模型系数组成的向量（有些地方也叫参数parameter，coefficients），||·||一般是L1或者L2范数，alpha是一个可调的参数，控制着正则化的强度。当用在线性模型上时，L1正则化和L2正则化也称为Lasso和Ridge。</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://fishdel.github.io/zh/tags/machine-learning/">Machine Learning</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span><a href="https://fishdel.github.io/">©2024 Yuuuu&rsquo;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

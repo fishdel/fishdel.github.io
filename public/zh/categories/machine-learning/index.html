@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>Machine Learning | Yuuuuu&#39;s Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="">
+<meta name="author" content="">
+<link rel="canonical" href="https://fishdel.github.io/zh/categories/machine-learning/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.d6fcd20a4fb86efa4dfac8ec95da60244cc8871042183da1ef28e3a762ad79c8.css" integrity="sha256-1vzSCk&#43;4bvpN&#43;sjsldpgJEzIhxBCGD2h7yjjp2Ktecg=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://fishdel.github.io/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://fishdel.github.io/favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://fishdel.github.io/favicon.png">
+<link rel="apple-touch-icon" href="https://fishdel.github.io/favicon.png">
+<link rel="mask-icon" href="https://fishdel.github.io/favicon.png">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" type="application/rss+xml" href="https://fishdel.github.io/zh/categories/machine-learning/index.xml">
+<link rel="alternate" hreflang="zh" href="https://fishdel.github.io/zh/categories/machine-learning/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:url" content="https://fishdel.github.io/zh/categories/machine-learning/">
+  <meta property="og:site_name" content="Yuuuuu&#39;s Blog">
+  <meta property="og:title" content="Machine Learning">
+  <meta property="og:locale" content="zh">
+  <meta property="og:type" content="website">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Machine Learning">
+<meta name="twitter:description" content="">
+
+</head>
+
+<body class="list" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://fishdel.github.io/zh/" accesskey="h" title="Yuuuuu&#39;s Blog (Alt + H)">Yuuuuu&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://fishdel.github.io/zh/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/zh/posts/" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/zh/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/zh/tags/" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/zh/categories/" title="🧩分类">
+                    <span>🧩分类</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/zh/search/" title="🔍搜索">
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/zh/about/" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main"> 
+<header class="page-header">
+  <h1>
+    Machine Learning
+  </h1>
+</header>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Pandas基本用法
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>1.数据导入 df=pd.read_csv(&#39;Pokemon.csv&#39;,encoding=&#34;ISO-8859-1&#34;) df.head() 2.查看数据 df.shape df.shape[0] df.shape[1] df.columns #列名 df.index #行名 df.dtypes df.head() df.tail() df.sample() df.describe() pd.set_option(&#39;max_colwidth&#39;,8) #设置每一行的最大宽度，恢复原设置方法 pd.reset_option(&#39;max_colwidth&#39;) loc操作与iloc loc通过label定位；iloc通过position定位
+df.loc[[0,5],[&#39;名称&#39;,&#39;生命点数&#39;]] df.iloc[0:10,[0,1]] df[:3] 3.数据筛选与操作 df[df[&#39;综合能力&#39;]&gt;400].head() df[df[&#39;世代数&#39;]==1] df.insert(4,&#39;能力600&#39;,df[&#39;综合能力&#39;]&gt;=600) 4.读取数据 pickle文件，可以将python中的数据类型进行序列化 compression参数指定了压缩类型，‘zip’, ‘gzip’, ‘bz2’, ‘zstd’
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-05-20 22:11:08 +0800 CST'>五月 20, 2022</span></footer>
+  <a class="entry-link" aria-label="post link to Pandas基本用法" href="https://fishdel.github.io/zh/posts/pandas%E5%B8%B8%E8%A7%81%E7%94%A8%E6%B3%95/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">工程化之docker&#43;kubeflow
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>基本概念 1.docker 应用容器引擎，用于运行容器
+image：可执行程序
+container：运行起来的进程
+dockerfile：image的源代码， 是一个用**来构建镜像的文本文件，**文本内容包含了一条条构建镜像所需的指令和说明
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-04-05 22:11:08 +0800 CST'>四月 5, 2022</span></footer>
+  <a class="entry-link" aria-label="post link to 工程化之docker&#43;kubeflow" href="https://fishdel.github.io/zh/posts/%E5%B7%A5%E7%A8%8B%E5%8C%96%E4%B9%8Bdocker&#43;kubeflow/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">机器学习实战(LightGBM)
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>LightGBM 介绍 LightGBM（Light Gradient Boosting Machine）：一个实现GBDT算法的框架，解决GBDT在海量数据遇到的问题。
+两大技术： （1）GOSS(Gradient-based One-Side Sampling)：减少样本数
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-04-05 22:11:08 +0800 CST'>四月 5, 2022</span></footer>
+  <a class="entry-link" aria-label="post link to 机器学习实战(LightGBM)" href="https://fishdel.github.io/zh/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98lightgbm/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">机器学习实战(集成学习与随机森林)
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>集成学习与随机森林 更新权重 Adaboost AdaBoostClassifier(base_estimator=None, n_estimators=50, learning_rate=1.0, algorithm=’SAMME.R’, random_state=None)
+base_estimator:可选参数，默认为DecisionTreeClassifier。 algorithm： 可选参数，默认为SAMME.R 循环训练，实例权重不断更新（不是是成本函数最小化，而是加入更多预测器）
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-04-05 22:11:08 +0800 CST'>四月 5, 2022</span></footer>
+  <a class="entry-link" aria-label="post link to 机器学习实战(集成学习与随机森林)" href="https://fishdel.github.io/zh/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E4%B8%8E%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">机器学习实战(降维)
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>降维 主要动机 加速，可视化数据，节省空间
+缺点：丢失信息，计算密集，转换过程难以理解
+什么时候用到降维 分类前，加速；聚类前，可视化数据
+维度诅咒 高维数据集——非常稀疏——训练实例彼此远离——容易过拟合
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-04-05 22:11:08 +0800 CST'>四月 5, 2022</span></footer>
+  <a class="entry-link" aria-label="post link to 机器学习实战(降维)" href="https://fishdel.github.io/zh/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E9%99%8D%E7%BB%B4/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">机器学习实战(决策树)
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>决策树 分类树 八个重要参数 criterion： 决定不纯度的计算方法： 1）”entropy“，使用信息熵（Entropy） 2）”gini“，使用基尼系数（Gini Impurity）
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-04-05 22:11:08 +0800 CST'>四月 5, 2022</span></footer>
+  <a class="entry-link" aria-label="post link to 机器学习实战(决策树)" href="https://fishdel.github.io/zh/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0%E5%86%B3%E7%AD%96%E6%A0%91/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">机器学习实战(训练模型)
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>训练模型 训练模型的方法 使用成本函数最小的参数 标准方程法 SVD奇异值分解 迭代优化，使用梯度下降 批量梯度下降 随机梯度下降 小批量梯度下降 训练模型方法的问题 训练集有数百万特征：（使用迭代优化）随机梯度下降和小批量梯度下降，若训练集可以容纳于内存，使用批量梯度下降
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-04-05 22:11:08 +0800 CST'>四月 5, 2022</span></footer>
+  <a class="entry-link" aria-label="post link to 机器学习实战(训练模型)" href="https://fishdel.github.io/zh/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E7%AC%94%E8%AE%B0%E8%AE%AD%E7%BB%83%E6%A8%A1%E5%9E%8B/"></a>
+</article>
+
+<article class="post-entry tag-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">机器学习实战(支持向量机)
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>支持向量机 线性SVM分类 硬间隔分类：让所有实例都在正确的一边的分类。 硬间隔变成软间隔：引入松弛变量C。 C是调节间隔与准确率的因子，C值越大，越不愿放弃那些离群点；c值越小，越不重视那些离群点。（模型过拟合，C值调小进行正则化）
+软间隔分类：在“街道”的宽度和间隔违例（错误分类）之间找到良好的平衡的分类。 svm_clf = SVC(kernel=“linear”, C=float(“inf”)) 线性核函数
+...</p>
+  </div>
+  <footer class="entry-footer"><span title='2022-04-05 22:11:08 +0800 CST'>四月 5, 2022</span></footer>
+  <a class="entry-link" aria-label="post link to 机器学习实战(支持向量机)" href="https://fishdel.github.io/zh/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/"></a>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span><a href="https://fishdel.github.io/">©2024 Yuuuu&rsquo;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

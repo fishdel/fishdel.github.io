@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>嵌入式系统——MCU组成结构与程序运行机制 | Yuuuuu&#39;s Blog</title>
+<meta name="keywords" content="嵌入式与C语言">
+<meta name="description" content="MCU系统结构
+整体结构
+因为学习的是STM32，所以按照手册进行理解。
+哈佛结构和冯诺依曼结构
+
+
+首先我们在编写代码的时候，可以将代码分为两部分，一部分是逻辑代码部分，另一部分是定义的变量，逻辑代码是不用改变的，而变量会改变，哈佛结构和冯诺依曼结构就是对于这个两部分代码的存储方式有着一些区别。
+冯诺依曼结构将程序存储器和数据存储器合并在一起的处理器架构设计，他的特点是使用同一个存储器，经由同一个总线传输。
+哈佛结构将程序指令存储和数据存储分开存储，在嵌入式编程中一般使用这种方式，因为可以只修改数据不用修改逻辑代码。">
+<meta name="author" content="">
+<link rel="canonical" href="https://fishdel.github.io/zh/posts/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0mcu%E7%BB%84%E6%88%90%E7%BB%93%E6%9E%84%E4%B8%8E%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6%E4%B8%89/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.d6fcd20a4fb86efa4dfac8ec95da60244cc8871042183da1ef28e3a762ad79c8.css" integrity="sha256-1vzSCk&#43;4bvpN&#43;sjsldpgJEzIhxBCGD2h7yjjp2Ktecg=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://fishdel.github.io/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://fishdel.github.io/favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://fishdel.github.io/favicon.png">
+<link rel="apple-touch-icon" href="https://fishdel.github.io/favicon.png">
+<link rel="mask-icon" href="https://fishdel.github.io/favicon.png">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="zh" href="https://fishdel.github.io/zh/posts/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0mcu%E7%BB%84%E6%88%90%E7%BB%93%E6%9E%84%E4%B8%8E%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6%E4%B8%89/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:url" content="https://fishdel.github.io/zh/posts/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0mcu%E7%BB%84%E6%88%90%E7%BB%93%E6%9E%84%E4%B8%8E%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6%E4%B8%89/">
+  <meta property="og:site_name" content="Yuuuuu&#39;s Blog">
+  <meta property="og:title" content="嵌入式系统——MCU组成结构与程序运行机制">
+  <meta property="og:description" content="MCU系统结构 整体结构 因为学习的是STM32，所以按照手册进行理解。
+哈佛结构和冯诺依曼结构 首先我们在编写代码的时候，可以将代码分为两部分，一部分是逻辑代码部分，另一部分是定义的变量，逻辑代码是不用改变的，而变量会改变，哈佛结构和冯诺依曼结构就是对于这个两部分代码的存储方式有着一些区别。 冯诺依曼结构将程序存储器和数据存储器合并在一起的处理器架构设计，他的特点是使用同一个存储器，经由同一个总线传输。 哈佛结构将程序指令存储和数据存储分开存储，在嵌入式编程中一般使用这种方式，因为可以只修改数据不用修改逻辑代码。">
+  <meta property="og:locale" content="zh">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2022-08-08T22:11:08+08:00">
+    <meta property="article:modified_time" content="2022-08-08T22:11:08+08:00">
+    <meta property="article:tag" content="嵌入式与C语言">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="嵌入式系统——MCU组成结构与程序运行机制">
+<meta name="twitter:description" content="MCU系统结构
+整体结构
+因为学习的是STM32，所以按照手册进行理解。
+哈佛结构和冯诺依曼结构
+
+
+首先我们在编写代码的时候，可以将代码分为两部分，一部分是逻辑代码部分，另一部分是定义的变量，逻辑代码是不用改变的，而变量会改变，哈佛结构和冯诺依曼结构就是对于这个两部分代码的存储方式有着一些区别。
+冯诺依曼结构将程序存储器和数据存储器合并在一起的处理器架构设计，他的特点是使用同一个存储器，经由同一个总线传输。
+哈佛结构将程序指令存储和数据存储分开存储，在嵌入式编程中一般使用这种方式，因为可以只修改数据不用修改逻辑代码。">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://fishdel.github.io/zh/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "嵌入式系统——MCU组成结构与程序运行机制",
+      "item": "https://fishdel.github.io/zh/posts/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0mcu%E7%BB%84%E6%88%90%E7%BB%93%E6%9E%84%E4%B8%8E%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6%E4%B8%89/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "嵌入式系统——MCU组成结构与程序运行机制",
+  "name": "嵌入式系统——MCU组成结构与程序运行机制",
+  "description": "MCU系统结构 整体结构 因为学习的是STM32，所以按照手册进行理解。\n哈佛结构和冯诺依曼结构 首先我们在编写代码的时候，可以将代码分为两部分，一部分是逻辑代码部分，另一部分是定义的变量，逻辑代码是不用改变的，而变量会改变，哈佛结构和冯诺依曼结构就是对于这个两部分代码的存储方式有着一些区别。 冯诺依曼结构将程序存储器和数据存储器合并在一起的处理器架构设计，他的特点是使用同一个存储器，经由同一个总线传输。 哈佛结构将程序指令存储和数据存储分开存储，在嵌入式编程中一般使用这种方式，因为可以只修改数据不用修改逻辑代码。\n",
+  "keywords": [
+    "嵌入式与C语言"
+  ],
+  "articleBody": "MCU系统结构 整体结构 因为学习的是STM32，所以按照手册进行理解。\n哈佛结构和冯诺依曼结构 首先我们在编写代码的时候，可以将代码分为两部分，一部分是逻辑代码部分，另一部分是定义的变量，逻辑代码是不用改变的，而变量会改变，哈佛结构和冯诺依曼结构就是对于这个两部分代码的存储方式有着一些区别。 冯诺依曼结构将程序存储器和数据存储器合并在一起的处理器架构设计，他的特点是使用同一个存储器，经由同一个总线传输。 哈佛结构将程序指令存储和数据存储分开存储，在嵌入式编程中一般使用这种方式，因为可以只修改数据不用修改逻辑代码。\nSTM32采用的就是这种哈佛结构 它分为四个驱动单元和四个从动单元 驱动单元：CM3，系统总线和数据总线，DMA 从动单元: SRAM，FLASH，FSMA，AHB到APB的桥以及连接的所有设备。\n可以从这个总线矩阵来看，它的前级是CM3和DMA，它的后级是从设备——也就是存储器以及各个外设控制器。\n各部分间联系 CM3内核 内核里面有NVIC嵌套中断向量控制器：ALU，寄存器组，内存保护单元，总线的内连接等。 NVIC:关于中断的内容可以看这一篇： 中断的概念与机制 寄存器组：其中寄存器组的R0-R12为通用寄存器。R13为堆栈指针寄存器，有2个寄存器，当时同一时间只能用一个，一个是主堆栈指针（MSP）：复位后缺省使用的堆栈指针，用于操作系统内核以及异常处理例程（包括中断服务例程）；另一个是进程堆栈指针（PSP）：由用户的应用程序代码使用。 R14为连接寄存器，当呼叫一个寄存器，R14存储返回地址；R15是程序计数器PC。 其中还有特殊功能寄存器组：\n程序状态字寄存器组（PSRs），记录ALU的标志。 中断屏蔽寄存器组（PRIMASK, FAULTMASK, BASEPRI） PRIMASK相当于中断总开关，关闭后只有NMI和硬fault才会响应；FAULTMASK打开后只有NMI才会响应； BASEPRI定义被屏蔽优先级的阈值。 控制寄存器（CONTROL）：选择堆栈的指针和线程模式。 总线 Icode指令总线：和FLASH的接口相连，用于取指令，它不经过总线矩阵，不需要切换，速度更快。 Dcode数据总线：主要用来读取存储在SRAM和Flash里的数据。 哈佛结构在这里我理解为SRAM是处理变量和堆栈记录，而Flash是我们烧进去的代码，SRAM是由锁存器构成，掉电之后内容就会没有，而Flash相当于逻辑代码。 DMA总线：可以访问Flash，SRAM，数据寄存器，然后三者间交换数据并且不占用CPU。 而总线矩阵在这里协调CM3内核和DMA的竞争。 系统总线：也叫外设总线，连接CM3的内核和外设。AHB通过桥接的方式进行了分频，APB2为72HZ上面搭载着GPIO口，ADC，TIM1等外设，而APB1为36HZ,上面挂着串口，看门狗等慢速设备。\n时钟 STM32F10x时钟源 HSI：（高速内部）RC振荡器，频率8MHz，精度不高 HSE：（高速外部）外接石英/陶瓷晶振（4MHz——16MHz） LSI：（低速内部）RC振荡器，频率40KHz，LSI是作为看门狗时钟源和RTC时钟源而独立使用 LSE：（低速外部）外接晶振，32.768KHz石英晶振 PLL：锁相环倍频输出，其时钟输入源可选择为HSI/2、HSE或者HSE/2。倍频可选择为2~16倍，但是其输出频率最大不得超过72MHz\n多个时钟源是因为兼容不同速度的外设，有些高速，有些低速，不同的时钟对应不同的模块。\n系统时钟SYSCLK可来源于三个时钟源：\nHSI振荡器时钟 HSE振荡器时钟 PLL时钟 系统时钟—\u003eAHB分频器—\u003e各个外设分频倍频器 —\u003e 外设时钟的设置\nstm32上电过程 1. 选择启动方式 STM32 上电复位后代码从0x00000000开始，选择不同的启动模式就是将不同的地址映射到0x00000000 从Flash启动，将0x80000000映射到0x00000000； 从系统存储器启动，一般是将stm32里带的Bootloader的代码映射到0x00000000，这个Bootloader就是将用户的代码通过串口下载到Flash，再从Flash启动； 从SRAM启动，将0x20000000映射到0x00000000。\n2. 根据复位中断向量表设置SP和PC 假定从Flash启动 向量表的存储位置是可以设置的，通过 NVIC 中的一个重定位寄存器来指出向量表的地址。在复位后，该寄存器的值为 0。因此，在地址 0 处必须包含一张向量表，用于初始时的异常分配。 起始地址存放堆顶指针，而第二个地址则必须存放复位中断入口向量地址，这样在Cortex-M3内核复位后，会自动从起始地址的下一个32位空间取出复位中断入口向量，跳转执行复位中断服务程序。\n3. 初始化系统时钟 在复位中断函数中调用 SystemInit 函数，初始化时钟，配置中断向量表等。\n4. 软件设置SP 在复位中断服务程序中会跳转__main函数，在这里面加载.data.bss,初始化栈区，在__main函数中调用C函数main。\n",
+  "wordCount" : "2042",
+  "inLanguage": "zh",
+  "datePublished": "2022-08-08T22:11:08+08:00",
+  "dateModified": "2022-08-08T22:11:08+08:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://fishdel.github.io/zh/posts/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0mcu%E7%BB%84%E6%88%90%E7%BB%93%E6%9E%84%E4%B8%8E%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6%E4%B8%89/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yuuuuu's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fishdel.github.io/favicon.png"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://fishdel.github.io/zh/" accesskey="h" title="Yuuuuu&#39;s Blog (Alt + H)">Yuuuuu&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://fishdel.github.io/zh/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/zh/posts/" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/zh/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/zh/tags/" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/zh/categories/" title="🧩分类">
+                    <span>🧩分类</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/zh/search/" title="🔍搜索">
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/zh/about/" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      嵌入式系统——MCU组成结构与程序运行机制
+    </h1>
+    <div class="post-meta"><span title='2022-08-08 22:11:08 +0800 CST'>八月 8, 2022</span>
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="mcu系统结构">MCU系统结构<a hidden class="anchor" aria-hidden="true" href="#mcu系统结构">#</a></h1>
+<h2 id="整体结构">整体结构<a hidden class="anchor" aria-hidden="true" href="#整体结构">#</a></h2>
+<p>因为学习的是STM32，所以按照手册进行理解。</p>
+<h3 id="哈佛结构和冯诺依曼结构">哈佛结构和冯诺依曼结构<a hidden class="anchor" aria-hidden="true" href="#哈佛结构和冯诺依曼结构">#</a></h3>
+<ol>
+<li>
+<p>首先我们在编写代码的时候，可以将代码分为两部分，一部分是逻辑代码部分，另一部分是定义的变量，逻辑代码是不用改变的，而变量会改变，哈佛结构和冯诺依曼结构就是对于这个两部分代码的存储方式有着一些区别。
+<strong>冯诺依曼结构</strong>将程序存储器和数据存储器合并在一起的处理器架构设计，他的特点是使用同一个存储器，经由同一个总线传输。
+<strong>哈佛结构</strong>将程序指令存储和数据存储分开存储，在嵌入式编程中一般使用这种方式，因为可以只修改数据不用修改逻辑代码。</p>
+</li>
+<li>
+<p>STM32采用的就是这种哈佛结构
+它分为四个驱动单元和四个从动单元
+<strong>驱动单元</strong>：CM3，系统总线和数据总线，DMA
+<strong>从动单元</strong>:   SRAM，FLASH，FSMA，AHB到APB的桥以及连接的所有设备。</p>
+</li>
+</ol>
+<p>可以从这个总线矩阵来看，它的前级是CM3和DMA，它的后级是从设备——也就是存储器以及各个外设控制器。</p>
+<p><img alt="在这里插入图片描述" loading="lazy" src="https://i-blog.csdnimg.cn/blog_migrate/fdf7b3c94410d991273ab37ae77eca93.png#pic_center"></p>
+<h2 id="各部分间联系">各部分间联系<a hidden class="anchor" aria-hidden="true" href="#各部分间联系">#</a></h2>
+<h3 id="cm3内核">CM3内核<a hidden class="anchor" aria-hidden="true" href="#cm3内核">#</a></h3>
+<p><img alt="在这里插入图片描述" loading="lazy" src="https://i-blog.csdnimg.cn/blog_migrate/4000ab9d4864a05b759e02d1703979ec.png#pic_center">
+内核里面有NVIC嵌套中断向量控制器：ALU，寄存器组，内存保护单元，总线的内连接等。
+NVIC:关于中断的内容可以看这一篇：
+<a href="https://blog.csdn.net/weixin_43925467/article/details/126206022?spm=1001.2014.3001.5502">中断的概念与机制</a>
+寄存器组：其中寄存器组的R0-R12为通用寄存器。R13为堆栈指针寄存器，有2个寄存器，当时同一时间只能用一个，一个是主堆栈指针（MSP）：复位后缺省使用的堆栈指针，用于操作系统内核以及异常处理例程（包括中断服务例程）；另一个是进程堆栈指针（PSP）：由用户的应用程序代码使用。
+R14为连接寄存器，当呼叫一个寄存器，R14存储返回地址；R15是程序计数器PC。
+其中还有特殊功能寄存器组：</p>
+<ol>
+<li>程序状态字寄存器组（PSRs），记录ALU的标志。</li>
+<li>中断屏蔽寄存器组（PRIMASK, FAULTMASK, BASEPRI）
+PRIMASK相当于中断总开关，关闭后只有NMI和硬fault才会响应；FAULTMASK打开后只有NMI才会响应；</li>
+<li>BASEPRI定义被屏蔽优先级的阈值。</li>
+<li>控制寄存器（CONTROL）：选择堆栈的指针和线程模式。</li>
+</ol>
+<h3 id="总线">总线<a hidden class="anchor" aria-hidden="true" href="#总线">#</a></h3>
+<p>Icode指令总线：和FLASH的接口相连，用于取指令，它不经过总线矩阵，不需要切换，速度更快。
+Dcode数据总线：主要用来读取存储在SRAM和Flash里的数据。
+<em><strong>哈佛结构在这里我理解为SRAM是处理变量和堆栈记录，而Flash是我们烧进去的代码，SRAM是由锁存器构成，掉电之后内容就会没有，而Flash相当于逻辑代码。</strong></em>
+DMA总线：可以访问Flash，SRAM，数据寄存器，然后三者间交换数据并且不占用CPU。
+而总线矩阵在这里协调CM3内核和DMA的竞争。
+系统总线：也叫外设总线，连接CM3的内核和外设。AHB通过桥接的方式进行了分频，APB2为72HZ上面搭载着GPIO口，ADC，TIM1等外设，而APB1为36HZ,上面挂着串口，看门狗等慢速设备。</p>
+<h3 id="时钟">时钟<a hidden class="anchor" aria-hidden="true" href="#时钟">#</a></h3>
+<p>STM32F10x时钟源
+HSI：（高速内部）RC振荡器，频率8MHz，精度不高
+HSE：（高速外部）外接石英/陶瓷晶振（4MHz——16MHz）
+LSI：（低速内部）RC振荡器，频率40KHz，LSI是作为看门狗时钟源和RTC时钟源而独立使用
+LSE：（低速外部）外接晶振，32.768KHz石英晶振
+PLL：锁相环倍频输出，其时钟输入源可选择为HSI/2、HSE或者HSE/2。倍频可选择为2~16倍，但是其输出频率最大不得超过72MHz</p>
+<p>多个时钟源是因为兼容不同速度的外设，有些高速，有些低速，不同的时钟对应不同的模块。</p>
+<p>系统时钟SYSCLK可来源于三个时钟源：</p>
+<ol>
+<li>HSI振荡器时钟</li>
+<li>HSE振荡器时钟</li>
+<li>PLL时钟</li>
+</ol>
+<p><em><strong>系统时钟&mdash;&gt;AHB分频器&mdash;&gt;各个外设分频倍频器 &mdash;&gt; 外设时钟的设置</strong></em></p>
+<h2 id="stm32上电过程">stm32上电过程<a hidden class="anchor" aria-hidden="true" href="#stm32上电过程">#</a></h2>
+<h3 id="1-选择启动方式">1. 选择启动方式<a hidden class="anchor" aria-hidden="true" href="#1-选择启动方式">#</a></h3>
+<p>STM32 上电复位后代码从0x00000000开始，选择不同的启动模式就是将不同的地址映射到0x00000000
+<strong>从Flash启动</strong>，将0x80000000映射到0x00000000；
+<strong>从系统存储器启动</strong>，一般是将stm32里带的Bootloader的代码映射到0x00000000，这个Bootloader就是将用户的代码通过串口下载到Flash，再从Flash启动；
+<strong>从SRAM启动</strong>，将0x20000000映射到0x00000000。</p>
+<h3 id="2-根据复位中断向量表设置sp和pc">2. 根据复位中断向量表设置SP和PC<a hidden class="anchor" aria-hidden="true" href="#2-根据复位中断向量表设置sp和pc">#</a></h3>
+<p>假定从Flash启动
+向量表的存储位置是可以设置的，通过 NVIC 中的一个重定位寄存器来指出向量表的地址。在复位后，该寄存器的值为 0。因此，在地址 0 处必须包含一张向量表，用于初始时的异常分配。
+<img alt="在这里插入图片描述" loading="lazy" src="https://i-blog.csdnimg.cn/blog_migrate/865c9853043f6b66ce892020df6d0f14.png#pic_center">
+起始地址存放堆顶指针，而第二个地址则必须存放复位中断入口向量地址，这样在Cortex-M3内核复位后，会自动从起始地址的下一个32位空间取出复位中断入口向量，跳转执行复位中断服务程序。</p>
+<h3 id="3-初始化系统时钟">3. 初始化系统时钟<a hidden class="anchor" aria-hidden="true" href="#3-初始化系统时钟">#</a></h3>
+<p>在复位中断函数中调用 SystemInit 函数，初始化时钟，配置中断向量表等。</p>
+<h3 id="4-软件设置sp">4. 软件设置SP<a hidden class="anchor" aria-hidden="true" href="#4-软件设置sp">#</a></h3>
+<p>在复位中断服务程序中会跳转__main函数，在这里面加载.data.bss,初始化栈区，在__main函数中调用C函数main。</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://fishdel.github.io/zh/tags/%E5%B5%8C%E5%85%A5%E5%BC%8F%E4%B8%8Ec%E8%AF%AD%E8%A8%80/">嵌入式与C语言</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span><a href="https://fishdel.github.io/">©2024 Yuuuu&rsquo;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

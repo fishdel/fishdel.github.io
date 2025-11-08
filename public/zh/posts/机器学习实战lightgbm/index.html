@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>机器学习实战(LightGBM) | Yuuuuu&#39;s Blog</title>
+<meta name="keywords" content="Machine learning">
+<meta name="description" content="LightGBM
+介绍
+LightGBM（Light Gradient Boosting Machine）：一个实现GBDT算法的框架，解决GBDT在海量数据遇到的问题。
+两大技术：
+（1）GOSS(Gradient-based One-Side Sampling)：减少样本数">
+<meta name="author" content="">
+<link rel="canonical" href="https://fishdel.github.io/zh/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98lightgbm/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.d6fcd20a4fb86efa4dfac8ec95da60244cc8871042183da1ef28e3a762ad79c8.css" integrity="sha256-1vzSCk&#43;4bvpN&#43;sjsldpgJEzIhxBCGD2h7yjjp2Ktecg=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://fishdel.github.io/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://fishdel.github.io/favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://fishdel.github.io/favicon.png">
+<link rel="apple-touch-icon" href="https://fishdel.github.io/favicon.png">
+<link rel="mask-icon" href="https://fishdel.github.io/favicon.png">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="zh" href="https://fishdel.github.io/zh/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98lightgbm/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:url" content="https://fishdel.github.io/zh/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98lightgbm/">
+  <meta property="og:site_name" content="Yuuuuu&#39;s Blog">
+  <meta property="og:title" content="机器学习实战(LightGBM)">
+  <meta property="og:description" content="LightGBM 介绍 LightGBM（Light Gradient Boosting Machine）：一个实现GBDT算法的框架，解决GBDT在海量数据遇到的问题。
+两大技术： （1）GOSS(Gradient-based One-Side Sampling)：减少样本数">
+  <meta property="og:locale" content="zh">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2022-04-05T22:11:08+08:00">
+    <meta property="article:modified_time" content="2022-04-05T22:11:08+08:00">
+    <meta property="article:tag" content="Machine Learning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="机器学习实战(LightGBM)">
+<meta name="twitter:description" content="LightGBM
+介绍
+LightGBM（Light Gradient Boosting Machine）：一个实现GBDT算法的框架，解决GBDT在海量数据遇到的问题。
+两大技术：
+（1）GOSS(Gradient-based One-Side Sampling)：减少样本数">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://fishdel.github.io/zh/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "机器学习实战(LightGBM)",
+      "item": "https://fishdel.github.io/zh/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98lightgbm/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "机器学习实战(LightGBM)",
+  "name": "机器学习实战(LightGBM)",
+  "description": "LightGBM 介绍 LightGBM（Light Gradient Boosting Machine）：一个实现GBDT算法的框架，解决GBDT在海量数据遇到的问题。\n两大技术： （1）GOSS(Gradient-based One-Side Sampling)：减少样本数\n",
+  "keywords": [
+    "Machine learning"
+  ],
+  "articleBody": "LightGBM 介绍 LightGBM（Light Gradient Boosting Machine）：一个实现GBDT算法的框架，解决GBDT在海量数据遇到的问题。\n两大技术： （1）GOSS(Gradient-based One-Side Sampling)：减少样本数\n（2）EFB (Exclusive Feature Bundling ):减少特征数\nXGBoost的缺点：先预排序再找分割点，空间消耗大\nXGBoost与LightGBM的区别：\nlightGBM XGBoost 分裂方式 leaft-wise选择分裂收益最大的节点，要限制深度容易过拟合 level-wise无差别分裂 输入 lightgbm支持直接输入categorical 的feature 需要one-hot编码 时间复杂度 基于直方图的决策树算法，直方图的优化算法只需要计算K次，时间复杂度为O(Kfeature) 基于预排序的决策树算法，每遍历一个特征就需要计算一次特征的增益，时间复杂度为O(datafeature) 特征捆绑转化为图着色问题，减少特征数量 两种使用形式 sklearn接口形式 导包\nimport lightgbm as lgb from sklearn.metrics import mean_squared_error from sklearn.datasets import load_boston from sklearn.model_selection import train_test_split gbm = lgb.LGBMRegressor(objective='regression', num_leaves=31, learning_rate=0.05, n_estimators=20) gbm.fit(X_train, y_train, eval_set=[(X_test, y_test)], eval_metric='l1', early_stopping_rounds=5) 原生形式 数据集切分与转换\nlgb_train = lgb.Dataset(X_train, y_train) #If this is Dataset for validation, training data should be used as reference. lgb_eval = lgb.Dataset(X_test, y_test, reference=lgb_train) 将参数写为字典形式\nparams = { 'task': 'train', 'boosting_type': 'gbdt', # 设置提升类型 'objective': 'regression', # 目标函数 'metric': {'l2', 'auc'}, # 评估函数 'num_leaves': 31, # 叶子节点数 'learning_rate': 0.05, # 学习速率 'feature_fraction': 0.9, # 建树的特征选择比例 'bagging_fraction': 0.8, # 建树的样本采样比例 'bagging_freq': 5, # k 意味着每 k 次迭代执行bagging 'verbose': 1 # \u003c0 显示致命的, =0 显示错误 (警告), \u003e0 显示信息 } 交叉验证与预测评估\ngbm = lgb.train(params, lgb_train, num_boost_round=20, valid_sets=lgb_eval, early_stopping_rounds=5) y_pred = gbm.predict(X_test, num_iteration=gbm.best_iteration) Epoch、Iteration、Batchsize相关理解 Epoch 一个完整的数据集通过了神经网络一次并且返回了一次。梯度下降的方法来优化学习过程，随着epoch\nIteration batch需要完成一个epoch的次数\n一个迭代=一个正向通过+一个反向通过。\nBatchsize 不能将数据一次性通过神经网络的时候，就需要将数据集分成几个batch。\nbatchsize的选择：Batch：数据集较小选择全批次\nmini batch：选定后以batch的大小输入网络，计算这个batch的所有样本的平均损失，即代价函数是所有样本的平均\nstochastic：每次修正方向以各自样本的梯度方向修正，难收敛\n如果batchsize过小，训练数据难以收敛容易欠拟合，增加batchsize相对处理速度加快但是占用内存增加\n参数调整 预先固定的参数 调整策略 learning_rate 0.05~0.1 学习率较小比较稳定。默认0.1 n_estimators 100~1000。可以设置一个较大的值配合early_stopping_round来让模型根据性能自动选择最好的迭代次数。默认100 min_split_gain 执行节点分裂的最小增益。默认为0。不建议去调整。增大这个数值会得到相对浅的树深。可调整其他参数得到类似效果。 min_child_sample 一个叶子上的最小数据量。默认设置为20.数据量大适当增加 min_child_weight 一个叶子上的最小hessian和。默认设置为0.001，一般设置为1。不建议调整，增大数值会得到较浅的树深 通过算法来搜索的参数 调整策略 max_depth 3，4，5（过大容易过拟合） num_leaves 小于2^max_depth-1 subsample 大致的搜索范围[0.8, 0.9, 1.0] colsample_bytree 大致的搜索范围[0.8, 0.9, 1.0] reg_alpha 服务于L1正则化，一般取0-1000的范围。通过特征筛选该数值由大变小可以增加模型信心 reg_lambda 服务于L2正则化，一般0-1000的范围。如果有非常强势的特征，可以人为加大一些reg_lambda使得整体特征效果平均一些，一般会比reg_alpha的数值略大一些，但如果这个参数大的夸张也需要再查看一遍特征是否合理 代码实例 训练模型并求最优参数的函数定义 import lightgbm as lgb def cv_model(clf, train_x, train_y, test_x, clf_name): 划分100折并进行数据打乱\nfolds = 10 seed = 2022 kf = KFold(n_splits=folds, shuffle=True, random_state=seed) ​ 设置测试集的输出矩阵。每一组数据输出：[0,0,0,0]以概率值填入\ntest = np.zeros((test_x.shape[0],4)) #交叉验证分数 cv_scores = [] onehot_encoder = OneHotEncoder(sparse=False) 根据折数进行划分，i值代表第（i+1）折。每一个K折都进行「数据混乱：随机」操作 train_index：10折里9折在train_index valid_index：剩下1折样本索引值，作为验证集用于给出「训练误差」\nfor i, (train_index, valid_index) in enumerate(kf.split(train_x, train_y)): if i \u003c 9: #打印第（i+1）个模型结果 print('模型:'i+1) #将训练集分为：真正训练的数据（K-1折），和 训练集中的测试数据（1折） trn_x, trn_y, val_x, val_y = train_x.iloc[train_index], train_y.iloc[train_index], train_x.iloc[valid_index], train_y.iloc[valid_index] 模型的设置和调用 #LGB模型 if clf_name == \"lgb\": #训练样本 train_matrix = clf.Dataset(trn_x, label=trn_y) #训练集中测试样本 valid_matrix = clf.Dataset(val_x, label=val_y) #参数设置 params = { 'boosting_type': 'gbdt', #boosting方式 'objective': 'multiclass', #任务类型为「多分类」 'num_class': 4, #类别个数 'num_leaves': 2 ** 5, #最大的叶子数，树模型的复杂度 'feature_fraction': 0.8, #每次迭代中随机选择特征的比例（0.5-0.9之间调整） 'bagging_fraction': 0.8, #不进行重采样的情况下随机选择部分数据（0.5-0.9之间调整） 'bagging_freq': 5, #每5次迭代，进行一次bagging（3-5之间调整） 'learning_rate': 0.05, #学习率 'seed': seed, #seed值，保证模型复现 'nthread': 28, 'n_jobs':24, #多线程 'verbose': 1, 'lambda_l1': 0.4, # L1正则化 'lambda_l2': 0.5, #L2正则化 'min_data_in_leaf':100, #叶子可能具有的最小记录数 } #模型 model = clf.train(params, train_set=train_matrix, #训练样本 valid_sets=valid_matrix, #测试样本 num_boost_round=2000, #迭代次数 verbose_eval=100, early_stopping_rounds=200) #如果数据在200次内没有提高，停止计算 ​\nval_pred = model.predict(val_x, num_iteration=model.best_iteration) test_pred = model.predict(test_x, num_iteration=model.best_iteration) val_y = np.array(val_y).reshape(-1, 1) val_y = onehot_encoder.fit_transform(val_y) print('预测的概率矩阵：') print(test_pred) test += test_pred #验证集计算训练误差 score = loss(val_y, val_pred) cv_scores.append(score) print(cv_scores) print(\"%s_scotrainre_list:\" % clf_name, cv_scores) print(\"%s_score_mean:\" % clf_name, np.mean(cv_scores)) print(\"%s_score_std:\" % clf_name, np.std(cv_scores)) #i个模型输出结果的平均值。 test = test / 10 return test 调用模型的函数定义 def lgb_model(x_train, y_train, x_test): lgb_test = cv_model(lgb, x_train, y_train, x_test, \"lgb\") return lgb_test def loss(y_p,y_t): y_p=np.array(y_p) y_t=np.array(y_t) loss=sum(sum(abs(y_p-y_t))) return loss lgb_test = lgb_model(X_train, y_train, X_test) ",
+  "wordCount" : "2133",
+  "inLanguage": "zh",
+  "datePublished": "2022-04-05T22:11:08+08:00",
+  "dateModified": "2022-04-05T22:11:08+08:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://fishdel.github.io/zh/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98lightgbm/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yuuuuu's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fishdel.github.io/favicon.png"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://fishdel.github.io/zh/" accesskey="h" title="Yuuuuu&#39;s Blog (Alt + H)">Yuuuuu&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://fishdel.github.io/zh/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/zh/posts/" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/zh/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/zh/tags/" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/zh/categories/" title="🧩分类">
+                    <span>🧩分类</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/zh/search/" title="🔍搜索">
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/zh/about/" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      机器学习实战(LightGBM)
+    </h1>
+    <div class="post-meta"><span title='2022-04-05 22:11:08 +0800 CST'>四月 5, 2022</span>
+
+</div>
+  </header> 
+  <div class="post-content"><h2 id="lightgbm">LightGBM<a hidden class="anchor" aria-hidden="true" href="#lightgbm">#</a></h2>
+<h3 id="介绍">介绍<a hidden class="anchor" aria-hidden="true" href="#介绍">#</a></h3>
+<p>LightGBM（Light Gradient Boosting Machine）：一个实现GBDT算法的框架，解决GBDT在海量数据遇到的问题。</p>
+<h5 id="两大技术">两大技术：<a hidden class="anchor" aria-hidden="true" href="#两大技术">#</a></h5>
+<p>（1）GOSS(Gradient-based One-Side Sampling)：减少样本数</p>
+<p>（2）EFB (Exclusive Feature Bundling ):减少特征数</p>
+<p>XGBoost的缺点：先预排序再找分割点，空间消耗大</p>
+<p>XGBoost与LightGBM的区别：</p>
+<table>
+  <thead>
+      <tr>
+          <th></th>
+          <th>lightGBM</th>
+          <th>XGBoost</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>分裂方式</td>
+          <td>leaft-wise选择分裂收益最大的节点，要限制深度容易过拟合</td>
+          <td>level-wise无差别分裂</td>
+      </tr>
+      <tr>
+          <td>输入</td>
+          <td>lightgbm支持直接输入categorical 的feature</td>
+          <td>需要one-hot编码</td>
+      </tr>
+      <tr>
+          <td>时间复杂度</td>
+          <td><em>基于直方图的决策树算法，直方图的优化算法只需要计算K次，时间复杂度为O(K</em>feature)</td>
+          <td>基于预排序的决策树算法，每遍历一个特征就需要计算一次特征的增益，时间复杂度为O(data<em>feature)</em></td>
+      </tr>
+      <tr>
+          <td></td>
+          <td>特征捆绑转化为图着色问题，减少特征数量</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="两种使用形式">两种使用形式<a hidden class="anchor" aria-hidden="true" href="#两种使用形式">#</a></h3>
+<h4 id="sklearn接口形式">sklearn接口形式<a hidden class="anchor" aria-hidden="true" href="#sklearn接口形式">#</a></h4>
+<p>导包</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">lightgbm</span> <span class="k">as</span> <span class="nn">lgb</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn.metrics</span> <span class="kn">import</span> <span class="n">mean_squared_error</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn.datasets</span> <span class="kn">import</span> <span class="n">load_boston</span>
+</span></span><span class="line"><span class="cl"><span class="kn">from</span> <span class="nn">sklearn.model_selection</span> <span class="kn">import</span> <span class="n">train_test_split</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">gbm</span> <span class="o">=</span> <span class="n">lgb</span><span class="o">.</span><span class="n">LGBMRegressor</span><span class="p">(</span><span class="n">objective</span><span class="o">=</span><span class="s1">&#39;regression&#39;</span><span class="p">,</span> <span class="n">num_leaves</span><span class="o">=</span><span class="mi">31</span><span class="p">,</span> <span class="n">learning_rate</span><span class="o">=</span><span class="mf">0.05</span><span class="p">,</span> <span class="n">n_estimators</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">gbm</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">eval_set</span><span class="o">=</span><span class="p">[(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">)],</span> <span class="n">eval_metric</span><span class="o">=</span><span class="s1">&#39;l1&#39;</span><span class="p">,</span> <span class="n">early_stopping_rounds</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</span></span></code></pre></div><h4 id="原生形式">原生形式<a hidden class="anchor" aria-hidden="true" href="#原生形式">#</a></h4>
+<p>数据集切分与转换</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">lgb_train</span> <span class="o">=</span> <span class="n">lgb</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="c1">#If this is Dataset for validation, training data should be used as reference.</span>
+</span></span><span class="line"><span class="cl"><span class="n">lgb_eval</span> <span class="o">=</span> <span class="n">lgb</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">y_test</span><span class="p">,</span> <span class="n">reference</span><span class="o">=</span><span class="n">lgb_train</span><span class="p">)</span> 
+</span></span></code></pre></div><p>将参数写为字典形式</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;task&#39;</span><span class="p">:</span> <span class="s1">&#39;train&#39;</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;boosting_type&#39;</span><span class="p">:</span> <span class="s1">&#39;gbdt&#39;</span><span class="p">,</span>  <span class="c1"># 设置提升类型</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;objective&#39;</span><span class="p">:</span> <span class="s1">&#39;regression&#39;</span><span class="p">,</span>  <span class="c1"># 目标函数</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;metric&#39;</span><span class="p">:</span> <span class="p">{</span><span class="s1">&#39;l2&#39;</span><span class="p">,</span> <span class="s1">&#39;auc&#39;</span><span class="p">},</span>  <span class="c1"># 评估函数</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;num_leaves&#39;</span><span class="p">:</span> <span class="mi">31</span><span class="p">,</span>  <span class="c1"># 叶子节点数</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">,</span>  <span class="c1"># 学习速率</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;feature_fraction&#39;</span><span class="p">:</span> <span class="mf">0.9</span><span class="p">,</span>  <span class="c1"># 建树的特征选择比例</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;bagging_fraction&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>  <span class="c1"># 建树的样本采样比例</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;bagging_freq&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>  <span class="c1"># k 意味着每 k 次迭代执行bagging</span>
+</span></span><span class="line"><span class="cl">    <span class="s1">&#39;verbose&#39;</span><span class="p">:</span> <span class="mi">1</span>  <span class="c1"># &lt;0 显示致命的, =0 显示错误 (警告), &gt;0 显示信息</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>交叉验证与预测评估</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">gbm</span> <span class="o">=</span> <span class="n">lgb</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> <span class="n">lgb_train</span><span class="p">,</span> <span class="n">num_boost_round</span><span class="o">=</span><span class="mi">20</span><span class="p">,</span> <span class="n">valid_sets</span><span class="o">=</span><span class="n">lgb_eval</span><span class="p">,</span> <span class="n">early_stopping_rounds</span><span class="o">=</span><span class="mi">5</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="n">y_pred</span> <span class="o">=</span> <span class="n">gbm</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">X_test</span><span class="p">,</span> <span class="n">num_iteration</span><span class="o">=</span><span class="n">gbm</span><span class="o">.</span><span class="n">best_iteration</span><span class="p">)</span>
+</span></span></code></pre></div><h3 id="epochiterationbatchsize相关理解">Epoch、Iteration、Batchsize相关理解<a hidden class="anchor" aria-hidden="true" href="#epochiterationbatchsize相关理解">#</a></h3>
+<h4 id="epoch">Epoch<a hidden class="anchor" aria-hidden="true" href="#epoch">#</a></h4>
+<p>一个完整的数据集通过了神经网络一次并且返回了一次。梯度下降的方法来优化学习过程，随着epoch</p>
+<h4 id="iteration">Iteration<a hidden class="anchor" aria-hidden="true" href="#iteration">#</a></h4>
+<p>batch需要完成一个epoch的次数</p>
+<p>一个迭代=一个正向通过+一个反向通过。</p>
+<h4 id="batchsize">Batchsize<a hidden class="anchor" aria-hidden="true" href="#batchsize">#</a></h4>
+<p>不能将数据一次性通过神经网络的时候，就需要将数据集分成几个batch。</p>
+<p>batchsize的选择：Batch：数据集较小选择全批次</p>
+<p>mini batch：选定后以batch的大小输入网络，计算这个batch的所有样本的平均损失，即代价函数是所有样本的平均</p>
+<p>stochastic：每次修正方向以各自样本的梯度方向修正，难收敛</p>
+<p>如果batchsize过小，训练数据难以收敛容易欠拟合，增加batchsize相对处理速度加快但是占用内存增加</p>
+<h3 id="参数调整">参数调整<a hidden class="anchor" aria-hidden="true" href="#参数调整">#</a></h3>
+<table>
+  <thead>
+      <tr>
+          <th>预先固定的参数</th>
+          <th>调整策略</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>learning_rate</td>
+          <td>0.05~0.1 学习率较小比较稳定。默认0.1</td>
+      </tr>
+      <tr>
+          <td>n_estimators</td>
+          <td>100~1000。可以设置一个较大的值配合early_stopping_round来让模型根据性能自动选择最好的迭代次数。默认100</td>
+      </tr>
+      <tr>
+          <td>min_split_gain</td>
+          <td>执行节点分裂的最小增益。默认为0。<strong>不建议去调整</strong>。增大这个数值会得到相对浅的树深。可调整其他参数得到类似效果。</td>
+      </tr>
+      <tr>
+          <td>min_child_sample</td>
+          <td>一个叶子上的最小数据量。默认设置为20.数据量大适当增加</td>
+      </tr>
+      <tr>
+          <td>min_child_weight</td>
+          <td>一个叶子上的最小hessian和。默认设置为0.001，一般设置为1。<strong>不建议调整</strong>，增大数值会得到较浅的树深</td>
+      </tr>
+  </tbody>
+</table>
+<table>
+  <thead>
+      <tr>
+          <th>通过算法来搜索的参数</th>
+          <th>调整策略</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>max_depth</td>
+          <td>3，4，5（过大容易过拟合）</td>
+      </tr>
+      <tr>
+          <td>num_leaves</td>
+          <td>小于2^max_depth-1</td>
+      </tr>
+      <tr>
+          <td>subsample</td>
+          <td>大致的搜索范围[0.8, 0.9, 1.0]</td>
+      </tr>
+      <tr>
+          <td>colsample_bytree</td>
+          <td>大致的搜索范围[0.8, 0.9, 1.0]</td>
+      </tr>
+      <tr>
+          <td>reg_alpha</td>
+          <td>服务于L1正则化，一般取0-1000的范围。通过特征筛选该数值由大变小可以增加模型信心</td>
+      </tr>
+      <tr>
+          <td>reg_lambda</td>
+          <td>服务于L2正则化，一般0-1000的范围。如果有非常强势的特征，可以人为加大一些reg_lambda使得整体特征效果平均一些，一般会比reg_alpha的数值略大一些，但如果这个参数大的夸张也需要再查看一遍特征是否合理</td>
+      </tr>
+  </tbody>
+</table>
+<h3 id="代码实例">代码实例<a hidden class="anchor" aria-hidden="true" href="#代码实例">#</a></h3>
+<h4 id="训练模型并求最优参数的函数定义">训练模型并求最优参数的函数定义<a hidden class="anchor" aria-hidden="true" href="#训练模型并求最优参数的函数定义">#</a></h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="kn">import</span> <span class="nn">lightgbm</span> <span class="k">as</span> <span class="nn">lgb</span>
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">cv_model</span><span class="p">(</span><span class="n">clf</span><span class="p">,</span> <span class="n">train_x</span><span class="p">,</span> <span class="n">train_y</span><span class="p">,</span> <span class="n">test_x</span><span class="p">,</span> <span class="n">clf_name</span><span class="p">):</span>
+</span></span></code></pre></div><p>划分100折并进行数据打乱</p>
+<pre tabindex="0"><code>folds = 10
+seed = 2022
+kf = KFold(n_splits=folds, shuffle=True, random_state=seed)
+</code></pre><p>​    设置测试集的输出矩阵。每一组数据输出：[0,0,0,0]以概率值填入</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">test</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">zeros</span><span class="p">((</span><span class="n">test_x</span><span class="o">.</span><span class="n">shape</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span><span class="mi">4</span><span class="p">))</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1">#交叉验证分数</span>
+</span></span><span class="line"><span class="cl"><span class="n">cv_scores</span> <span class="o">=</span> <span class="p">[]</span>
+</span></span><span class="line"><span class="cl"><span class="n">onehot_encoder</span> <span class="o">=</span> <span class="n">OneHotEncoder</span><span class="p">(</span><span class="n">sparse</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
+</span></span></code></pre></div><p>根据折数进行划分，i值代表第（i+1）折。每一个K折都进行「数据混乱：随机」操作
+train_index：10折里9折在train_index
+valid_index：剩下1折样本索引值，作为验证集用于给出「训练误差」</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">for</span> <span class="n">i</span><span class="p">,</span> <span class="p">(</span><span class="n">train_index</span><span class="p">,</span> <span class="n">valid_index</span><span class="p">)</span> <span class="ow">in</span> <span class="nb">enumerate</span><span class="p">(</span><span class="n">kf</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="n">train_x</span><span class="p">,</span> <span class="n">train_y</span><span class="p">)):</span>
+</span></span><span class="line"><span class="cl"><span class="k">if</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="mi">9</span><span class="p">:</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">#打印第（i+1）个模型结果</span>
+</span></span><span class="line"><span class="cl">    <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;模型:&#39;</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    
+</span></span><span class="line"><span class="cl">    <span class="c1">#将训练集分为：真正训练的数据（K-1折），和 训练集中的测试数据（1折）</span>
+</span></span><span class="line"><span class="cl">    <span class="n">trn_x</span><span class="p">,</span> <span class="n">trn_y</span><span class="p">,</span> <span class="n">val_x</span><span class="p">,</span> <span class="n">val_y</span> <span class="o">=</span> <span class="n">train_x</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">train_index</span><span class="p">],</span> <span class="n">train_y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">train_index</span><span class="p">],</span> <span class="n">train_x</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">valid_index</span><span class="p">],</span> <span class="n">train_y</span><span class="o">.</span><span class="n">iloc</span><span class="p">[</span><span class="n">valid_index</span><span class="p">]</span>
+</span></span></code></pre></div><h4 id="模型的设置和调用">模型的设置和调用<a hidden class="anchor" aria-hidden="true" href="#模型的设置和调用">#</a></h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"> <span class="c1">#LGB模型</span>
+</span></span><span class="line"><span class="cl">        <span class="k">if</span> <span class="n">clf_name</span> <span class="o">==</span> <span class="s2">&#34;lgb&#34;</span><span class="p">:</span>            
+</span></span><span class="line"><span class="cl">            <span class="c1">#训练样本</span>
+</span></span><span class="line"><span class="cl">            <span class="n">train_matrix</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="n">trn_x</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">trn_y</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">            <span class="c1">#训练集中测试样本</span>
+</span></span><span class="line"><span class="cl">            <span class="n">valid_matrix</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">Dataset</span><span class="p">(</span><span class="n">val_x</span><span class="p">,</span> <span class="n">label</span><span class="o">=</span><span class="n">val_y</span><span class="p">)</span> 
+</span></span><span class="line"><span class="cl">            <span class="c1">#参数设置</span>
+</span></span><span class="line"><span class="cl">            <span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;boosting_type&#39;</span><span class="p">:</span> <span class="s1">&#39;gbdt&#39;</span><span class="p">,</span>          <span class="c1">#boosting方式</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;objective&#39;</span><span class="p">:</span> <span class="s1">&#39;multiclass&#39;</span><span class="p">,</span>        <span class="c1">#任务类型为「多分类」</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;num_class&#39;</span><span class="p">:</span> <span class="mi">4</span><span class="p">,</span>                   <span class="c1">#类别个数</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;num_leaves&#39;</span><span class="p">:</span> <span class="mi">2</span> <span class="o">**</span> <span class="mi">5</span><span class="p">,</span>             <span class="c1">#最大的叶子数，树模型的复杂度</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;feature_fraction&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>          <span class="c1">#每次迭代中随机选择特征的比例（0.5-0.9之间调整）</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;bagging_fraction&#39;</span><span class="p">:</span> <span class="mf">0.8</span><span class="p">,</span>          <span class="c1">#不进行重采样的情况下随机选择部分数据（0.5-0.9之间调整）</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;bagging_freq&#39;</span><span class="p">:</span> <span class="mi">5</span><span class="p">,</span>                <span class="c1">#每5次迭代，进行一次bagging（3-5之间调整）</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;learning_rate&#39;</span><span class="p">:</span> <span class="mf">0.05</span><span class="p">,</span>            <span class="c1">#学习率</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;seed&#39;</span><span class="p">:</span> <span class="n">seed</span><span class="p">,</span>                     <span class="c1">#seed值，保证模型复现</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;nthread&#39;</span><span class="p">:</span> <span class="mi">28</span><span class="p">,</span>                    
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;n_jobs&#39;</span><span class="p">:</span><span class="mi">24</span><span class="p">,</span>                      <span class="c1">#多线程</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;verbose&#39;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;lambda_l1&#39;</span><span class="p">:</span> <span class="mf">0.4</span><span class="p">,</span>                 <span class="c1"># L1正则化</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;lambda_l2&#39;</span><span class="p">:</span> <span class="mf">0.5</span><span class="p">,</span>                 <span class="c1">#L2正则化</span>
+</span></span><span class="line"><span class="cl">                <span class="s1">&#39;min_data_in_leaf&#39;</span><span class="p">:</span><span class="mi">100</span><span class="p">,</span>           <span class="c1">#叶子可能具有的最小记录数</span>
+</span></span><span class="line"><span class="cl">            <span class="p">}</span>
+</span></span><span class="line"><span class="cl">            
+</span></span><span class="line"><span class="cl">            <span class="c1">#模型</span>
+</span></span><span class="line"><span class="cl">            <span class="n">model</span> <span class="o">=</span> <span class="n">clf</span><span class="o">.</span><span class="n">train</span><span class="p">(</span><span class="n">params</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                      <span class="n">train_set</span><span class="o">=</span><span class="n">train_matrix</span><span class="p">,</span>     <span class="c1">#训练样本</span>
+</span></span><span class="line"><span class="cl">                      <span class="n">valid_sets</span><span class="o">=</span><span class="n">valid_matrix</span><span class="p">,</span>    <span class="c1">#测试样本 </span>
+</span></span><span class="line"><span class="cl">                      <span class="n">num_boost_round</span><span class="o">=</span><span class="mi">2000</span><span class="p">,</span>      <span class="c1">#迭代次数</span>
+</span></span><span class="line"><span class="cl">                      <span class="n">verbose_eval</span><span class="o">=</span><span class="mi">100</span><span class="p">,</span>           
+</span></span><span class="line"><span class="cl">                      <span class="n">early_stopping_rounds</span><span class="o">=</span><span class="mi">200</span><span class="p">)</span>  <span class="c1">#如果数据在200次内没有提高，停止计算</span>
+</span></span></code></pre></div><p>​</p>
+<pre tabindex="0"><code class="language-python'" data-lang="python'">            val_pred = model.predict(val_x, num_iteration=model.best_iteration)
+            test_pred = model.predict(test_x, num_iteration=model.best_iteration) 
+
+        val_y = np.array(val_y).reshape(-1, 1)
+        val_y = onehot_encoder.fit_transform(val_y)
+        print(&#39;预测的概率矩阵：&#39;)
+        print(test_pred)
+        test += test_pred
+        #验证集计算训练误差
+        score = loss(val_y, val_pred)
+        cv_scores.append(score)
+        print(cv_scores)
+    
+print(&#34;%s_scotrainre_list:&#34; % clf_name, cv_scores)
+print(&#34;%s_score_mean:&#34; % clf_name, np.mean(cv_scores))
+print(&#34;%s_score_std:&#34; % clf_name, np.std(cv_scores))
+
+#i个模型输出结果的平均值。
+test = test / 10
+return test
+</code></pre><h4 id="调用模型的函数定义">调用模型的函数定义<a hidden class="anchor" aria-hidden="true" href="#调用模型的函数定义">#</a></h4>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">lgb_model</span><span class="p">(</span><span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">    <span class="n">lgb_test</span> <span class="o">=</span> <span class="n">cv_model</span><span class="p">(</span><span class="n">lgb</span><span class="p">,</span> <span class="n">x_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">x_test</span><span class="p">,</span> <span class="s2">&#34;lgb&#34;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">lgb_test</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">def</span> <span class="nf">loss</span><span class="p">(</span><span class="n">y_p</span><span class="p">,</span><span class="n">y_t</span><span class="p">):</span>
+</span></span><span class="line"><span class="cl">	<span class="n">y_p</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_p</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">y_t</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span><span class="n">y_t</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl">    <span class="n">loss</span><span class="o">=</span><span class="nb">sum</span><span class="p">(</span><span class="nb">sum</span><span class="p">(</span><span class="nb">abs</span><span class="p">(</span><span class="n">y_p</span><span class="o">-</span><span class="n">y_t</span><span class="p">)))</span>
+</span></span><span class="line"><span class="cl">    <span class="k">return</span> <span class="n">loss</span>
+</span></span></code></pre></div><div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">lgb_test</span> <span class="o">=</span> <span class="n">lgb_model</span><span class="p">(</span><span class="n">X_train</span><span class="p">,</span> <span class="n">y_train</span><span class="p">,</span> <span class="n">X_test</span><span class="p">)</span>
+</span></span></code></pre></div>
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://fishdel.github.io/zh/tags/machine-learning/">Machine Learning</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span><a href="https://fishdel.github.io/">©2024 Yuuuu&rsquo;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

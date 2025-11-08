@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>数据安全 | Yuuuuu&#39;s Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="密码技术
+1.密码体制分类
+
+对称密码体制
+
+
+  
+      
+          优点
+          缺点
+      
+  
+  
+      
+          加/解密速度快
+          密钥分发需要安全通道
+      
+      
+          明文长度和密文一样
+          密钥量大难以管理
+      
+      
+          密钥比较短
+          无法解决不可否认性
+      
+  
+
+
+非对称密码体制
+
+
+  
+      
+          优点
+          缺点
+      
+  
+  
+      
+          密钥分发相对容易
+          加/解密速度慢
+      
+      
+          密钥管理容易
+          密文长度较长
+      
+      
+          能实现数字签名
+          密钥长度长
+      
+  
+
+2.密码体制的攻击
+
+唯密文攻击：攻击者知道部分密文；
+已知明文攻击：攻击者者知道部分密文和对应的明文；
+选择明文攻击：攻击者可以选择任意明文，并在同一密钥下得到相应密文；（控制加密器）
+选择密文攻击：攻击者可以选择任意密文，并得到对应解密的明文；（控制解密器）
+选择文本攻击：同时控制加密器和解密器。
+
+3.传统密码体制
+
+置换密码（重排）
+代换密码（替换）
+
+
+  
+      
+          单字母代换
+          多字母代换
+      
+  
+  
+      
+          单表代换 （移位，替换，仿射）
+          
+      
+      
+          多表代换
+          
+      
+  
+
+
+
+仿射密码
+e=（ax&#43;b）mod26
+d= a^-1(x-y)mod26">
+<meta name="author" content="">
+<link rel="canonical" href="https://fishdel.github.io/posts/%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.d6fcd20a4fb86efa4dfac8ec95da60244cc8871042183da1ef28e3a762ad79c8.css" integrity="sha256-1vzSCk&#43;4bvpN&#43;sjsldpgJEzIhxBCGD2h7yjjp2Ktecg=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://fishdel.github.io/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://fishdel.github.io/favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://fishdel.github.io/favicon.png">
+<link rel="apple-touch-icon" href="https://fishdel.github.io/favicon.png">
+<link rel="mask-icon" href="https://fishdel.github.io/favicon.png">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="zh" href="https://fishdel.github.io/posts/%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:url" content="https://fishdel.github.io/posts/%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8/">
+  <meta property="og:site_name" content="Yuuuuu&#39;s Blog">
+  <meta property="og:title" content="数据安全">
+  <meta property="og:description" content="密码技术 1.密码体制分类 对称密码体制 优点 缺点 加/解密速度快 密钥分发需要安全通道 明文长度和密文一样 密钥量大难以管理 密钥比较短 无法解决不可否认性 非对称密码体制 优点 缺点 密钥分发相对容易 加/解密速度慢 密钥管理容易 密文长度较长 能实现数字签名 密钥长度长 2.密码体制的攻击 唯密文攻击：攻击者知道部分密文； 已知明文攻击：攻击者者知道部分密文和对应的明文； 选择明文攻击：攻击者可以选择任意明文，并在同一密钥下得到相应密文；（控制加密器） 选择密文攻击：攻击者可以选择任意密文，并得到对应解密的明文；（控制解密器） 选择文本攻击：同时控制加密器和解密器。 3.传统密码体制 置换密码（重排） 代换密码（替换） 单字母代换 多字母代换 单表代换 （移位，替换，仿射） 多表代换 仿射密码 e=（ax&#43;b）mod26 d= a^-1(x-y)mod26">
+  <meta property="og:locale" content="zh">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2021-05-20T22:11:08+08:00">
+    <meta property="article:modified_time" content="2021-05-20T22:11:08+08:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="数据安全">
+<meta name="twitter:description" content="密码技术
+1.密码体制分类
+
+对称密码体制
+
+
+  
+      
+          优点
+          缺点
+      
+  
+  
+      
+          加/解密速度快
+          密钥分发需要安全通道
+      
+      
+          明文长度和密文一样
+          密钥量大难以管理
+      
+      
+          密钥比较短
+          无法解决不可否认性
+      
+  
+
+
+非对称密码体制
+
+
+  
+      
+          优点
+          缺点
+      
+  
+  
+      
+          密钥分发相对容易
+          加/解密速度慢
+      
+      
+          密钥管理容易
+          密文长度较长
+      
+      
+          能实现数字签名
+          密钥长度长
+      
+  
+
+2.密码体制的攻击
+
+唯密文攻击：攻击者知道部分密文；
+已知明文攻击：攻击者者知道部分密文和对应的明文；
+选择明文攻击：攻击者可以选择任意明文，并在同一密钥下得到相应密文；（控制加密器）
+选择密文攻击：攻击者可以选择任意密文，并得到对应解密的明文；（控制解密器）
+选择文本攻击：同时控制加密器和解密器。
+
+3.传统密码体制
+
+置换密码（重排）
+代换密码（替换）
+
+
+  
+      
+          单字母代换
+          多字母代换
+      
+  
+  
+      
+          单表代换 （移位，替换，仿射）
+          
+      
+      
+          多表代换
+          
+      
+  
+
+
+
+仿射密码
+e=（ax&#43;b）mod26
+d= a^-1(x-y)mod26">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://fishdel.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "数据安全",
+      "item": "https://fishdel.github.io/posts/%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "数据安全",
+  "name": "数据安全",
+  "description": "密码技术 1.密码体制分类 对称密码体制 优点 缺点 加/解密速度快 密钥分发需要安全通道 明文长度和密文一样 密钥量大难以管理 密钥比较短 无法解决不可否认性 非对称密码体制 优点 缺点 密钥分发相对容易 加/解密速度慢 密钥管理容易 密文长度较长 能实现数字签名 密钥长度长 2.密码体制的攻击 唯密文攻击：攻击者知道部分密文； 已知明文攻击：攻击者者知道部分密文和对应的明文； 选择明文攻击：攻击者可以选择任意明文，并在同一密钥下得到相应密文；（控制加密器） 选择密文攻击：攻击者可以选择任意密文，并得到对应解密的明文；（控制解密器） 选择文本攻击：同时控制加密器和解密器。 3.传统密码体制 置换密码（重排） 代换密码（替换） 单字母代换 多字母代换 单表代换 （移位，替换，仿射） 多表代换 仿射密码 e=（ax+b）mod26 d= a^-1(x-y)mod26\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "密码技术 1.密码体制分类 对称密码体制 优点 缺点 加/解密速度快 密钥分发需要安全通道 明文长度和密文一样 密钥量大难以管理 密钥比较短 无法解决不可否认性 非对称密码体制 优点 缺点 密钥分发相对容易 加/解密速度慢 密钥管理容易 密文长度较长 能实现数字签名 密钥长度长 2.密码体制的攻击 唯密文攻击：攻击者知道部分密文； 已知明文攻击：攻击者者知道部分密文和对应的明文； 选择明文攻击：攻击者可以选择任意明文，并在同一密钥下得到相应密文；（控制加密器） 选择密文攻击：攻击者可以选择任意密文，并得到对应解密的明文；（控制解密器） 选择文本攻击：同时控制加密器和解密器。 3.传统密码体制 置换密码（重排） 代换密码（替换） 单字母代换 多字母代换 单表代换 （移位，替换，仿射） 多表代换 仿射密码 e=（ax+b）mod26 d= a^-1(x-y)mod26\n多表代换vigenere 分组 -\u003e模26-\u003e加上密钥\n统计分析法\n4.现代对称密码体制 DES 分组长度64位 密钥长度56位 其中8位为奇偶校验位 流程：明文64bit——\u003e初始IP变换——\u003e(64bit密钥进行子密钥生成)乘积变换——\u003e逆初始变换——\u003e输出64比特密文 5.非对称密码体制 RSA基本原理： 1.密钥产生： 随机生成大素数p,q,n=p*q,欧拉函数O(n)=(p-1)(q-1) 随机选择密钥k,k和O(n)互质，若sk=k,pk就是sk的逆元 2.加密过程与解密过程 Ci=mi^sk mod n Mi=ci^pk mod n 安全性取决与大素数分解的难度和p,q的保密性 信息认证技术 1.哈希函数MD5 以512为分组来处理数据，分为16个32位子数组——\u003e输出4个32位子数字级联成128位散列值\n数据填充与分组：最后一位为448位，将填充前的消息L转为64位，（保留最后64位）填充到后448位那里 2.消息认证技术 （检验消息是否真实）\n消息加密：将整个消息的密文作为认证码 对称加密，添加校验码，公钥加密 哈希函数：将哈希函数产生的散列值作为消息认证码 使用哈希函数，保证机密性的哈希函数，混合加密认证 消息认证码：将消息和密钥一起作为认证码 3.数字签名 直接数字签名：依赖于发送方私人密钥的安全性，若丢失或被盗用，签名被伪造。 仲裁数字签名： 方案1：对称加密算法（报文M以明文形式发送） 方案2：对称加密算法，密文传输（仲裁者两方勾结） 方案3：公开密钥算法，密文传输（） 4.身份认证 常见的重放攻击：1.简单重放；2.可检测的重放；3.不可检测的重复； 4.不加修改的逆向重放 重放攻击的预防：序列号，时间戳，随机数 基于对称密钥的身份认证 特点 Needham-Schroeder (随机数) 第三步易受攻击 Denning（时间戳） 无法安全同步网络时钟,抑制—重放攻击，报文中的时间戳快了 Numan-Stubblebine 解决抑制—重放攻击 基于公钥的消息认证 特点 Denning-Sacco 引入时间戳，但需严格时钟同步 Woo-lam 用随机数作为临时交互值 计算机病毒 1.计算机病毒特征 隐蔽性，寄生性，可触发性，传染性，破坏性\n2.常见的病毒类型 引导型病毒，文件型病毒，网络蠕虫，计算机木马\n3.病毒的检测 特征代码法：对每种病毒样本抽取特征代码，根据该代码特征进行病毒检测； 校验和法：计算文件内容的校验和； 行为检测法：利用病毒特有行为特征进行检测 软件模拟法：两次特征代码法，识别未知病毒\n网络攻击与防范 1.分类 分类 举例 窃听 网络监听，获取密码，网络监听 欺骗 获取密码，恶意代码，网络欺骗 拒绝服务 数据驱动攻击 缓冲区溢出 2.步骤 目标检测——端口扫描——网络监听——实施攻击——撤退\n防火墙技术 1. 体系结构 堡垒主机体系结构 堡垒主机是一种被强化的可以防御攻击的计算机，被暴露于因特网之上，作为进入内部网络的一个检查点（checkpoint），以达到把整个网络的安全问题集中在某个主机上解决。正是由于这个原因，防火墙的建造者和防火墙的管理者应尽力给予其保护，特别是在防火墙的安装和初始化的过程中应予以仔细保护\n双宿主主机体系结构 双宿主主机的防火墙系统由一台装有两个网卡的堡垒主机构成。两个网卡分别与外部网及内部网相连。堡垒主机上运行防火墙软件，可以转发数据、提供服务等。堡垒主机将防止在外部网络和内部系统之间建立任何直接的连接，可以确保数据包不能直接从外部网络到达内部网络。 双宿主主机有两个接口，具有以下特点。 （1）两个端口之间不能进行直接的IP数据包的转发。 （2）防火墙内部的系统可以与双宿主主机进行通信，同时防火墙外部的系统也可以与双宿主主机进行通信，但二者之间不能直接进行通信。 这种体系结构的优点是结构非常简单，易于实现，并且具有高度的安全性，可以完全阻止内部网络与外部网络通信 屏蔽主机体系结构 这种结构的堡垒主机位于内部网络，而过滤路由器按以下规则过滤数据包：任何外部网（如 Internet）的主机都只能与内部网的堡垒主机建立连接，甚至只有提供某些类型服务的外部网主机才被允许与堡垒主机建立连接。任何外部系统对内部网络的操作都必须经过堡垒主机，同时堡垒主机本身就要求有较全面的安全维护。包过滤系统也允许堡垒主机与外部网进行一些“可以接受（即符合站点的安全规则）”的连接\n屏蔽子网体系结构 在最简单的屏蔽子网体系结构中，有两台都与边界网络相连的过滤路由器，一台位于边界网络与内部网络之间，而另一台位于边界网络与外部网络之间。在这种结构下，入侵者要攻击到内部网必须通过两台路由器的安全控制，即使入侵者通过了堡垒主机，它还必须通过内部路由器才能抵达内部网，因此整个网络安全机制就不会因一个站点攻破而全部瘫痪。\n",
+  "wordCount" : "2200",
+  "inLanguage": "zh",
+  "datePublished": "2021-05-20T22:11:08+08:00",
+  "dateModified": "2021-05-20T22:11:08+08:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://fishdel.github.io/posts/%E6%95%B0%E6%8D%AE%E5%AE%89%E5%85%A8/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yuuuuu's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fishdel.github.io/favicon.png"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://fishdel.github.io/" accesskey="h" title="Yuuuuu&#39;s Blog (Alt + H)">Yuuuuu&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://fishdel.github.io/" title="首页">
+                    <span>首页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/archives/" title="归档">
+                    <span>归档</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/categories/" title="分类">
+                    <span>分类</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/tags/" title="标签">
+                    <span>标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/search/" title="搜索">
+                    <span>搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/about/" title="关于">
+                    <span>关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      数据安全
+    </h1>
+    <div class="post-meta"><span title='2021-05-20 22:11:08 +0800 CST'>五月 20, 2021</span>
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="密码技术">密码技术<a hidden class="anchor" aria-hidden="true" href="#密码技术">#</a></h1>
+<h2 id="1密码体制分类">1.密码体制分类<a hidden class="anchor" aria-hidden="true" href="#1密码体制分类">#</a></h2>
+<ul>
+<li>对称密码体制</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>优点</th>
+          <th>缺点</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>加/解密速度快</td>
+          <td>密钥分发需要安全通道</td>
+      </tr>
+      <tr>
+          <td>明文长度和密文一样</td>
+          <td>密钥量大难以管理</td>
+      </tr>
+      <tr>
+          <td>密钥比较短</td>
+          <td>无法解决不可否认性</td>
+      </tr>
+  </tbody>
+</table>
+<ul>
+<li>非对称密码体制</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>优点</th>
+          <th>缺点</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>密钥分发相对容易</td>
+          <td>加/解密速度慢</td>
+      </tr>
+      <tr>
+          <td>密钥管理容易</td>
+          <td>密文长度较长</td>
+      </tr>
+      <tr>
+          <td>能实现数字签名</td>
+          <td>密钥长度长</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="2密码体制的攻击">2.密码体制的攻击<a hidden class="anchor" aria-hidden="true" href="#2密码体制的攻击">#</a></h2>
+<ul>
+<li>唯密文攻击：攻击者知道部分密文；</li>
+<li>已知明文攻击：攻击者者知道部分密文和对应的明文；</li>
+<li>选择明文攻击：攻击者可以选择任意明文，并在同一密钥下得到相应密文；（控制加密器）</li>
+<li>选择密文攻击：攻击者可以选择任意密文，并得到对应解密的明文；（控制解密器）</li>
+<li>选择文本攻击：同时控制加密器和解密器。</li>
+</ul>
+<h2 id="3传统密码体制">3.传统密码体制<a hidden class="anchor" aria-hidden="true" href="#3传统密码体制">#</a></h2>
+<ul>
+<li>置换密码（重排）</li>
+<li>代换密码（替换）</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>单字母代换</th>
+          <th>多字母代换</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>单表代换 （移位，替换，仿射）</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>多表代换</td>
+          <td></td>
+      </tr>
+  </tbody>
+</table>
+<ul>
+<li>
+<p><strong>仿射密码</strong>
+e=（ax+b）mod26
+d= a^-1(x-y)mod26</p>
+</li>
+<li>
+<p><strong>多表代换vigenere</strong>
+分组 -&gt;模26-&gt;加上密钥</p>
+</li>
+<li>
+<p>统计分析法</p>
+</li>
+</ul>
+<h2 id="4现代对称密码体制">4.现代对称密码体制<a hidden class="anchor" aria-hidden="true" href="#4现代对称密码体制">#</a></h2>
+<ul>
+<li>DES
+分组长度64位 密钥长度56位 其中8位为奇偶校验位
+流程：明文64bit——&gt;初始IP变换——&gt;(64bit密钥进行子密钥生成)乘积变换——&gt;逆初始变换——&gt;输出64比特密文</li>
+</ul>
+<h2 id="5非对称密码体制">5.非对称密码体制<a hidden class="anchor" aria-hidden="true" href="#5非对称密码体制">#</a></h2>
+<ul>
+<li>RSA基本原理：
+1.密钥产生：
+随机生成大素数p,q,n=p*q,欧拉函数O(n)=(p-1)(q-1)
+随机选择密钥k,k和O(n)互质，若sk=k,pk就是sk的逆元
+2.加密过程与解密过程
+Ci=mi^sk mod n
+Mi=ci^pk mod n
+<strong>安全性取决与大素数分解的难度和p,q的保密性</strong></li>
+</ul>
+<h1 id="信息认证技术">信息认证技术<a hidden class="anchor" aria-hidden="true" href="#信息认证技术">#</a></h1>
+<h2 id="1哈希函数md5">1.哈希函数MD5<a hidden class="anchor" aria-hidden="true" href="#1哈希函数md5">#</a></h2>
+<p>以512为分组来处理数据，分为16个32位子数组——&gt;输出4个32位子数字级联成128位散列值</p>
+<ul>
+<li>数据填充与分组：最后一位为448位，将填充前的消息L转为64位，（保留最后64位）填充到后448位那里</li>
+</ul>
+<h2 id="2消息认证技术">2.消息认证技术<a hidden class="anchor" aria-hidden="true" href="#2消息认证技术">#</a></h2>
+<p>（检验消息是否真实）</p>
+<ul>
+<li>消息加密：将整个消息的密文作为认证码
+<strong>对称加密，添加校验码，公钥加密</strong></li>
+<li>哈希函数：将哈希函数产生的散列值作为消息认证码
+<strong>使用哈希函数，保证机密性的哈希函数，混合加密认证</strong></li>
+<li>消息认证码：将消息和密钥一起作为认证码</li>
+</ul>
+<h2 id="3数字签名">3.数字签名<a hidden class="anchor" aria-hidden="true" href="#3数字签名">#</a></h2>
+<ul>
+<li>直接数字签名：依赖于发送方私人密钥的安全性，若丢失或被盗用，签名被伪造。</li>
+<li>仲裁数字签名：
+方案1：对称加密算法（报文M以明文形式发送）
+方案2：对称加密算法，密文传输（仲裁者两方勾结）
+方案3：公开密钥算法，密文传输（）</li>
+</ul>
+<h2 id="4身份认证">4.身份认证<a hidden class="anchor" aria-hidden="true" href="#4身份认证">#</a></h2>
+<ul>
+<li><strong>常见的重放攻击</strong>：1.简单重放；2.可检测的重放；3.不可检测的重复； 4.不加修改的逆向重放
+<strong>重放攻击的预防</strong>：序列号，时间戳，随机数</li>
+</ul>
+<table>
+  <thead>
+      <tr>
+          <th>基于对称密钥的身份认证</th>
+          <th>特点</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Needham-Schroeder   (随机数)</td>
+          <td>第三步易受攻击</td>
+      </tr>
+      <tr>
+          <td>Denning（时间戳）</td>
+          <td>无法安全同步网络时钟,抑制—重放攻击，报文中的时间戳快了</td>
+      </tr>
+      <tr>
+          <td>Numan-Stubblebine</td>
+          <td>解决抑制—重放攻击</td>
+      </tr>
+  </tbody>
+</table>
+<table>
+  <thead>
+      <tr>
+          <th>基于公钥的消息认证</th>
+          <th>特点</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>Denning-Sacco</td>
+          <td>引入时间戳，但需严格时钟同步</td>
+      </tr>
+      <tr>
+          <td>Woo-lam</td>
+          <td>用随机数作为临时交互值</td>
+      </tr>
+  </tbody>
+</table>
+<h1 id="计算机病毒">计算机病毒<a hidden class="anchor" aria-hidden="true" href="#计算机病毒">#</a></h1>
+<h2 id="1计算机病毒特征">1.计算机病毒特征<a hidden class="anchor" aria-hidden="true" href="#1计算机病毒特征">#</a></h2>
+<p>隐蔽性，寄生性，可触发性，传染性，破坏性</p>
+<h2 id="2常见的病毒类型">2.常见的病毒类型<a hidden class="anchor" aria-hidden="true" href="#2常见的病毒类型">#</a></h2>
+<p>引导型病毒，文件型病毒，网络蠕虫，计算机木马</p>
+<h2 id="3病毒的检测">3.病毒的检测<a hidden class="anchor" aria-hidden="true" href="#3病毒的检测">#</a></h2>
+<p>特征代码法：对每种病毒样本抽取特征代码，根据该代码特征进行病毒检测；
+校验和法：计算文件内容的校验和；
+行为检测法：利用病毒特有行为特征进行检测
+软件模拟法：两次特征代码法，识别未知病毒</p>
+<h1 id="网络攻击与防范">网络攻击与防范<a hidden class="anchor" aria-hidden="true" href="#网络攻击与防范">#</a></h1>
+<h2 id="1分类">1.分类<a hidden class="anchor" aria-hidden="true" href="#1分类">#</a></h2>
+<table>
+  <thead>
+      <tr>
+          <th>分类</th>
+          <th>举例</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>窃听</td>
+          <td>网络监听，获取密码，网络监听</td>
+      </tr>
+      <tr>
+          <td>欺骗</td>
+          <td>获取密码，恶意代码，网络欺骗</td>
+      </tr>
+      <tr>
+          <td>拒绝服务</td>
+          <td></td>
+      </tr>
+      <tr>
+          <td>数据驱动攻击</td>
+          <td>缓冲区溢出</td>
+      </tr>
+  </tbody>
+</table>
+<h2 id="2步骤">2.步骤<a hidden class="anchor" aria-hidden="true" href="#2步骤">#</a></h2>
+<p>目标检测——端口扫描——网络监听——实施攻击——撤退</p>
+<h1 id="防火墙技术">防火墙技术<a hidden class="anchor" aria-hidden="true" href="#防火墙技术">#</a></h1>
+<h2 id="1-体系结构">1. 体系结构<a hidden class="anchor" aria-hidden="true" href="#1-体系结构">#</a></h2>
+<ul>
+<li>
+<p>　<strong>堡垒主机体系结构</strong>
+堡垒主机是一种被强化的可以防御攻击的计算机，被暴露于因特网之上，作为进入内部网络的一个检查点（checkpoint），以达到把整个网络的安全问题集中在某个主机上解决。正是由于这个原因，防火墙的建造者和防火墙的管理者应尽力给予其保护，特别是在防火墙的安装和初始化的过程中应予以仔细保护</p>
+</li>
+<li>
+<p><strong>双宿主主机体系结构</strong>
+双宿主主机的防火墙系统由一台装有两个网卡的堡垒主机构成。两个网卡分别与外部网及内部网相连。堡垒主机上运行防火墙软件，可以转发数据、提供服务等。堡垒主机将防止在外部网络和内部系统之间建立任何直接的连接，可以确保数据包不能直接从外部网络到达内部网络。
+双宿主主机有两个接口，具有以下特点。
+　　（1）两个端口之间不能进行直接的IP数据包的转发。
+　　（2）防火墙内部的系统可以与双宿主主机进行通信，同时防火墙外部的系统也可以与双宿主主机进行通信，但二者之间不能直接进行通信。
+　　这种体系结构的优点是结构非常简单，易于实现，并且具有高度的安全性，可以完全阻止内部网络与外部网络通信
+　　</p>
+</li>
+<li>
+<p><strong>屏蔽主机体系结构</strong>
+这种结构的堡垒主机位于内部网络，而过滤路由器按以下规则过滤数据包：任何外部网（如 Internet）的主机都只能与内部网的堡垒主机建立连接，甚至只有提供某些类型服务的外部网主机才被允许与堡垒主机建立连接。任何外部系统对内部网络的操作都必须经过堡垒主机，同时堡垒主机本身就要求有较全面的安全维护。包过滤系统也允许堡垒主机与外部网进行一些“可以接受（即符合站点的安全规则）”的连接</p>
+</li>
+<li>
+<p><strong>屏蔽子网体系结构</strong>
+在最简单的屏蔽子网体系结构中，有两台都与边界网络相连的过滤路由器，一台位于边界网络与内部网络之间，而另一台位于边界网络与外部网络之间。在这种结构下，入侵者要攻击到内部网必须通过两台路由器的安全控制，即使入侵者通过了堡垒主机，它还必须通过内部路由器才能抵达内部网，因此整个网络安全机制就不会因一个站点攻破而全部瘫痪。</p>
+</li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span><a href="https://fishdel.github.io/">©2024 Yuuuu&rsquo;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

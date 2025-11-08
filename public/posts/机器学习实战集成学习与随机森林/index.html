@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>机器学习实战(集成学习与随机森林) | Yuuuuu&#39;s Blog</title>
+<meta name="keywords" content="Machine learning">
+<meta name="description" content="集成学习与随机森林
+更新权重
+Adaboost
+
+
+AdaBoostClassifier(base_estimator=None, n_estimators=50,
+learning_rate=1.0, algorithm=’SAMME.R’,
+random_state=None)
+
+base_estimator:可选参数，默认为DecisionTreeClassifier。
+algorithm： 可选参数，默认为SAMME.R
+
+
+
+循环训练，实例权重不断更新（不是是成本函数最小化，而是加入更多预测器）">
+<meta name="author" content="">
+<link rel="canonical" href="https://fishdel.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E4%B8%8E%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.d6fcd20a4fb86efa4dfac8ec95da60244cc8871042183da1ef28e3a762ad79c8.css" integrity="sha256-1vzSCk&#43;4bvpN&#43;sjsldpgJEzIhxBCGD2h7yjjp2Ktecg=" rel="preload stylesheet" as="style">
+<link rel="icon" href="https://fishdel.github.io/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="https://fishdel.github.io/favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="https://fishdel.github.io/favicon.png">
+<link rel="apple-touch-icon" href="https://fishdel.github.io/favicon.png">
+<link rel="mask-icon" href="https://fishdel.github.io/favicon.png">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="zh" href="https://fishdel.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E4%B8%8E%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript><meta property="og:url" content="https://fishdel.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E4%B8%8E%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/">
+  <meta property="og:site_name" content="Yuuuuu&#39;s Blog">
+  <meta property="og:title" content="机器学习实战(集成学习与随机森林)">
+  <meta property="og:description" content="集成学习与随机森林 更新权重 Adaboost AdaBoostClassifier(base_estimator=None, n_estimators=50, learning_rate=1.0, algorithm=’SAMME.R’, random_state=None)
+base_estimator:可选参数，默认为DecisionTreeClassifier。 algorithm： 可选参数，默认为SAMME.R 循环训练，实例权重不断更新（不是是成本函数最小化，而是加入更多预测器）">
+  <meta property="og:locale" content="zh">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2022-04-05T22:11:08+08:00">
+    <meta property="article:modified_time" content="2022-04-05T22:11:08+08:00">
+    <meta property="article:tag" content="Machine Learning">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="机器学习实战(集成学习与随机森林)">
+<meta name="twitter:description" content="集成学习与随机森林
+更新权重
+Adaboost
+
+
+AdaBoostClassifier(base_estimator=None, n_estimators=50,
+learning_rate=1.0, algorithm=’SAMME.R’,
+random_state=None)
+
+base_estimator:可选参数，默认为DecisionTreeClassifier。
+algorithm： 可选参数，默认为SAMME.R
+
+
+
+循环训练，实例权重不断更新（不是是成本函数最小化，而是加入更多预测器）">
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "https://fishdel.github.io/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "机器学习实战(集成学习与随机森林)",
+      "item": "https://fishdel.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E4%B8%8E%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "机器学习实战(集成学习与随机森林)",
+  "name": "机器学习实战(集成学习与随机森林)",
+  "description": "集成学习与随机森林 更新权重 Adaboost AdaBoostClassifier(base_estimator=None, n_estimators=50, learning_rate=1.0, algorithm=’SAMME.R’, random_state=None)\nbase_estimator:可选参数，默认为DecisionTreeClassifier。 algorithm： 可选参数，默认为SAMME.R 循环训练，实例权重不断更新（不是是成本函数最小化，而是加入更多预测器）\n",
+  "keywords": [
+    "Machine learning"
+  ],
+  "articleBody": "集成学习与随机森林 更新权重 Adaboost AdaBoostClassifier(base_estimator=None, n_estimators=50, learning_rate=1.0, algorithm=’SAMME.R’, random_state=None)\nbase_estimator:可选参数，默认为DecisionTreeClassifier。 algorithm： 可选参数，默认为SAMME.R 循环训练，实例权重不断更新（不是是成本函数最小化，而是加入更多预测器）\nGradient Boosting 新预测器针对前一个预测器的残差进行拟合\nGradientBoostingRegressor(max_depth=2,n_estimators=3,learning_rate=1.0,random_state=42)\n提前停止法\n训练完之后测量每个阶段的训练验证误差，找到树的最优数量后重新训练\nerrors = [mean_squared_error(y_val, y_pred) for y_pred in gbrt.staged_predict(X_val)]\nbst_n_estimators = np.argmin(errors) + 1\n验证误差在连续某次未改善时停止训练\nxgboost xgbc = XGBClassifier(max_depth=2, learning_rate=1, n_estimators=2, # number of iterations or number of trees slient=0, objective=\"binary:logistic\" ) 不更新权重 投票分类器 基于多分类器的结果聚合\nvoting_clf = VotingClassifier(estimators=[ (’log_clf’, LogisticRegression()), (‘svm_clf’, SVC(probability=True)), (‘dt_clf’, DecisionTreeClassifier(random_state=10)), ], voting=‘soft’) voting_clf.fit(X_train, y_train) voting_clf.score(X_test, y_test)\nbagging./pasting 有放回抽样。在每个数据集上学习出一个模型，最后的预测结果利用N个模型的输出得到，具体地：分类问题采用N个模型预测投票的方式，回归问题采用N个模型预测平均的方式。\n1.通过设置参数 bootstrap=False来切换为无放回采样。 2.n_estimators=500，表示有有500个相同的决策器。 3.max_samples=100，表示在数据集上有放回采样 100 个训练实例。 4.n_jobs=-1，n_jobs 参数告诉 sklearn 用于训练和预测所需要 CPU 核的数量。（-1 代表着 sklearn 会使用所有空闲核） 5.oob_score=True，表示包外评估bag_clf.oob_score_ 随机森林\nrnd_clf = RandomForestClassifier(n_estimators=500, max_leaf_nodes=16, random_state=42)\n重要参数\nn_estimators，random_state，boostrap和oob_score 重要属性\n.estimators_ .oob_score_ .feature_importances_ 接口\napply，fit，predict，score和predict_proba ",
+  "wordCount" : "670",
+  "inLanguage": "zh",
+  "datePublished": "2022-04-05T22:11:08+08:00",
+  "dateModified": "2022-04-05T22:11:08+08:00",
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "https://fishdel.github.io/posts/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E5%AE%9E%E6%88%98%E9%9B%86%E6%88%90%E5%AD%A6%E4%B9%A0%E4%B8%8E%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Yuuuuu's Blog",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://fishdel.github.io/favicon.png"
+    }
+  }
+}
+</script>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="https://fishdel.github.io/" accesskey="h" title="Yuuuuu&#39;s Blog (Alt + H)">Yuuuuu&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="https://fishdel.github.io/" title="🏠主页">
+                    <span>🏠主页</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/posts/" title="📚文章">
+                    <span>📚文章</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/archives/" title="⏱时间轴">
+                    <span>⏱时间轴</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/tags/" title="🔖标签">
+                    <span>🔖标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/categories/" title="🧩分类">
+                    <span>🧩分类</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/search/" title="🔍搜索">
+                    <span>🔍搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="https://fishdel.github.io/about/" title="🙋🏻‍♂️关于">
+                    <span>🙋🏻‍♂️关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      机器学习实战(集成学习与随机森林)
+    </h1>
+    <div class="post-meta"><span title='2022-04-05 22:11:08 +0800 CST'>四月 5, 2022</span>
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="集成学习与随机森林">集成学习与随机森林<a hidden class="anchor" aria-hidden="true" href="#集成学习与随机森林">#</a></h1>
+<h2 id="更新权重">更新权重<a hidden class="anchor" aria-hidden="true" href="#更新权重">#</a></h2>
+<h3 id="adaboost">Adaboost<a hidden class="anchor" aria-hidden="true" href="#adaboost">#</a></h3>
+<ul>
+<li>
+<p>AdaBoostClassifier(base_estimator=None, n_estimators=50,
+learning_rate=1.0, algorithm=’SAMME.R’,
+random_state=None)</p>
+<ul>
+<li>base_estimator:可选参数，默认为DecisionTreeClassifier。</li>
+<li>algorithm： 可选参数，默认为SAMME.R</li>
+</ul>
+</li>
+<li>
+<p>循环训练，实例权重不断更新（不是是成本函数最小化，而是加入更多预测器）</p>
+</li>
+</ul>
+<h3 id="gradient-boosting">Gradient Boosting<a hidden class="anchor" aria-hidden="true" href="#gradient-boosting">#</a></h3>
+<ul>
+<li>
+<p>新预测器针对前一个预测器的残差进行拟合</p>
+</li>
+<li>
+<p>GradientBoostingRegressor(max_depth=2,n_estimators=3,learning_rate=1.0,random_state=42)</p>
+<ul>
+<li>
+<p>提前停止法</p>
+<ul>
+<li>
+<p>训练完之后测量每个阶段的训练验证误差，找到树的最优数量后重新训练</p>
+</li>
+<li>
+<p>errors = [mean_squared_error(y_val, y_pred) for y_pred in gbrt.staged_predict(X_val)]</p>
+</li>
+<li>
+<p>bst_n_estimators = np.argmin(errors) + 1</p>
+</li>
+<li>
+<p>验证误差在连续某次未改善时停止训练</p>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="xgboost">xgboost<a hidden class="anchor" aria-hidden="true" href="#xgboost">#</a></h3>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-python" data-lang="python"><span class="line"><span class="cl"><span class="n">xgbc</span> <span class="o">=</span> <span class="n">XGBClassifier</span><span class="p">(</span><span class="n">max_depth</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                     <span class="n">learning_rate</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span> 
+</span></span><span class="line"><span class="cl">                     <span class="n">n_estimators</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span> <span class="c1"># number of iterations or number of trees</span>
+</span></span><span class="line"><span class="cl">                     <span class="n">slient</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">                     <span class="n">objective</span><span class="o">=</span><span class="s2">&#34;binary:logistic&#34;</span>
+</span></span><span class="line"><span class="cl">                    <span class="p">)</span>
+</span></span></code></pre></div><h2 id="不更新权重">不更新权重<a hidden class="anchor" aria-hidden="true" href="#不更新权重">#</a></h2>
+<h3 id="投票分类器">投票分类器<a hidden class="anchor" aria-hidden="true" href="#投票分类器">#</a></h3>
+<ul>
+<li>
+<p>基于多分类器的结果聚合</p>
+<ul>
+<li>voting_clf = VotingClassifier(estimators=[
+(&rsquo;log_clf&rsquo;, LogisticRegression()),
+(&lsquo;svm_clf&rsquo;, SVC(probability=True)),
+(&lsquo;dt_clf&rsquo;, DecisionTreeClassifier(random_state=10)),
+], voting=&lsquo;soft&rsquo;)</li>
+</ul>
+</li>
+</ul>
+<p>voting_clf.fit(X_train, y_train)
+voting_clf.score(X_test, y_test)</p>
+<h3 id="baggingpasting">bagging./pasting<a hidden class="anchor" aria-hidden="true" href="#baggingpasting">#</a></h3>
+<ul>
+<li>
+<p>有放回抽样。在每个数据集上学习出一个模型，最后的预测结果利用N个模型的输出得到，具体地：分类问题采用N个模型预测投票的方式，回归问题采用N个模型预测平均的方式。</p>
+<ul>
+<li>1.通过设置参数 bootstrap=False来切换为无放回采样。
+2.n_estimators=500，表示有有500个相同的决策器。
+3.max_samples=100，表示在数据集上有放回采样 100 个训练实例。
+4.n_jobs=-1，n_jobs 参数告诉 sklearn 用于训练和预测所需要 CPU 核的数量。（-1 代表着 sklearn 会使用所有空闲核）
+5.oob_score=True，表示包外评估bag_clf.oob_score_</li>
+</ul>
+</li>
+<li>
+<p>随机森林</p>
+<ul>
+<li>
+<p>rnd_clf = RandomForestClassifier(n_estimators=500, max_leaf_nodes=16, random_state=42)</p>
+</li>
+<li>
+<p>重要参数</p>
+<ul>
+<li>n_estimators，random_state，boostrap和oob_score</li>
+</ul>
+</li>
+<li>
+<p>重要属性</p>
+<ul>
+<li>.estimators_ .oob_score_ .feature_importances_</li>
+</ul>
+</li>
+<li>
+<p>接口</p>
+<ul>
+<li>apply，fit，predict，score和predict_proba</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+      <li><a href="https://fishdel.github.io/tags/machine-learning/">Machine Learning</a></li>
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span><a href="https://fishdel.github.io/">©2024 Yuuuu&rsquo;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>

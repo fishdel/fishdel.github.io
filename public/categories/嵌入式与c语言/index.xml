@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>嵌入式与C语言 on Yuuuuu&#39;s Blog</title>
+    <link>https://fishdel.github.io/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F%E4%B8%8Ec%E8%AF%AD%E8%A8%80/</link>
+    <description>Recent content in 嵌入式与C语言 on Yuuuuu&#39;s Blog</description>
+    <generator>Hugo -- 0.139.3</generator>
+    <language>zh</language>
+    <copyright>©2024 Yuuuu&amp;rsquo;s Blog</copyright>
+    <lastBuildDate>Thu, 21 Dec 2023 22:11:08 +0800</lastBuildDate>
+    <atom:link href="https://fishdel.github.io/categories/%E5%B5%8C%E5%85%A5%E5%BC%8F%E4%B8%8Ec%E8%AF%AD%E8%A8%80/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>嵌入式.ld,.lsl等链接文件作用</title>
+      <link>https://fishdel.github.io/posts/%E5%B5%8C%E5%85%A5%E5%BC%8F.ld.lsl%E7%AD%89%E9%93%BE%E6%8E%A5%E6%96%87%E4%BB%B6%E4%BD%9C%E7%94%A8/</link>
+      <pubDate>Thu, 21 Dec 2023 22:11:08 +0800</pubDate>
+      <guid>https://fishdel.github.io/posts/%E5%B5%8C%E5%85%A5%E5%BC%8F.ld.lsl%E7%AD%89%E9%93%BE%E6%8E%A5%E6%96%87%E4%BB%B6%E4%BD%9C%E7%94%A8/</guid>
+      <description>&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;生成可执行文件的主要流程：预编译、编译（C—&amp;gt;汇编—&amp;gt;binary）、链接。&lt;/p&gt;
+&lt;/li&gt;
+&lt;li&gt;
+&lt;p&gt;编译只是把各个.c和.s文件编译成对应的.o文件。然后需要链接器将各个.o文件链接为一个可执行文件。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>函数指针，位操作和数据类型</title>
+      <link>https://fishdel.github.io/posts/%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88%E4%BD%8D%E6%93%8D%E4%BD%9C%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</link>
+      <pubDate>Sat, 15 Jul 2023 22:11:08 +0800</pubDate>
+      <guid>https://fishdel.github.io/posts/%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88%E4%BD%8D%E6%93%8D%E4%BD%9C%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/</guid>
+      <description>&lt;h1 id=&#34;函数指针与回调函数&#34;&gt;函数指针与回调函数&lt;/h1&gt;
+&lt;h2 id=&#34;函数指针&#34;&gt;函数指针&lt;/h2&gt;
+&lt;p&gt;&lt;strong&gt;作用&lt;/strong&gt;：硬件驱动程序和用户应用程序相互分开，硬件驱动程序提供API函数，用户应用程序将函数作为回调函数的方式进行使用。
+&lt;em&gt;回调机制的好处是，&lt;em&gt;&lt;strong&gt;在程序执行期间可以动态更改被调用&lt;/strong&gt;&lt;/em&gt;&lt;/em&gt;
+&lt;em&gt;回调函数：作为参数传递给另一个函数的函数，接受回调作为参数的函数预计会在某个时间点执行它。&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>英飞凌 TC3XX CAN Interface (MCMCAN)模块</title>
+      <link>https://fishdel.github.io/posts/%E8%8B%B1%E9%A3%9E%E5%87%8C-tc3xx-can-interface-mcmcan-%E6%A8%A1%E5%9D%97/</link>
+      <pubDate>Tue, 11 Jul 2023 22:11:08 +0800</pubDate>
+      <guid>https://fishdel.github.io/posts/%E8%8B%B1%E9%A3%9E%E5%87%8C-tc3xx-can-interface-mcmcan-%E6%A8%A1%E5%9D%97/</guid>
+      <description>&lt;h3 id=&#34;can-interface-mcmcan&#34;&gt;&lt;strong&gt;CAN Interface (MCMCAN)&lt;/strong&gt;&lt;/h3&gt;
+&lt;h4 id=&#34;1模块&#34;&gt;1.模块&lt;/h4&gt;
+&lt;p&gt;有三个模块CAN0,CAN1,CAN2，一般只使用CAN0,CAN0的模块比较全面。&lt;/p&gt;
+&lt;p&gt;CAN0有4个CAN node，Message RAM 一共32Kbyte，FIFO,buffer，register在此处开辟。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>嵌入式系统——MCU组成结构与程序运行机制</title>
+      <link>https://fishdel.github.io/posts/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0mcu%E7%BB%84%E6%88%90%E7%BB%93%E6%9E%84%E4%B8%8E%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6%E4%B8%89/</link>
+      <pubDate>Mon, 08 Aug 2022 22:11:08 +0800</pubDate>
+      <guid>https://fishdel.github.io/posts/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0mcu%E7%BB%84%E6%88%90%E7%BB%93%E6%9E%84%E4%B8%8E%E7%A8%8B%E5%BA%8F%E8%BF%90%E8%A1%8C%E6%9C%BA%E5%88%B6%E4%B8%89/</guid>
+      <description>&lt;h1 id=&#34;mcu系统结构&#34;&gt;MCU系统结构&lt;/h1&gt;
+&lt;h2 id=&#34;整体结构&#34;&gt;整体结构&lt;/h2&gt;
+&lt;p&gt;因为学习的是STM32，所以按照手册进行理解。&lt;/p&gt;
+&lt;h3 id=&#34;哈佛结构和冯诺依曼结构&#34;&gt;哈佛结构和冯诺依曼结构&lt;/h3&gt;
+&lt;ol&gt;
+&lt;li&gt;
+&lt;p&gt;首先我们在编写代码的时候，可以将代码分为两部分，一部分是逻辑代码部分，另一部分是定义的变量，逻辑代码是不用改变的，而变量会改变，哈佛结构和冯诺依曼结构就是对于这个两部分代码的存储方式有着一些区别。
+&lt;strong&gt;冯诺依曼结构&lt;/strong&gt;将程序存储器和数据存储器合并在一起的处理器架构设计，他的特点是使用同一个存储器，经由同一个总线传输。
+&lt;strong&gt;哈佛结构&lt;/strong&gt;将程序指令存储和数据存储分开存储，在嵌入式编程中一般使用这种方式，因为可以只修改数据不用修改逻辑代码。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>嵌入式系统——CPU</title>
+      <link>https://fishdel.github.io/posts/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0cpu%E4%B8%80/</link>
+      <pubDate>Sun, 07 Aug 2022 22:11:08 +0800</pubDate>
+      <guid>https://fishdel.github.io/posts/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0cpu%E4%B8%80/</guid>
+      <description>&lt;h1 id=&#34;1-cpu的运行原理&#34;&gt;1. CPU的运行原理&lt;/h1&gt;
+&lt;h2 id=&#34;11-cpu最基本的工作单元mosfet&#34;&gt;1.1 CPU最基本的工作单元——MOSFET&lt;/h2&gt;
+&lt;h3 id=&#34;二极管的工作原理&#34;&gt;二极管的工作原理&lt;/h3&gt;
+&lt;p&gt;SI原子外层有4个电子，P原子外层有5个电子，B原子外层有3个电子；如果SI和P结合，就会多一个电子，导电性上升；如果SI和B结合，就会有一个空穴，会有电子过来，导电性也会上升；电子和空穴都叫载流子，载流子就是电流的载体。
+增加空穴的掺杂——P型掺杂；增加电子的掺杂——N型掺杂。
+如果在一块硅晶体左边和右边进行N型掺杂和P型掺杂，中间区域就会出现电子从N区扩散到P区和空穴结合；交界处N区域失去电子显正电，P区域得到电子带负电，中间产生一个电场，叫耗尽层。
+如果在外面接一个电池，如果电池提供的电场和中间电场方向相反进行抵消，此时电路导通；如果反过来接，耗尽层加宽，则不能导通。&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>嵌入式系统—中断</title>
+      <link>https://fishdel.github.io/posts/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%AD%E6%96%AD%E4%BA%8C/</link>
+      <pubDate>Sun, 07 Aug 2022 22:11:08 +0800</pubDate>
+      <guid>https://fishdel.github.io/posts/%E5%B5%8C%E5%85%A5%E5%BC%8F%E5%AD%A6%E4%B9%A0%E7%AC%94%E8%AE%B0%E4%B8%AD%E6%96%AD%E4%BA%8C/</guid>
+      <description>&lt;h2 id=&#34;中断的概念和机制&#34;&gt;中断的概念和机制&lt;/h2&gt;
+&lt;h3 id=&#34;中断与轮询&#34;&gt;中断与轮询&lt;/h3&gt;
+&lt;ul&gt;
+&lt;li&gt;&lt;strong&gt;中断&lt;/strong&gt;： 由硬件判断外部事件并通知CPU；专用的中断服务程序来处理事件
+&lt;ul&gt;
+&lt;li&gt;处理对响应要求非常高的事件&lt;/li&gt;
+&lt;li&gt;处理持续事件非常短的事件&lt;/li&gt;
+&lt;li&gt;低功耗的应用&lt;/li&gt;
+&lt;li&gt;程序设计复杂&lt;/li&gt;
+&lt;/ul&gt;
+&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;&lt;em&gt;&lt;strong&gt;通常把CPU内部的紧急时间叫做异常，比如地址访问越界；
+把CPU外部的片上外设产生的紧急时间叫做中断,比如GPIO口引脚的电平变化。
+中断和异常都是停下当前任务去执行紧急事件，所以一般统称位中断。&lt;/strong&gt;&lt;/em&gt;&lt;/p&gt;</description>
+    </item>
+  </channel>
+</rss>

@@ -15,7 +15,24 @@ pygmentsUseClasses: true
 defaultContentLanguage: zh # 顶部首先展示的语言界面
 defaultContentLanguageInSubdir: false # 是否要在地址栏加上默认的语言代码
 
+minify:
+    disableXML: true
+    # minifyOutput: true
+
+permalinks:
+  post: "/:title/"
+  # post: "/:year/:month/:day/:title/"
+
 params:
+  homeInfoParams:
+    Title: '一个学习、思考和吐槽的地方' # 主题
+    Content: '写一些生活中学到的内容（已移植21-23年内容），然后觉得做一个网站比较有趣
+                    ' # 描述
+
+    
+   
+
+
   # 搜索
   fuseOpts:
       isCaseSensitive: false # 是否大小写敏感
@@ -33,34 +50,42 @@ params:
       favicon32x32: "favicon.png"
       apple_touch_icon: "favicon.png"
       safari_pinned_tab: "favicon.png"
+  socialIcons:
+        - name: github
+          url: 'https://github.com/yunyit'
+        - name: bilibili
+          url: "https://space.bilibili.com/10831667"
+        - name: email
+          url: 'mailto:1029948143@qq.com'
 
+  
       
 languages:
   zh:
-    languageName: "中文" # 展示的语言名
+    languageName: "Chinese" # 展示的语言名
     weight: 1 # 权重
-    taxonomies: # 分类系统
-      category: categories
-      tag: tags
-    # https://gohugo.io/content-management/menus/#define-in-site-configuration
+    profileMode:
     menus:
       main:
-        - name: 首页
+        - name: 🏠主页
           pageRef: /
+          weight: 2 # 控制在页面上展示的前后顺序
+        - name: 📚文章
+          pageRef: posts/
           weight: 4 # 控制在页面上展示的前后顺序
-        - name: 归档
+        - name: ⏱时间轴
           pageRef: archives/
           weight: 5
-        - name: 分类
+        - name: 🧩分类
           pageRef: categories/
           weight: 10
-        - name: 标签
+        - name: 🔖标签
           pageRef: tags/
           weight: 10
-        - name: 搜索
+        - name: 🔍搜索
           pageRef: search/
           weight: 20
-        - name: 关于
+        - name: 🙋🏻‍♂️关于
           pageRef: about/
           weight: 21
  
@@ -68,7 +93,7 @@ languages:
 outputs:
   home:
     - HTML # 生成的静态页面
-    - RSS # 这个其实无所谓
+    - RSS # 
     - JSON # necessary for search, 这里的配置修改好之后，一定要重新生成一下
     
 

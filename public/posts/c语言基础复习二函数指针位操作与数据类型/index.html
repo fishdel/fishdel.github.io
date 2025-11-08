@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>Yuuuuu&#39;s Blog</title>
+<meta name="keywords" content="">
+<meta name="description" content="@TOC
+函数指针与回调函数
+函数指针
+作用：硬件驱动程序和用户应用程序相互分开，硬件驱动程序提供API函数，用户应用程序将函数作为回调函数的方式进行使用。
+回调机制的好处是，在程序执行期间可以动态更改被调用
+回调函数：作为参数传递给另一个函数的函数，接受回调作为参数的函数预计会在某个时间点执行它。">
+<meta name="author" content="">
+<link rel="canonical" href="http://localhost:1313/posts/c%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E5%A4%8D%E4%B9%A0%E4%BA%8C%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88%E4%BD%8D%E6%93%8D%E4%BD%9C%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.d6fcd20a4fb86efa4dfac8ec95da60244cc8871042183da1ef28e3a762ad79c8.css" integrity="sha256-1vzSCk&#43;4bvpN&#43;sjsldpgJEzIhxBCGD2h7yjjp2Ktecg=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/favicon.png">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/favicon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/favicon.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/favicon.png">
+<link rel="mask-icon" href="http://localhost:1313/favicon.png">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="zh" href="http://localhost:1313/posts/c%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E5%A4%8D%E4%B9%A0%E4%BA%8C%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88%E4%BD%8D%E6%93%8D%E4%BD%9C%E4%B8%8E%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+    <style>
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --theme: rgb(29, 30, 32);
+                --entry: rgb(46, 46, 51);
+                --primary: rgb(218, 218, 219);
+                --secondary: rgb(155, 156, 157);
+                --tertiary: rgb(65, 66, 68);
+                --content: rgb(196, 196, 197);
+                --code-block-bg: rgb(46, 46, 51);
+                --code-bg: rgb(55, 56, 62);
+                --border: rgb(51, 51, 51);
+            }
+
+            .list {
+                background: var(--theme);
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-track {
+                background: 0 0;
+            }
+
+            .list:not(.dark)::-webkit-scrollbar-thumb {
+                border-color: var(--theme);
+            }
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class="" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "dark") {
+        document.body.classList.add('dark');
+    } else if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        document.body.classList.add('dark');
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://localhost:1313/" accesskey="h" title="Yuuuuu&#39;s Blog (Alt + H)">Yuuuuu&#39;s Blog</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://localhost:1313/" title="首页">
+                    <span>首页</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/archives/" title="归档">
+                    <span>归档</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/categories/" title="分类">
+                    <span>分类</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/tags/" title="标签">
+                    <span>标签</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/search/" title="搜索">
+                    <span>搜索</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://localhost:1313/about/" title="关于">
+                    <span>关于</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    
+    <h1 class="post-title entry-hint-parent">
+      
+    </h1>
+    <div class="post-meta">
+
+</div>
+  </header> 
+  <div class="post-content"><p>@<a href="C%E8%AF%AD%E8%A8%80%E5%9F%BA%E7%A1%80%E5%A4%8D%E4%B9%A0%EF%BC%88%E4%BA%8C%EF%BC%89%E5%87%BD%E6%95%B0%E6%8C%87%E9%92%88%E4%B8%8E%E4%BD%8D%E6%93%8D%E4%BD%9C">TOC</a></p>
+<h1 id="函数指针与回调函数">函数指针与回调函数<a hidden class="anchor" aria-hidden="true" href="#函数指针与回调函数">#</a></h1>
+<h2 id="函数指针">函数指针<a hidden class="anchor" aria-hidden="true" href="#函数指针">#</a></h2>
+<p><strong>作用</strong>：硬件驱动程序和用户应用程序相互分开，硬件驱动程序提供API函数，用户应用程序将函数作为回调函数的方式进行使用。
+<em>回调机制的好处是，<em><strong>在程序执行期间可以动态更改被调用</strong></em></em>
+<em>回调函数：作为参数传递给另一个函数的函数，接受回调作为参数的函数预计会在某个时间点执行它。</em></p>
+<p><strong>使用方法</strong>：函数名带括号就是函数指针，没括号是指针函数</p>
+<p>把函数A的地址赋给一个函数指针p，以p为参数，赋值给函数B，函数B通过p调用A</p>
+<p>函数指针是一个指向函数的指针变量，32位单片机中存放大小为4字节的地址</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="kt">int</span> <span class="o">*</span><span class="p">(</span><span class="o">*</span><span class="n">pfunc</span><span class="p">)(</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="o">*</span><span class="p">,</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="o">*</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="k">typedef</span> <span class="kt">int</span> <span class="o">*</span><span class="p">(</span><span class="o">*</span><span class="n">pfunc</span><span class="p">)(</span><span class="kt">int</span><span class="p">,</span><span class="kt">int</span><span class="o">*</span><span class="p">,</span><span class="kt">void</span><span class="o">*</span><span class="p">)</span><span class="o">*</span><span class="p">;</span>
+</span></span></code></pre></div><p>一般用typedef定义函数指针类型。
+<em>typedef和define区别：typedef 语句是在编译过程中被解析的，而#define是在编译之前的预处理过程中被解析的</em></p>
+<p><code>typedef uint8_t (*func_ptr) (void);</code>，就相当于把<code>uint8_t (*) (void);</code> 定义成了另一个别名 <code>func_ptr</code>了。这个<code>func_ptr</code>就表示了函数指针类型。</p>
+<p><code>typedef int *(*pfunc)(int,int*,void*)*;</code>相当于把<code>int（*）(int,int*,void*)</code>；定义成别名<code>pfunc</code></p>
+<p>相当于把 <code>int(*)(int，int*，void*)</code>取一个别名<code>pfunc</code></p>
+<h2 id="回调函数">回调函数<a hidden class="anchor" aria-hidden="true" href="#回调函数">#</a></h2>
+<p><strong>作用:</strong>
+虽然只是函数指针的应用，但通过函数指针的当时区分传入不同的函数入口地址去执行不同的函数，可以节省单片机的ram和rom的开支。</p>
+<p><strong>实现：</strong>
+例如将callback函数看做底层函数，main函数看成上层应用函数，现在有上层方法A,上层方法B,在使用底层callback函数进行功能设计时，转回去拿到具体的方法A,方法B，再把结果返回main,此时方法A,B就是回调函数。</p>
+<p><strong>举例：</strong>
+EcuM_AL_Reset是回调函数，属于对象外的，该函数被调用后，会MCAL标准函数Mcu_PerformReset来重启CPU</p>
+<h2 id="钩子函数">钩子函数<a hidden class="anchor" aria-hidden="true" href="#钩子函数">#</a></h2>
+<p>hook函数实际也是函数指针，因为也是用户定义的，也可以理解为回调函数，二者之间区别主要是回<strong>调函数主要是目的处理，hook函数主要是过程监控。</strong></p>
+<p>定义函数fun1，fun2，再定义一个pfun函数指针，在main函数里通过pfun指向fun1，fun2，这个过程称为挂钩子。在不确定main函数的功能的情况下，留下函数指针作为接口，挂上不同的函数就可以完成不同的功能。</p>
+<p><em>HOOK函数相当于一个监视器，捕获消息队列中需要的内容去处理</em></p>
+<p>挂钩子的过程也称为注册。在注册函数中，使用者把自己编写的钩子函数挂在已经声明的函数指针上，这个注册函数的参数是要挂上的钩子函数的地址，即函数指针。</p>
+<p><strong>举例：Autosar中的hook函数机制</strong></p>
+<p>1）由操作系统调用，在特定的context中取决于操作系统的实现
+2）高于所有task
+3）不被第二类中断程序打断。
+4）属于操作系统的一部分
+5）可以由用户定义功能</p>
+<p>截获行为的函数调用（相当于监控器）。所有特定于应用程序的Hook函数（Startup, Shutdown and Error）必须返回（不接受阻塞或无限循环）。</p>
+<p>当应用程序或操作系统在出现严重错误时请求系统关闭时调用 (ShutdownHook)</p>
+<p>在Shutdown OS时，操作系统将调用钩子函数ShutdownHook，勾到EcuM_ShutDown那边，然后关闭（如下图： 多核系统关闭过程）。用户通常可以在ShutdownHook中自由定义任何系统行为</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="nf">FUNC</span><span class="p">(</span><span class="kt">void</span><span class="p">,</span> <span class="n">OS_SHUTDOWNHOOK_CODE</span><span class="p">)</span> <span class="nf">ShutdownHook</span><span class="p">(</span><span class="n">StatusType</span> <span class="n">Fatalerror</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span><span class="p">(</span> <span class="nf">GetCoreID</span><span class="p">()</span> <span class="o">==</span> <span class="n">OS_CORE_ID_MASTER</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="nf">EcuM_Shutdown</span><span class="p">();</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h2 id="位操作">位操作<a hidden class="anchor" aria-hidden="true" href="#位操作">#</a></h2>
+<h3 id="1-移位操作">1. 移位操作<a hidden class="anchor" aria-hidden="true" href="#1-移位操作">#</a></h3>
+<p>①&laquo; 左移  ：左移几位就把左边的数去掉几位，右边补0；相当于2^5-&gt;2^6</p>
+<p><strong>源操作数 * 2的N次方（N取决于移动的位数） = 移动后的结果。</strong></p>
+<p>②&raquo;右移：右移几位就把右边的数去掉几位，左边补0</p>
+<p><strong>源操作数 / 2的N次方（N取决于移动的位数） = 移动后的结果(*<em>只取整数部分*</em>)</strong></p>
+<p>算术左移和逻辑左移相同</p>
+<p>​       算术右移符号位要一起移动，左边补符号位，11100算术右移一位为11110</p>
+<h3 id="2逻辑运算">2.逻辑运算<a hidden class="anchor" aria-hidden="true" href="#2逻辑运算">#</a></h3>
+<ol>
+<li>&amp;(与) 和0一起使用 可以清零</li>
+<li>|(或) 可以置1</li>
+<li>^(异或)</li>
+</ol>
+<h3 id="3举例">3.举例<a hidden class="anchor" aria-hidden="true" href="#3举例">#</a></h3>
+<h4 id="将特定数置1">将特定数置1<a hidden class="anchor" aria-hidden="true" href="#将特定数置1">#</a></h4>
+<p>0xf8 把第2位到第6位置1</p>
+<p>1111 _1000</p>
+<p>2到6  1_1111 =0x1f</p>
+<p>从第二位开始置1 0x1f&laquo;2 = 111_1100</p>
+<p>第a位到第b位置1，（b-a+1）转为16进制</p>
+<p>从哪一位开始置1 则左移多少位，&laquo;a</p>
+<p>把第4位到第8位和第23到25位同时置1</p>
+<p>((0x1f &laquo;4) | (0x7&laquo;23))</p>
+<h4 id="将特定数置0">将特定数置0<a hidden class="anchor" aria-hidden="true" href="#将特定数置0">#</a></h4>
+<p>先置1 再按位取反</p>
+<p>~((0x1f &laquo;3)</p>
+<table>
+  <thead>
+      <tr>
+          <th>操作</th>
+          <th>表达式</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr>
+          <td>设置整型数a的bit4</td>
+          <td>a|=(1&laquo;4)</td>
+      </tr>
+      <tr>
+          <td>设置整型数a的bit4~bit7</td>
+          <td>a|=（(0x1f）&laquo;4）</td>
+      </tr>
+      <tr>
+          <td>清除整型数a的bit15</td>
+          <td>a&amp;=((~a&laquo;15))</td>
+      </tr>
+  </tbody>
+</table>
+<h4 id="代码举例">代码举例<a hidden class="anchor" aria-hidden="true" href="#代码举例">#</a></h4>
+<ol>
+<li>清除特定位的值</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="n">VOID</span>	<span class="nf">Clear_data</span><span class="p">(</span> <span class="k">const</span> <span class="n">UCHAR</span> <span class="n">indat</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">UCHAR</span>			<span class="n">byte_id</span><span class="p">;</span>								
+</span></span><span class="line"><span class="cl">	<span class="n">UCHAR</span>			<span class="n">bit_dat</span><span class="p">;</span>								
+</span></span><span class="line"><span class="cl">	<span class="n">UCHAR</span>			<span class="n">bit_id</span><span class="p">;</span>									
+</span></span><span class="line"><span class="cl">	<span class="n">UCHAR</span>			<span class="n">bit_dat_inv</span><span class="p">;</span>							
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">    <span class="cm">/* indat/8 取得其数组id*/</span>
+</span></span><span class="line"><span class="cl">	<span class="n">byte_id</span>	<span class="o">=</span> <span class="p">(</span><span class="n">UCHAR</span><span class="p">)</span><span class="nf">If_Shift_LR</span><span class="p">(</span> <span class="p">(</span><span class="n">ULONG</span><span class="p">)</span><span class="n">indat</span><span class="p">,</span> <span class="n">ZSHIFT3</span> <span class="p">);</span>
+</span></span><span class="line"><span class="cl">    <span class="cm">/* indat%8 取得其bit位*/</span>
+</span></span><span class="line"><span class="cl">	<span class="n">bit_id</span>	<span class="o">=</span> <span class="p">(</span><span class="n">UCHAR</span><span class="p">)(</span> <span class="n">indat</span> <span class="o">&amp;</span> <span class="n">ZMASK_07</span> <span class="p">);</span>					
+</span></span><span class="line"><span class="cl">	<span class="n">bit_dat</span>	<span class="o">=</span> <span class="p">(</span><span class="n">UCHAR</span><span class="p">)</span><span class="nf">If_Shift_LL</span><span class="p">(</span> <span class="n">ZMASK_BIT0</span><span class="p">,</span> <span class="p">(</span><span class="n">ULONG</span><span class="p">)</span><span class="n">bit_id</span> <span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="n">bit_dat_inv</span> <span class="o">=</span> <span class="o">~</span><span class="n">bit_dat</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl">	<span class="cm">/*&amp;= 清除该位*/</span>
+</span></span><span class="line"><span class="cl">	<span class="n">array</span><span class="p">[</span> <span class="n">byte_id</span> <span class="p">]</span>	<span class="o">&amp;=</span> <span class="n">bit_dat_inv</span><span class="p">;</span>					
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><ol start="2">
+<li>memcpy函数
+3.以2Byte为单位进行复制处理，从起始地址开始每2个Byte拷贝到目标地址，n是拷贝次数，如果16个字节，以2Byte为单位复写，n=8，以4Byte为单位复写，n=4</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="n">VOID</span>	<span class="nf">If_Memcpy2</span><span class="p">(</span> <span class="n">VOID</span><span class="o">*</span> <span class="k">const</span> <span class="n">dst</span><span class="p">,</span> <span class="k">const</span> <span class="n">VOID</span><span class="o">*</span> <span class="k">const</span> <span class="n">src</span><span class="p">,</span> <span class="n">SIZE_T</span> <span class="n">n</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">USHORT</span><span class="o">*</span>			<span class="n">dst_p</span> <span class="o">=</span> <span class="p">(</span><span class="n">USHORT</span><span class="o">*</span><span class="p">)</span><span class="n">dst</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">	<span class="k">const</span>	<span class="n">USHORT</span><span class="o">*</span>	<span class="n">src_p</span> <span class="o">=</span> <span class="p">(</span><span class="k">const</span> <span class="n">USHORT</span><span class="o">*</span><span class="p">)</span><span class="n">src</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="cm">/*n = n/2 如果是4个byte为单位进行复写，IfCfc_Shift_LR( (ULONG)n, 2 );*/</span>
+</span></span><span class="line"><span class="cl">	<span class="n">n</span> <span class="o">=</span> <span class="p">(</span><span class="n">SIZE_T</span><span class="p">)</span><span class="nf">If_Shift_LR</span><span class="p">(</span> <span class="p">(</span><span class="n">ULONG</span><span class="p">)</span><span class="n">n</span><span class="p">,</span> <span class="mi">1</span> <span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="k">if</span> <span class="p">(</span> <span class="n">n</span> <span class="o">!=</span> <span class="mi">0</span> <span class="p">)</span>
+</span></span><span class="line"><span class="cl">	<span class="p">{</span>
+</span></span><span class="line"><span class="cl">		<span class="k">do</span>
+</span></span><span class="line"><span class="cl">		<span class="p">{</span>
+</span></span><span class="line"><span class="cl">			<span class="o">*</span><span class="p">(</span><span class="n">dst_p</span><span class="p">)</span> <span class="o">=</span> <span class="o">*</span><span class="p">(</span><span class="n">src_p</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">			<span class="n">dst_p</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="n">src_p</span><span class="o">++</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">			<span class="n">n</span><span class="o">--</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl">		<span class="p">}</span>
+</span></span><span class="line"><span class="cl">		<span class="k">while</span> <span class="p">(</span> <span class="n">n</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="p">);</span>
+</span></span><span class="line"><span class="cl">	<span class="p">}</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><h1 id="数据类型与关键字">数据类型与关键字<a hidden class="anchor" aria-hidden="true" href="#数据类型与关键字">#</a></h1>
+<h2 id="enum枚举">enum枚举<a hidden class="anchor" aria-hidden="true" href="#enum枚举">#</a></h2>
+<p><strong>注意点：</strong></p>
+<p>1.<em><strong>在同一个作用域能不能出现重名的枚举常量名</strong></em>；</p>
+<p>虽然定义了两个枚举类型 enum1，enum2，但如果其成员常量名相同则会报错</p>
+<p>2.<em><strong>不可以定义相同的变量但是可以定义相同的值</strong></em>；</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="err">`</span><span class="k">typedef</span> <span class="k">enum</span> 
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
+</span></span><span class="line"><span class="cl">	<span class="n">enumA</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="n">enumB</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="n">enumC</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>	
+</span></span><span class="line"><span class="cl">	<span class="n">enmuD</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl">	<span class="n">enmuE</span><span class="o">=</span><span class="mi">6</span><span class="p">,</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span><span class="n">A_enum</span><span class="p">;</span><span class="err">`</span>
+</span></span></code></pre></div><h2 id="union联合体">union联合体<a hidden class="anchor" aria-hidden="true" href="#union联合体">#</a></h2>
+<p><strong>注意点</strong></p>
+<ol>
+<li>内存空间相同但储存不同的数据类型，并不是同时储存，而是一次只能存储一种数据类型。</li>
+<li>联合体的大小都相等，每个联合可以储存各种数据类型。共用体的长度为其最大的成员的长度。
+<strong>用途：</strong>
+数据的格式在不同场合下不同时，节省内存。</li>
+</ol>
+<h2 id="const关键字">const关键字<a hidden class="anchor" aria-hidden="true" href="#const关键字">#</a></h2>
+<p>可以保护被修饰的东西，防止意外修改，增强程序的健壮性</p>
+<p>编译器通常不为普通const常量分配存储空间，而是将它们保存在符号表中，这使得它成为一个编译期间的常量，没有了存储与读内存的操作，使得它的效率也很高。</p>
+<h2 id="inline关键字">inline关键字<a hidden class="anchor" aria-hidden="true" href="#inline关键字">#</a></h2>
+<p>关键字inline 必须与函数定义体放在一起</p>
+<p>只适合函数体内代码简单的函数数使用</p>
+<ol>
+<li><strong>static inline</strong></li>
+</ol>
+<p>inline函数不能在两个不同的文件中出现，一个.h不能被两个不同的文件包含，一个inline在不同的.C里面生成了不同的实例</p>
+<p>c文件中的仅inline函数是不内联的，因为没有static，编译会认为它是全局的，因此像普通函数一样编译了。
+加入static，这样内部调用函数时，会内联，而外部调用该函数时，则不会内联。</p>
+<h2 id="static关键字">static关键字<a hidden class="anchor" aria-hidden="true" href="#static关键字">#</a></h2>
+<p><strong>修饰变量：</strong></p>
+<p><em>修饰全局变量</em>：仅对当前文件可见，其他文件不可访问，其他文件可以定义与其同名的变量</p>
+<p><em>修饰局部变量</em>：普通局部变量存储在栈空间，编译器不会初始化；修饰之后的局部变量，即使在声明时未赋初值，编译器也会把它初始化为0。且静态局部变量存储于进程的全局数据区，即使函数返回，它的值也会保持不变</p>
+<p><strong>修饰函数：</strong></p>
+<p>静态函数只能在声明它的文件中可见，其他文件不能引用该函数</p>
+<h2 id="volatile关键字">volatile关键字<a hidden class="anchor" aria-hidden="true" href="#volatile关键字">#</a></h2>
+<p>每次读取数据，必须在内存上取，而不是使用保存在寄存器或者cache里的备份（<strong>直接取内存原始地址</strong>）</p>
+<p>没有声明的话，对一个变量进行多次赋值，没有生成之间汇编代码，直接取最后的值寻址赋值给该变量；声明之后每个变量的赋值都形成了汇编代码，没有被优化。</p>
+<blockquote>
+<p><em><strong>易变的</strong>
+<strong>多线程的程序，共同访问内存时多个程序可以操纵这个变量；和外部设备的状态对应，通过驱动程序和中断改变该变量的值，程序并不知道</strong></em></p>
+</blockquote>
+<p>用途：</p>
+<ol>
+<li>
+<p>并行设备的硬件寄存器（状态寄存器），每次对它的读写都可能有不同意义</p>
+</li>
+<li>
+<p>一个中断服务子程序中会访问到的非自动变量；当变量在触发某中断程序中修改，对于编译器，主函数里没有修改这个变量，可能只执行一次从内存到某寄存器的读操作，而后每次只会从该寄存器中读取变量副本，使得中断程序的操作做了跟没做一样。</p>
+</li>
+<li>
+<p>多线程任务中的共享变量。</p>
+</li>
+</ol>
+<p>一个参数可以既是const又是volatile——只读的状态寄存器。它是volatile因为它可能被意想不到地改变。它是const因为程序不应该试图去修改它。</p>
+<p>一个volatile的指针——当一个中断服务子程序修改一个指向一个主函数的指针时</p>
+<h2 id="宏定义">宏定义<a hidden class="anchor" aria-hidden="true" href="#宏定义">#</a></h2>
+<p><strong>用途</strong></p>
+<ol>
+<li>
+<p>防止头文件被重复包含</p>
+</li>
+<li>
+<p>重新定义一些类型</p>
+</li>
+<li>
+<p>得到指定地址</p>
+</li>
+<li>
+<p>得到指定地址上的一个字节</p>
+</li>
+</ol>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-c" data-lang="c"><span class="line"><span class="cl"><span class="cp">#define  MEM_B( x )  ( *( (byte *) (x) ) )
+</span></span></span><span class="line"><span class="cl"><span class="cp">#define  MEM_W( x )  ( *( (word *) (x) ) )
+</span></span></span></code></pre></div><h2 id="translation-unit">Translation unit<a hidden class="anchor" aria-hidden="true" href="#translation-unit">#</a></h2>
+<p>在函数块外部名字声明（函数和变量）若只能在一个已知的translation unit是可见的，称为内部链接。他们对于linker（连接器）是不可见。若声明的函数或变量对于其他的目标文件是看见的，则称为具有外部连接，对于linker是可见的。</p>
+<p>编译的基本单元是.c文件</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+        <span><a href="https://fishdel.github.io/">©2024 Yuuuu&rsquo;s Blog</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+</body>
+
+</html>
